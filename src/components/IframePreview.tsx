@@ -1,0 +1,214 @@
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+
+interface IframePreviewProps {
+  classes: string;
+  dark: boolean;
+  width: number | null;
+  hover: boolean;
+  focus: boolean;
+  previewMode: string;
+}
+
+export function IframePreview({ classes, dark, width, hover, focus, previewMode }: IframePreviewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const containerWidth = entry.contentRect.width;
+        if (width && width > containerWidth) {
+          setScale(containerWidth / width);
+        } else {
+          setScale(1);
+        }
+      }
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [width]);
+
+  useEffect(() => {
+    const doc = iframeRef.current?.contentDocument;
+    if (doc && !mountNode) {
+      doc.open();
+      doc.write(`
+        <!DOCTYPE html>
+        <html class="${dark ? 'dark' : ''}">
+        <head>
+          <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+          <style>
+            body { 
+              margin: 0; 
+              padding: 0; 
+              min-height: 100vh; 
+              display: flex; 
+              align-items: center; 
+              justify-content: center; 
+              background: transparent; 
+            }
+            #root {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 2rem;
+            }
+            ::-webkit-scrollbar { width: 8px; height: 8px; }
+            ::-webkit-scrollbar-track { background: transparent; }
+            ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+          </style>
+        </head>
+        <body>
+          <div id="root"></div>
+        </body>
+        </html>
+      `);
+      doc.close();
+      
+      const checkRoot = setInterval(() => {
+        const root = iframeRef.current?.contentDocument?.getElementById('root');
+        if (root) {
+          setMountNode(root);
+          clearInterval(checkRoot);
+        }
+      }, 50);
+      return () => clearInterval(checkRoot);
+    }
+  }, [mountNode, dark]);
+
+  useEffect(() => {
+    const doc = iframeRef.current?.contentDocument;
+    if (doc) {
+      if (dark) doc.documentElement.classList.add('dark');
+      else doc.documentElement.classList.remove('dark');
+    }
+  }, [dark]);
+
+  let simClasses = classes;
+  if (hover) simClasses = simClasses.replace(/hover:/g, '');
+  if (focus) simClasses = simClasses.replace(/focus:/g, '');
+
+  return (
+    <div ref={containerRef} className="w-full h-full flex items-center justify-center overflow-hidden">
+      <div 
+        style={{ 
+          width: width ? `${width}px` : '100%', 
+          height: width ? `${100 / scale}%` : '100%',
+          transform: `scale(${scale})`,
+          transformOrigin: 'center center',
+          transition: 'transform 0.3s ease, width 0.3s ease, height 0.3s ease'
+        }}
+        className="flex items-center justify-center"
+      >
+        <iframe
+          ref={iframeRef}
+          className="w-[96%] h-full bg-transparent border-0 rounded-xl"
+          style={{ minHeight: '400px' }}
+          title="preview"
+        >
+          {mountNode && createPortal(
+            <div className="relative group transition-all duration-300 w-full h-full p-4 md:p-8 flex items-center justify-center">
+              {previewMode === 'layouts' ? (
+                <div className="w-full max-w-4xl aspect-[4/3] sm:aspect-video relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl">
+                   {/* Background Grid Layer */}
+                   <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-4 p-4 pointer-events-none opacity-30">
+                      {[...Array(9)].map((_, i) => (
+                         <div key={i} className="border-2 border-dashed border-slate-600 rounded-xl bg-slate-800/30"></div>
+                      ))}
+                   </div>
+                   
+                   {/* The actual preview container with simClasses */}
+                   <div className={`absolute inset-0 p-4 transition-all duration-300 ${simClasses}`}>
+                      <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-indigo-500/20 border-2 border-indigo-500 flex items-center justify-center text-indigo-100 font-bold text-xl sm:text-2xl transition-all duration-300">1</div>
+                      <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center text-emerald-100 font-bold text-xl sm:text-2xl transition-all duration-300">2</div>
+                      <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-rose-500/20 border-2 border-rose-500 flex items-center justify-center text-rose-100 font-bold text-xl sm:text-2xl transition-all duration-300">3</div>
+                      <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center text-amber-100 font-bold text-xl sm:text-2xl transition-all duration-300">4</div>
+                      {(simClasses.includes('flex-wrap') || simClasses.includes('flex-nowrap')) && (
+                        <>
+                          <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-cyan-500/20 border-2 border-cyan-500 flex items-center justify-center text-cyan-100 font-bold text-xl sm:text-2xl transition-all duration-300">5</div>
+                          <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-violet-500/20 border-2 border-violet-500 flex items-center justify-center text-violet-100 font-bold text-xl sm:text-2xl transition-all duration-300">6</div>
+                          <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-xl bg-pink-500/20 border-2 border-pink-500 flex items-center justify-center text-pink-100 font-bold text-xl sm:text-2xl transition-all duration-300">7</div>
+                        </>
+                      )}
+                   </div>
+                </div>
+              ) : (
+                <div className={simClasses}>
+                {previewMode === 'typography' && (
+                  <div className="flex flex-col gap-4 text-slate-200 w-full max-w-lg text-left bg-slate-900/50 p-8 rounded-2xl border border-slate-800">
+                    <h1 className="text-4xl font-bold text-white tracking-tight">Typography Hierarchy</h1>
+                    <h2 className="text-2xl font-semibold text-slate-300">Secondary Heading</h2>
+                    <p className="text-base text-slate-400 leading-relaxed">
+                      This is a paragraph of text demonstrating the body typography. 
+                      Tailwind CSS makes it easy to style text with utility classes and establish a clear visual hierarchy.
+                    </p>
+                    <div className="flex items-center gap-3 mt-2">
+                       <span className="text-sm font-medium text-indigo-400 hover:text-indigo-300 cursor-pointer">Read more &rarr;</span>
+                       <span className="text-[10px] font-mono bg-slate-800 px-2 py-1 rounded text-slate-300 border border-slate-700">article-tag</span>
+                    </div>
+                  </div>
+                )}
+
+                {previewMode === 'colors' && (
+                  <div className="flex flex-wrap items-center justify-center gap-6 p-8 bg-slate-900/50 rounded-2xl border border-slate-800">
+                     <div className="flex flex-col items-center gap-2">
+                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary shadow-lg shadow-primary/30"></div>
+                       <span className="text-xs font-mono text-slate-400">primary (indigo-500)</span>
+                     </div>
+                     <div className="flex flex-col items-center gap-2">
+                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-success shadow-lg shadow-success/30"></div>
+                       <span className="text-xs font-mono text-slate-400">success (emerald-500)</span>
+                     </div>
+                     <div className="flex flex-col items-center gap-2">
+                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-danger shadow-lg shadow-danger/30"></div>
+                       <span className="text-xs font-mono text-slate-400">danger (rose-500)</span>
+                     </div>
+                     <div className="flex flex-col items-center gap-2">
+                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-warning shadow-lg shadow-warning/30"></div>
+                       <span className="text-xs font-mono text-slate-400">warning (amber-500)</span>
+                     </div>
+                     <div className="flex flex-col items-center gap-2">
+                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-info shadow-lg shadow-info/30"></div>
+                       <span className="text-xs font-mono text-slate-400">info (cyan-500)</span>
+                     </div>
+                  </div>
+                )}
+
+                {previewMode === 'components' && (
+                   <div className="flex flex-col sm:flex-row items-center gap-8 p-8 bg-slate-900/50 rounded-2xl border border-slate-800">
+                     <button className="px-6 py-3 bg-indigo-500 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/30 hover:bg-indigo-600 transition-colors focus:ring-4 focus:ring-indigo-500/30 outline-none">
+                       Action Button
+                     </button>
+                     <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 flex items-center gap-4 shadow-xl">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0"></div>
+                        <div className="flex flex-col pr-4">
+                           <span className="text-sm font-medium text-slate-200">User Profile</span>
+                           <span className="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
+                             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                             Active now
+                           </span>
+                        </div>
+                     </div>
+                   </div>
+                )}
+
+              </div>
+              )}
+              <div className="absolute bottom-4 right-4 px-3 py-1 bg-slate-800/80 backdrop-blur rounded text-[10px] font-mono text-indigo-400 pointer-events-none">
+                div.preview
+              </div>
+            </div>,
+            mountNode
+          )}
+        </iframe>
+      </div>
+    </div>
+  );
+}
