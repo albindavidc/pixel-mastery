@@ -2,6 +2,7 @@ export type ViewMode = 'curriculum' | 'reference';
 
 export interface Module {
   id: string;
+  category?: 'css' | 'tailwind';
   title: string;
   description: string;
   content: string; // Markdown or simple HTML

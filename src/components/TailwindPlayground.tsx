@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { IframePreview } from './IframePreview';
 import { controlBarData, wildcards } from '../data/controlBar';
 
-export function Playground() {
+export function TailwindPlayground() {
   const { 
     playgroundClasses, 
     setPlaygroundClasses,
@@ -15,8 +15,8 @@ export function Playground() {
   } = useAppStore();
 
   const [copied, setCopied] = useState(false);
-  const [previewMode, setPreviewMode] = useState('layouts');
-  const previewModes = ['layouts', 'typography', 'colors', 'components'];
+  const [previewMode, setPreviewMode] = useState('flex');
+  const previewModes = ['flex', 'grid'];
   
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
 
@@ -159,7 +159,7 @@ export function Playground() {
                 className="flex-1 flex flex-wrap items-center gap-1.5 px-1 pb-1 min-w-0" 
                 onWheel={handleWheel}
               >
-                <div className="flex items-center flex-wrap gap-1.5">
+                <div className="flex flex-wrap items-center gap-1.5">
                   {group.properties.map(prop => {
                     const isWildcard = prop.endsWith('-*') || (prop in wildcards && prop !== 'flex' && prop !== 'grid');
                     const isSpecialWildcard = prop === 'flex' || prop === 'grid';
@@ -262,18 +262,16 @@ export function Playground() {
 
           <div className="absolute top-3 right-4 flex gap-4 items-center z-10">
             {/* Legend */}
-            {(previewMode === 'layouts' || previewMode === 'tailwind' || previewMode === 'flex' || previewMode === 'grid') && (
-              <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase bg-[#0f172a]/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300 shadow-lg pointer-events-none">
-                <div className="flex items-center gap-2 text-sky-400">
-                  <span className="w-4 h-0 border-t-2 border-dotted border-sky-400"></span>
-                  <span>Container</span>
-                </div>
-                <div className="flex items-center gap-2 text-fuchsia-400">
-                  <span className="w-3 h-3 flex items-center justify-center rounded bg-fuchsia-500/20 border border-fuchsia-500 text-[8px] font-mono leading-none">1</span>
-                  <span>Item (1-9)</span>
-                </div>
+            <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase bg-[#0f172a]/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300 shadow-lg pointer-events-none">
+              <div className="flex items-center gap-2 text-sky-400">
+                <span className="w-4 h-0 border-t-2 border-dotted border-sky-400"></span>
+                <span>Container</span>
               </div>
-            )}
+              <div className="flex items-center gap-2 text-fuchsia-400">
+                <span className="w-3 h-3 flex items-center justify-center rounded bg-fuchsia-500/20 border border-fuchsia-500 text-[8px] font-mono leading-none">1</span>
+                <span>Item (1-9)</span>
+              </div>
+            </div>
             {/* Preview Modes */}
             <div className="flex gap-1 bg-[#0f172a]/80 backdrop-blur rounded-lg p-1 border border-slate-700/50 shadow-lg">
               {previewModes.map(mode => (

@@ -3,6 +3,7 @@ import { Module } from '../types';
 export const modules: Module[] = [
   {
     id: 'layout',
+    category: 'css',
     title: '1. Layout',
     description: 'Control the document flow and element visibility.',
     content: 'The `display` property sets whether an element is treated as a block or inline element and the layout used for its children, like flow layout, grid or flex. In Tailwind v4, standard display utilities remain unchanged.',
@@ -17,14 +18,15 @@ export const modules: Module[] = [
     }
   },
   {
-    id: 'flexbox',
-    title: '2. Flexbox',
-    description: 'A one-dimensional layout method for arranging items in rows or columns.',
-    content: 'Flexbox is essential for modern layouts. Use `flex` to enable it, then control direction with `flex-row` or `flex-col`.',
+    id: 'flexbox-grid',
+    category: 'css',
+    title: '2. Flexbox & Grid',
+    description: 'One and two-dimensional layout methods for arranging items.',
+    content: 'Flexbox is essential for one-dimensional layouts (rows or columns), while Grid allows you to define both rows and columns. Use `flex` or `grid` to enable them.',
     examples: [
       { label: 'Flex Row', classes: 'flex flex-row gap-4 bg-slate-100 p-4' },
-      { label: 'Flex Column', classes: 'flex flex-col gap-4 bg-slate-100 p-4' },
-      { label: 'Center Content', classes: 'flex justify-center items-center h-32 bg-slate-100' },
+      { label: '3 Columns Grid', classes: 'grid grid-cols-3 gap-4 bg-slate-100 p-4' },
+      { label: 'Center Content (Flex)', classes: 'flex justify-center items-center h-32 bg-slate-100' },
     ],
     challenge: {
       description: 'Create a flex container, stacked in a column, with items centered vertically and horizontally.',
@@ -32,21 +34,8 @@ export const modules: Module[] = [
     }
   },
   {
-    id: 'grid',
-    title: '3. Grid',
-    description: 'A two-dimensional layout system.',
-    content: 'Grid allows you to define rows and columns. Use `grid` to enable, and `grid-cols-{n}` to set columns.',
-    examples: [
-      { label: '3 Columns', classes: 'grid grid-cols-3 gap-4 bg-slate-100 p-4' },
-      { label: 'Auto Fit', classes: 'grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4' },
-    ],
-    challenge: {
-      description: 'Create a grid with 2 equal columns and a gap of 16px (gap-4).',
-      targetClasses: ['grid', 'grid-cols-2', 'gap-4'],
-    }
-  },
-  {
     id: 'spacing',
+    category: 'css',
     title: '4. Spacing',
     description: 'Control margin, padding, and space between elements.',
     content: 'Tailwind uses a proportional spacing scale. `p-4` is padding all around, `mt-2` is margin top. `space-x-4` adds horizontal space between children.',
@@ -61,6 +50,7 @@ export const modules: Module[] = [
   },
   {
     id: 'sizing',
+    category: 'css',
     title: '5. Sizing',
     description: 'Set width and height of elements.',
     content: 'Use `w-*` and `h-*` for width and height. `w-full` means 100%. `size-16` is a shorthand for both `w-16` and `h-16`.',
@@ -76,6 +66,7 @@ export const modules: Module[] = [
   },
   {
     id: 'position',
+    category: 'css',
     title: '6. Position',
     description: 'Control how elements are positioned in the DOM.',
     content: 'Choose between `static`, `relative`, `absolute`, `fixed`, and `sticky`. Use `inset-0` as a shorthand for top/right/bottom/left 0.',
@@ -90,6 +81,7 @@ export const modules: Module[] = [
   },
   {
     id: 'borders',
+    category: 'css',
     title: '7. Borders',
     description: 'Style the borders of your elements.',
     content: 'Use `border` to add a border, `border-{color}` to color it, and `rounded-*` for border radius.',
@@ -104,6 +96,7 @@ export const modules: Module[] = [
   },
   {
     id: 'backgrounds',
+    category: 'css',
     title: '8. Backgrounds',
     description: 'Set background colors, gradients, and images.',
     content: '`bg-{color}` sets solid backgrounds. Use `bg-gradient-to-{dir} from-{c} to-{c}` for gradients.',
@@ -118,6 +111,7 @@ export const modules: Module[] = [
   },
   {
     id: 'effects',
+    category: 'css',
     title: '9. Effects',
     description: 'Add box shadows, opacity, and mix blend modes.',
     content: '`shadow-*` applies drop shadows. `opacity-*` sets transparency. `ring-*` creates focus rings.',
@@ -132,6 +126,7 @@ export const modules: Module[] = [
   },
   {
     id: 'typography',
+    category: 'css',
     title: '10. Typography',
     description: 'Style your text.',
     content: 'Control font size (`text-xl`), weight (`font-bold`), color (`text-slate-900`), and more.',
@@ -146,6 +141,7 @@ export const modules: Module[] = [
   },
   {
     id: 'transforms',
+    category: 'css',
     title: '11. Transforms',
     description: 'Scale, rotate, and translate elements.',
     content: 'Tailwind v4 applies transforms automatically. Just use `scale-110`, `rotate-45`, `translate-x-4`.',
@@ -160,6 +156,7 @@ export const modules: Module[] = [
   },
   {
     id: 'transitions',
+    category: 'css',
     title: '12. Transitions & Animation',
     description: 'Animate property changes.',
     content: 'Add `transition` to smooth changes, then specify `duration-*` and `ease-*`. Use `animate-*` for keyframe animations like pulse or spin.',
@@ -174,6 +171,7 @@ export const modules: Module[] = [
   },
   {
     id: 'interaction',
+    category: 'css',
     title: '13. Interaction & Filters',
     description: 'Control cursors, selection, and visual filters.',
     content: 'Change the cursor with `cursor-pointer`. Add visual filters like `blur-md` or `grayscale`.',
@@ -188,6 +186,7 @@ export const modules: Module[] = [
   },
   {
     id: 'states',
+    category: 'css',
     title: '14. States',
     description: 'Style pseudo-classes like hover, focus, and dark mode.',
     content: 'Prefix utilities to apply them conditionally: `hover:bg-indigo-600`, `focus:ring-2`, `dark:bg-slate-800`.',
@@ -202,6 +201,7 @@ export const modules: Module[] = [
   },
   {
     id: 'responsive',
+    category: 'css',
     title: '15. Responsive Design',
     description: 'Build mobile-first layouts.',
     content: 'Use breakpoint prefixes (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`) to apply styles at specific screen widths. e.g., `flex-col md:flex-row`.',
@@ -212,6 +212,23 @@ export const modules: Module[] = [
     challenge: {
       description: 'Set background to slate-200 by default, and change it to indigo-200 on medium (md) screens and above.',
       targetClasses: ['bg-slate-200', 'md:bg-indigo-200'],
+    }
+  }
+,
+  {
+    id: 'tailwind-flexbox-grid',
+    category: 'tailwind',
+    title: 'Flexbox & Grid',
+    description: 'One and two-dimensional layout methods for arranging items.',
+    content: 'Flexbox is essential for one-dimensional layouts (rows or columns), while Grid allows you to define both rows and columns. Use `flex` or `grid` to enable them.',
+    examples: [
+      { label: 'Flex Row', classes: 'flex flex-row gap-4 bg-slate-100 p-4' },
+      { label: '3 Columns Grid', classes: 'grid grid-cols-3 gap-4 bg-slate-100 p-4' },
+      { label: 'Center Content (Flex)', classes: 'flex justify-center items-center h-32 bg-slate-100' },
+    ],
+    challenge: {
+      description: 'Create a flex container, stacked in a column, with items centered vertically and horizontally.',
+      targetClasses: ['flex', 'flex-col', 'justify-center', 'items-center'],
     }
   }
 ];

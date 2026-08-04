@@ -27,9 +27,9 @@ const AppContext = createContext<AppState | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [viewMode, setViewMode] = useState<ViewMode>('curriculum');
-  const [currentModuleId, setCurrentModuleId] = useState<string>(modules[0].id);
+  const [currentModuleId, setCurrentModuleId] = useState<string>('tailwind-flexbox-grid');
   const [completedModules, setCompletedModules] = useState<string[]>([]);
-  const [playgroundClasses, setPlaygroundClasses] = useState<string>('flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full h-full');
+  const [playgroundClasses, setPlaygroundClasses] = useState<string>('flex flex-col flex-wrap items-center gap-10 w-full h-full');
   
   const [playgroundState, setPlaygroundStateInternal] = useState({
     hover: false,
