@@ -32,7 +32,7 @@ export function Curriculum() {
 
   return (
     <div className="bg-zinc-950 transition-colors">
-      <div className="max-w-4xl mx-auto p-8 lg:p-12">
+      <div className="max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto p-8 lg:p-12">
                                         {/* Quick Reference Guide */}
         <div className="mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-lg">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -190,7 +190,7 @@ export function Curriculum() {
             </div>
           </div>
           
-          {/* Common Properties */}
+{/* Common Properties */}
           <div className="pt-6 border-t border-zinc-800">
             <h4 className="text-xs font-bold text-zinc-300 uppercase tracking-widest mb-4">Common Properties (Flex & Grid)</h4>
             
@@ -263,6 +263,126 @@ export function Curriculum() {
               </div>
             </div>
           </div>
+
+          {/* Alignment Cheat Sheet */}
+          <div className="pt-6 border-t border-zinc-800 mt-6">
+            <h4 className="text-xs font-bold text-zinc-300 uppercase tracking-widest mb-4">Alignment Matrix (Flexbox & Grid)</h4>
+            <div className="flex flex-col gap-4">
+              
+              {/* Content (Container) */}
+              <div className="bg-zinc-950/50 rounded-xl border border-zinc-800/50 p-4">
+                <h5 className="text-[10px] font-bold text-sky-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                  1. Content (Container)
+                </h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">justify-content</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">justify-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      normal, start, end, end-safe, center, center-safe, between, around, evenly, stretch, baseline
+                    </div>
+                  </div>
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">align-content</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">content-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      normal, start, end, center, between, around, evenly, baseline, stretch
+                    </div>
+                  </div>
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">place-content</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">place-content-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      start, end, end-safe, center, center-safe, between, around, evenly, baseline, stretch
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Items (All Items) */}
+              <div className="bg-zinc-950/50 rounded-xl border border-zinc-800/50 p-4">
+                <h5 className="text-[10px] font-bold text-sky-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                  2. Items (All Items)
+                </h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">justify-items</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">justify-items-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      start, end, center, stretch
+                    </div>
+                  </div>
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">align-items</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">items-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      start, end, end-safe, center, center-safe, baseline, baseline-last, stretch
+                    </div>
+                  </div>
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">place-items</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">place-items-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      start, end, end-safe, center, center-safe, baseline, stretch
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Self (Single Item) */}
+              <div className="bg-zinc-950/50 rounded-xl border border-zinc-800/50 p-4">
+                <h5 className="text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500"></span>
+                  3. Self (Single Item)
+                </h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">justify-self</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">justify-self-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      auto, start, end, end-safe, center, center-safe, stretch
+                    </div>
+                  </div>
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">align-self</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">self-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      auto, start, end, end-safe, center, center-safe, baseline, stretch
+                    </div>
+                  </div>
+                  <div className="bg-zinc-900 rounded-lg p-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-mono text-zinc-300">place-self</span>
+                      <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded border border-indigo-500/20">place-self-*</span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-mono leading-relaxed">
+                      auto, start, end, end-safe, center, center-safe, stretch
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
         <header className="mb-8">
@@ -280,6 +400,117 @@ export function Curriculum() {
 
         <div className="prose prose-invert max-w-none mb-10 text-zinc-400 leading-relaxed">
           <p>{module.content}</p>
+
+          {/* Definitions */}
+          <div className="mt-8 mb-6 space-y-6 not-prose">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              
+              {/* Core Layout Properties */}
+              <div className="bg-zinc-900/40 rounded-xl border border-zinc-800/60 overflow-hidden">
+                <div className="bg-zinc-800/40 px-4 py-2 border-b border-zinc-800/60">
+                  <h4 className="text-[10px] font-bold text-sky-400 uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                    Layout Properties
+                  </h4>
+                </div>
+                <div className="p-4 flex flex-col gap-3">
+                  {[
+                    { prop: 'flex-basis', desc: 'Sets the initial size of a flex item before extra space is distributed.' },
+                    { prop: 'flex-direction', desc: 'Defines the main axis direction (row, column, etc.) of flex items.' },
+                    { prop: 'flex-wrap', desc: 'Controls whether flex items stay on one line or wrap.' },
+                    { prop: 'flex', desc: 'Shorthand for flex-grow, flex-shrink, and flex-basis.' },
+                    { 
+                      prop: 'flex-grow', 
+                      desc: 'Determines how much a flex item expands to fill available space.',
+                      subprops: [
+                        { class: 'grow', style: 'flex-grow: 1;' },
+                        { class: 'grow-<number>', style: 'flex-grow: <number>;' },
+                        { class: 'grow-[<value>]', style: 'flex-grow: <value>;' },
+                        { class: 'grow-(<custom-property>)', style: 'flex-grow: var(<custom-property>);' }
+                      ]
+                    },
+                    { 
+                      prop: 'flex-shrink', 
+                      desc: 'Determines how much a flex item shrinks when space is limited.',
+                      subprops: [
+                        { class: 'shrink', style: 'flex-shrink: 1;' },
+                        { class: 'shrink-<number>', style: 'flex-shrink: <number>;' },
+                        { class: 'shrink-[<value>]', style: 'flex-shrink: <value>;' },
+                        { class: 'shrink-(<custom-property>)', style: 'flex-shrink: var(<custom-property>);' }
+                      ]
+                    },
+                    { 
+                      prop: 'order', 
+                      desc: 'Changes the visual order of flex or grid items without changing the HTML.',
+                      subprops: [
+                        { class: 'order-<number>', style: 'order: <number>;' },
+                        { class: '-order-<number>', style: 'order: calc(<number> * -1);' },
+                        { class: 'order-first', style: 'order: -9999;' },
+                        { class: 'order-last', style: 'order: 9999;' },
+                        { class: 'order-[<value>]', style: 'order: <value>;' },
+                        { class: 'order-(<custom-property>)', style: 'order: var(<custom-property>);' }
+                      ]
+                    },
+                    { prop: 'grid-template-columns', desc: 'Defines the number and size of explicit grid columns.' },
+                    { prop: 'grid-column', desc: 'Specifies which column(s) a grid item occupies.' },
+                    { prop: 'grid-template-rows', desc: 'Defines the number and size of explicit grid rows.' },
+                    { prop: 'grid-row', desc: 'Specifies which row(s) a grid item occupies.' },
+                    { prop: 'grid-auto-flow', desc: 'Controls how automatically placed grid items are inserted.' },
+                    { prop: 'grid-auto-columns', desc: 'Sets the size of implicitly created grid columns.' },
+                    { prop: 'grid-auto-rows', desc: 'Sets the size of implicitly created grid rows.' },
+                    { prop: 'gap', desc: 'Sets the spacing between rows and columns.' },
+                  ].map(item => (
+                    <div key={item.prop} className="flex flex-col gap-2 py-1">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                        <span className="text-xs font-mono text-zinc-300 min-w-[170px] shrink-0 bg-zinc-800/40 px-1.5 py-0.5 rounded w-fit border border-zinc-700/50">{item.prop}</span>
+                        <span className="text-xs text-zinc-400 leading-relaxed">{item.desc}</span>
+                      </div>
+                      {item.subprops && (
+                        <div className="mt-1 ml-2 sm:ml-[182px] border-l border-zinc-700/50 pl-4 space-y-1.5">
+                          {item.subprops.map(sp => (
+                            <div key={sp.class} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
+                              <span className="text-[10px] font-mono text-indigo-300 min-w-[140px] shrink-0 bg-indigo-950/30 px-1.5 py-0.5 rounded w-fit">{sp.class}</span>
+                              <span className="text-[10px] font-mono text-zinc-500">{sp.style}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Alignment Properties */}
+              <div className="bg-zinc-900/40 rounded-xl border border-zinc-800/60 overflow-hidden">
+                <div className="bg-zinc-800/40 px-4 py-2 border-b border-zinc-800/60">
+                  <h4 className="text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500"></span>
+                    Alignment Properties
+                  </h4>
+                </div>
+                <div className="p-4 flex flex-col gap-3">
+                  {[
+                    { prop: 'justify-content', desc: 'Aligns all items as a group along the main (or inline) axis.' },
+                    { prop: 'justify-items', desc: 'Sets the default inline-axis alignment for all grid items inside their cells.' },
+                    { prop: 'justify-self', desc: 'Aligns a single grid item along the inline axis within its own cell.' },
+                    { prop: 'align-content', desc: 'Aligns multiple rows or columns as a group along the cross (or block) axis.' },
+                    { prop: 'align-items', desc: 'Sets the default cross-axis alignment for all flex or grid items.' },
+                    { prop: 'align-self', desc: 'Overrides align-items for one flex or grid item.' },
+                    { prop: 'place-content', desc: 'Shorthand for align-content and justify-content.' },
+                    { prop: 'place-items', desc: 'Shorthand for align-items and justify-items.' },
+                    { prop: 'place-self', desc: 'Shorthand for align-self and justify-self.' },
+                  ].map(item => (
+                    <div key={item.prop} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                      <span className="text-xs font-mono text-zinc-300 min-w-[140px] shrink-0 bg-zinc-800/40 px-1.5 py-0.5 rounded w-fit border border-zinc-700/50">{item.prop}</span>
+                      <span className="text-xs text-zinc-400 leading-relaxed">{item.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
           
           {/* Note about v4 changes */}
           <div className="my-6 p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20 flex gap-3 text-sm text-indigo-200">
