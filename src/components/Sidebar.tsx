@@ -105,11 +105,16 @@ export function Sidebar() {
                   onClick={() => setTailwindExpanded(!tailwindExpanded)} 
                   className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
                 >
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors">Tailwind</h3>
+                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
+                    Tailwind
+                    {tailwindExpanded && (
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">v4.3</span>
+                    )}
+                  </h3>
                   {tailwindExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
                 </button>
               ) : (
-                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">Tailwind</h3>
+                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">TW</h3>
               )}
               
               <div className="space-y-1">

@@ -115,7 +115,10 @@ export const wildcards: Record<string, string[]> = {
   'w-*': ['w-0', 'w-px', 'w-1', 'w-4', 'w-8', 'w-16', 'w-32', 'w-64', 'w-full', 'w-screen', 'w-auto', 'w-1/2', 'w-1/3', 'w-2/3', 'w-1/4', 'w-3/4'],
   'h-*': ['h-0', 'h-px', 'h-1', 'h-4', 'h-8', 'h-16', 'h-32', 'h-64', 'h-full', 'h-screen', 'h-auto', 'h-1/2', 'h-1/3', 'h-2/3', 'h-1/4', 'h-3/4'],
 
-  'flex-basis': ['basis-0', 'basis-px', 'basis-auto', 'basis-full', 'basis-1/2', 'basis-1/3', 'basis-2/3', 'basis-1/4', 'basis-3/4', 'basis-1/5', 'basis-2/5', 'basis-3/5', 'basis-4/5', 'basis-full'],
+  'flex-basis': [
+    'basis-0', 'basis-px', 'basis-auto', 'basis-full', 
+    'basis-3xs', 'basis-2xs', 'basis-xs', 'basis-sm', 'basis-md', 'basis-lg', 'basis-xl', 'basis-2xl', 'basis-3xl', 'basis-4xl', 'basis-5xl', 'basis-6xl', 'basis-7xl'
+  ],
   'flex-direction': ['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse'],
   'flex-wrap': ['flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'],
   'flex-grow': ['grow', 'grow-0'],

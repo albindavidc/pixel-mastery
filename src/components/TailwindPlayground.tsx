@@ -2,6 +2,8 @@ import { useAppStore } from '../store';
 import { Copy, RotateCcw, X } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 import { IframePreview } from './IframePreview';
+import { CustomValuesHelpModal } from './CustomValuesHelpModal';
+import { Info } from 'lucide-react';
 import { controlBarData, wildcards } from '../data/controlBar';
 
 export function TailwindPlayground() {
@@ -16,9 +18,28 @@ export function TailwindPlayground() {
 
   const [copied, setCopied] = useState(false);
   const [previewMode, setPreviewMode] = useState('flex');
+  const [savedClasses, setSavedClasses] = useState({
+    flex: 'flex flex-col flex-wrap items-center gap-10 w-full h-full',
+    grid: 'grid grid-cols-3 gap-6 place-content-center w-full h-full'
+  });
   const previewModes = ['flex', 'grid'];
   
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
+  const [showBasisModal, setShowBasisModal] = useState(false);
+
+  // Track the current classes for the active mode
+  useEffect(() => {
+    setSavedClasses(prev => ({
+      ...prev,
+      [previewMode]: playgroundClasses
+    }));
+  }, [playgroundClasses, previewMode]);
+
+  const handleModeChange = (mode: string) => {
+    if (mode === previewMode) return;
+    setPreviewMode(mode);
+    setPlaygroundClasses(savedClasses[mode as keyof typeof savedClasses] || '');
+  };
 
   // Close Row 2 if we switch tabs
   useEffect(() => {
@@ -103,6 +124,7 @@ export function TailwindPlayground() {
     }
   };
 
+
   const handleVariantClick = (variant: string) => {
     if (!selectedProperty) return;
     
@@ -110,7 +132,12 @@ export function TailwindPlayground() {
     let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
     const variantsForProp = wildcards[selectedProperty] || [];
     
-    newClasses = newClasses.filter(c => !variantsForProp.includes(c));
+    // Custom filter for basis arbitrary values
+    if (selectedProperty === 'flex-basis') {
+      newClasses = newClasses.filter(c => !c.startsWith('basis-'));
+    } else {
+      newClasses = newClasses.filter(c => !variantsForProp.includes(c));
+    }
     
     // If not already active (toggle behavior on variants too if they match)
     const wasActive = playgroundClasses.split(' ').includes(variant);
@@ -118,6 +145,40 @@ export function TailwindPlayground() {
       newClasses.push(variant);
     }
     
+    setPlaygroundClasses(newClasses.join(' '));
+  };
+  
+  const handleCustomArbitraryValue = (value: string) => {
+    if (!selectedProperty || !['flex-basis', 'flex'].includes(selectedProperty)) return;
+    if (!value) return;
+        let formattedValue = value.trim();
+    const prefix = selectedProperty === 'flex-basis' ? 'basis-' : 'flex-';
+    
+    if (!formattedValue.startsWith(prefix)) {
+      if (formattedValue.startsWith('[') || formattedValue.startsWith('(')) {
+        formattedValue = `${prefix}${formattedValue}`;
+      } else if (
+        /^\d+\/\d+$/.test(formattedValue) || 
+        /^\d+(\.\d+)?$/.test(formattedValue) || 
+        ['auto', 'full', 'px', 'none', 'initial', '3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl'].includes(formattedValue)
+      ) {
+        formattedValue = `${prefix}${formattedValue}`;
+      } else {
+        formattedValue = `${prefix}[${formattedValue.replace(/\s+/g, '_')}]`;
+      }
+    }
+    
+    const isTargetProp = (c) => {
+      if (selectedProperty === 'flex-basis') return c.startsWith('basis-');
+      if (selectedProperty === 'flex') {
+        return c.startsWith('flex-') && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
+      }
+      return false;
+    };
+
+    let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
+    newClasses = newClasses.filter(c => !isTargetProp(c));
+    newClasses.push(formattedValue);
     setPlaygroundClasses(newClasses.join(' '));
   };
 
@@ -135,6 +196,7 @@ export function TailwindPlayground() {
 
   return (
     <div className="flex-1 bg-zinc-950 flex flex-col h-full overflow-hidden relative transition-colors">
+      <CustomValuesHelpModal isOpen={showBasisModal} onClose={() => setShowBasisModal(false)} property={selectedProperty} />
       {/* Dynamic Property Control Bar */}
       <div className="flex-shrink-0 bg-zinc-900 border-b border-zinc-800 flex flex-col z-10 shadow-sm transition-colors w-full sticky top-0">
         <div className="flex flex-col border-b border-zinc-800/50">
@@ -197,9 +259,15 @@ export function TailwindPlayground() {
               
               {gIdx === 0 && (
                 <button
-                  onClick={() => setPlaygroundClasses('flex flex-col flex-wrap items-center gap-10 w-full h-full')}
+                  onClick={() => {
+                    const defaultClass = previewMode === 'grid' 
+                      ? 'grid grid-cols-3 gap-6 place-content-center w-full h-full' 
+                      : 'flex flex-col flex-wrap items-center gap-10 w-full h-full';
+                    setPlaygroundClasses(defaultClass);
+                    setSelectedProperty(null);
+                  }}
                   className="w-7 h-7 shrink-0 flex items-center justify-center text-zinc-500 hover:text-white bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 rounded transition-colors ml-2"
-                  title="Clear classes"
+                  title="Reset classes"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                 </button>
@@ -230,6 +298,42 @@ export function TailwindPlayground() {
                   {variant}
                 </button>
               ))}
+              {['flex-basis', 'flex'].includes(selectedProperty) && Array.from(activeClassesSet).filter(c => {
+                if (selectedProperty === 'flex-basis') return c.startsWith('basis-') && !wildcards['flex-basis']?.includes(c);
+                if (selectedProperty === 'flex') return c.startsWith('flex-') && !wildcards['flex']?.includes(c) && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
+                return false;
+              }).map(variant => (
+                <button
+                  key={variant}
+                  onClick={() => handleVariantClick(variant)}
+                  className="shrink-0 px-2.5 py-1 text-xs font-mono rounded-md transition-colors border bg-indigo-600 text-white border-indigo-500 shadow-sm flex items-center gap-1.5"
+                >
+                  {variant}
+                  <X className="w-3 h-3 text-indigo-200" />
+                </button>
+              ))}
+              {['flex-basis', 'flex'].includes(selectedProperty) && (
+                <div className="flex items-center gap-1.5 ml-2 border-l border-zinc-800/50 pl-2">
+                  <input
+                    type="text"
+                    placeholder="e.g. 10px, [10px]"
+                    className="w-32 px-2 py-1 text-xs font-mono bg-zinc-950 border border-zinc-800 rounded-md text-zinc-300 placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleCustomArbitraryValue(e.currentTarget.value);
+                        e.currentTarget.value = '';
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={() => setShowBasisModal(true)}
+                    className="shrink-0 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md transition-colors border bg-indigo-500/10 text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20 flex items-center gap-1.5"
+                  >
+                    <Info className="w-3.5 h-3.5" />
+                    Custom Values
+                  </button>
+                </div>
+              )}
             </div>
             {selectedProperty && (
               <button
@@ -277,12 +381,21 @@ export function TailwindPlayground() {
               {previewModes.map(mode => (
                 <button
                   key={mode}
-                  onClick={() => setPreviewMode(mode)}
+                  onClick={() => handleModeChange(mode)}
                   className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded transition-colors ${previewMode === mode ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
                 >
                   {mode}
                 </button>
               ))}
+              {['flex-basis', 'flex'].includes(selectedProperty) && (
+                <button
+                  onClick={() => setShowBasisModal(true)}
+                  className="shrink-0 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-md transition-colors border bg-indigo-500/10 text-indigo-400 border-indigo-500/30 hover:bg-indigo-500/20 hover:border-indigo-400/50 flex items-center gap-1.5 shadow-sm"
+                >
+                  <Info className="w-4 h-4" />
+                  Custom Values Reference
+                </button>
+              )}
             </div>
           </div>
 
