@@ -6,9 +6,10 @@
 import { AppProvider, useAppStore } from './store';
 import { Sidebar } from './components/Sidebar';
 import { Curriculum } from './components/Curriculum';
-import { Reference } from './components/Reference';
+import { Guidelines } from './components/Guidelines';
 import { Playground } from './components/Playground';
 import { TailwindPlayground } from './components/TailwindPlayground';
+import { LayoutPlayground } from './components/LayoutPlayground';
 
 function MainLayout() {
   const { viewMode, playgroundState, currentModuleId } = useAppStore();
@@ -18,18 +19,23 @@ function MainLayout() {
       <Sidebar />
       <div className="flex-1 overflow-y-auto bg-zinc-950">
         <div className="flex flex-col min-h-max">
-          {(currentModuleId === 'flexbox-grid') && (
+                    {(currentModuleId.startsWith('tailwind-layout') && currentModuleId !== 'tailwind-layout-display') && viewMode !== 'guidelines' && (
+            <div className="h-[100vh] min-h-[700px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
+              <LayoutPlayground />
+            </div>
+          )}
+          {(currentModuleId === 'flexbox-grid') && viewMode !== 'guidelines' && (
             <div className="h-[100vh] min-h-[700px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
               <Playground />
             </div>
           )}
-          {(currentModuleId === 'tailwind-flexbox-grid') && (
+          {(currentModuleId === 'tailwind-flexbox-grid' || currentModuleId === 'tailwind-layout-display') && viewMode !== 'guidelines' && (
             <div className="h-[100vh] min-h-[700px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
               <TailwindPlayground />
             </div>
           )}
           <div className="flex-1 flex flex-col shrink-0 relative z-0">
-            {viewMode === 'curriculum' ? <Curriculum /> : <Reference />}
+            {viewMode === 'guidelines' ? <Guidelines /> : <Curriculum />}
           </div>
         </div>
       </div>

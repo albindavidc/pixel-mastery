@@ -14,6 +14,42 @@ export const controlBarData = {
     }
   ],
 
+  'display': [
+    {
+      group: 'Display',
+      properties: ['block', 'inline-block', 'inline', 'flex', 'inline-flex', 'grid', 'inline-grid', 'flow-root', 'contents', 'table', 'table-row', 'table-cell', 'hidden']
+    },
+    {
+      group: 'Screen Reader',
+      properties: ['sr-only', 'not-sr-only']
+    }
+  ],
+  'box-sizing': [
+    {
+      group: 'Box Sizing',
+      properties: ['box-border', 'box-content']
+    }
+  ],
+  'position': [
+    {
+      group: 'Position',
+      properties: ['static', 'fixed', 'absolute', 'relative', 'sticky']
+    },
+    {
+      group: 'Top / Right / Bottom / Left',
+      properties: ['inset-*', 'inset-x-*', 'inset-y-*', 'top-*', 'right-*', 'bottom-*', 'left-*']
+    }
+  ],
+  'visibility': [
+    {
+      group: 'Visibility',
+      properties: ['visible', 'invisible', 'collapse']
+    },
+    {
+      group: 'Z-Index',
+      properties: ['z-0', 'z-10', 'z-20', 'z-30', 'z-40', 'z-50', 'z-auto']
+    }
+  ],
   flex: [
     {
       group: 'Flex Container',
@@ -55,6 +91,8 @@ export const controlBarData = {
 };
 
 export const wildcards: Record<string, string[]> = {
+  'box-border': ['box-border'],
+  'box-content': ['box-content'],
   'flex': ['flex-1', 'flex-auto', 'flex-initial', 'flex-none'],
   'grid': ['grid-flow-row', 'grid-flow-col', 'grid-flow-row-dense', 'grid-flow-col-dense'],
   'justify-*': ['justify-normal', 'justify-start', 'justify-center', 'justify-end', 'justify-between', 'justify-around', 'justify-evenly', 'justify-stretch'],
@@ -115,6 +153,14 @@ export const wildcards: Record<string, string[]> = {
   'w-*': ['w-0', 'w-px', 'w-1', 'w-4', 'w-8', 'w-16', 'w-32', 'w-64', 'w-full', 'w-screen', 'w-auto', 'w-1/2', 'w-1/3', 'w-2/3', 'w-1/4', 'w-3/4'],
   'h-*': ['h-0', 'h-px', 'h-1', 'h-4', 'h-8', 'h-16', 'h-32', 'h-64', 'h-full', 'h-screen', 'h-auto', 'h-1/2', 'h-1/3', 'h-2/3', 'h-1/4', 'h-3/4'],
 
+  
+  'inset-*': ['inset-0', 'inset-px', 'inset-0.5', 'inset-1', 'inset-2', 'inset-3', 'inset-4', 'inset-auto', 'inset-full'],
+  'inset-x-*': ['inset-x-0', 'inset-x-px', 'inset-x-1', 'inset-x-4', 'inset-x-auto', 'inset-x-full'],
+  'inset-y-*': ['inset-y-0', 'inset-y-px', 'inset-y-1', 'inset-y-4', 'inset-y-auto', 'inset-y-full'],
+  'top-*': ['top-0', 'top-px', 'top-1', 'top-4', 'top-auto', 'top-full'],
+  'right-*': ['right-0', 'right-px', 'right-1', 'right-4', 'right-auto', 'right-full'],
+  'bottom-*': ['bottom-0', 'bottom-px', 'bottom-1', 'bottom-4', 'bottom-auto', 'bottom-full'],
+  'left-*': ['left-0', 'left-px', 'left-1', 'left-4', 'left-auto', 'left-full'],
   'flex-basis': [
     'basis-0', 'basis-px', 'basis-auto', 'basis-full', 
     'basis-3xs', 'basis-2xs', 'basis-xs', 'basis-sm', 'basis-md', 'basis-lg', 'basis-xl', 'basis-2xl', 'basis-3xl', 'basis-4xl', 'basis-5xl', 'basis-6xl', 'basis-7xl'

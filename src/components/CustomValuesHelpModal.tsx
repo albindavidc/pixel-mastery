@@ -23,7 +23,20 @@ export function CustomValuesHelpModal({ isOpen, onClose, property }: CustomValue
               <Lightbulb className="w-6 h-6 text-indigo-400" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-zinc-100 tracking-tight">{property === 'flex-basis' ? 'Flex Basis' : 'Flex'} Reference</h3>
+              <h3 className="text-xl font-bold text-zinc-100 tracking-tight">
+                {property === 'flex-basis' ? 'Flex Basis' : 
+                 property === 'flex' ? 'Flex' :
+                 property === 'flex-grow' ? 'Flex Grow' :
+                 property === 'flex-shrink' ? 'Flex Shrink' :
+                 property === 'order' ? 'Order' :
+                 property === 'grid-template-columns' ? 'Grid Template Columns' :
+                 property === 'grid-template-rows' ? 'Grid Template Rows' :
+                 property === 'grid-auto-columns' ? 'Grid Auto Columns' :
+                 property === 'grid-auto-rows' ? 'Grid Auto Rows' :
+                 property === 'grid-column' ? 'Grid Column' :
+                 property === 'grid-row' ? 'Grid Row' :
+                 property === 'gap' ? 'Gap' : 'Reference'} Reference
+              </h3>
               <p className="text-sm text-zinc-400 mt-1">Available classes and their CSS output</p>
             </div>
           </div>
@@ -202,7 +215,557 @@ export function CustomValuesHelpModal({ isOpen, onClose, property }: CustomValue
                       <td className="px-6 py-3.5 text-slate-300">flex-basis: var(--container-7xl); <span className="text-slate-500 font-sans italic text-xs ml-2">/* 80rem (1280px) */</span></td>
                     </tr>
                   </>
-                ) : (
+                ) : property === 'flex-grow' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grow</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">flex-grow: 1;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grow-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300 mb-2">flex-grow: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">grow-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300 mb-2">flex-grow: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">grow-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300 mb-2">flex-grow: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'flex-shrink' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">shrink</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">flex-shrink: 1;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">shrink-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300 mb-2">flex-shrink: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">shrink-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300 mb-2">flex-shrink: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">shrink-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300 mb-2">flex-shrink: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'order' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">order-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300 mb-2">order: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">-order-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300 mb-2">order: calc(&lt;number&gt; * -1);</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">order-first</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300 mb-2">order: -9999;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">order-last</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300 mb-2">order: 9999;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">order-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300 mb-2">order: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">order-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300 mb-2">order: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'grid-template-columns' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grid-cols-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-template-columns: repeat(&lt;number&gt;, minmax(0, 1fr));</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grid-cols-none</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-template-columns: none;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grid-cols-subgrid</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-template-columns: subgrid;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">grid-cols-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-template-columns: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">grid-cols-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-template-columns: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'grid-template-rows' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grid-rows-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-template-rows: repeat(&lt;number&gt;, minmax(0, 1fr));</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grid-rows-none</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-template-rows: none;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">grid-rows-subgrid</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-template-rows: subgrid;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">grid-rows-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-template-rows: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">grid-rows-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-template-rows: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'grid-auto-columns' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-cols-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-columns: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-cols-min</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-columns: min-content;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-cols-max</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-columns: max-content;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-cols-fr</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-columns: minmax(0, 1fr);</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-cols-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-columns: calc(var(--spacing) * &lt;number&gt;);</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">auto-cols-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-auto-columns: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">auto-cols-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-auto-columns: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'grid-auto-rows' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-rows-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-rows: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-rows-min</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-rows: min-content;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-rows-max</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-rows: max-content;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-rows-fr</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-rows: minmax(0, 1fr);</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">auto-rows-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-auto-rows: calc(var(--spacing) * &lt;number&gt;);</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">auto-rows-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-auto-rows: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">auto-rows-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-auto-rows: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'grid-column' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-span-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column: span &lt;number&gt; / span &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-span-full</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column: 1 / -1;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-start-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column-start: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-start-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column-start: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-end-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column-end: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-end-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column-end: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">col-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-column: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">col-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-column: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">col-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-column: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'grid-row' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-span-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row: span &lt;number&gt; / span &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-span-full</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row: 1 / -1;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-start-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row-start: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-start-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row-start: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-end-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row-end: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-end-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row-end: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-auto</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row: auto;</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">row-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">grid-row: &lt;number&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">row-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-row: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">row-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">grid-row: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'gap' ? (
+                  <>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">gap-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">gap: calc(var(--spacing) * &lt;value&gt;);</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">gap-x-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">column-gap: calc(var(--spacing) * &lt;value&gt;);</div>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-sky-400 font-medium">gap-y-&lt;number&gt;</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-slate-300">row-gap: calc(var(--spacing) * &lt;value&gt;);</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">gap-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">gap: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">gap-x-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">column-gap: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">gap-y-[&lt;value&gt;]</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">row-gap: &lt;value&gt;;</div>
+                      </td>
+                    </tr>
+                    <tr className="bg-indigo-500/10 border-l-4 border-l-indigo-500 transition-colors">
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-fuchsia-400 font-bold">gap-(&lt;custom-property&gt;)</div>
+                      </td>
+                      <td className="px-6 py-4 align-top">
+                        <div className="text-indigo-300">gap: var(&lt;custom-property&gt;);</div>
+                      </td>
+                    </tr>
+                  </>
+                ) : property === 'flex' ? (
                   <>
                     <tr className="hover:bg-slate-800/30 transition-colors">
                       <td className="px-6 py-4 align-top">
@@ -282,7 +845,7 @@ export function CustomValuesHelpModal({ isOpen, onClose, property }: CustomValue
                       </td>
                     </tr>
                   </>
-                )}
+                ) : null}
               </tbody>
             </table>
           </div>

@@ -6,24 +6,38 @@ import { CustomValuesHelpModal } from './CustomValuesHelpModal';
 import { Info } from 'lucide-react';
 import { controlBarData, wildcards } from '../data/controlBar';
 
-export function TailwindPlayground() {
+export function LayoutPlayground() {
   const { 
     playgroundClasses, 
     setPlaygroundClasses,
     playgroundState,
     setPlaygroundState,
     playgroundSize,
-    setPlaygroundSize
+    setPlaygroundSize,
+    currentModuleId
   } = useAppStore();
 
   const [copied, setCopied] = useState(false);
-  const [previewMode, setPreviewMode] = useState('display');
-  const [savedClasses, setSavedClasses] = useState({
-    display: 'block p-6 w-full max-w-xs bg-cyan-500/20 border-4 border-cyan-500 rounded-2xl shadow-xl',
-    flex: 'flex flex-col flex-wrap items-center gap-10 w-full h-full',
-    grid: 'grid grid-cols-3 gap-6 place-content-center w-full h-full'
+  
+  // Determine modes based on current module
+  const moduleMode = currentModuleId === 'tailwind-layout-position' ? 'position' 
+                   : currentModuleId === 'tailwind-layout-visibility' ? 'visibility' 
+                   : 'box-sizing';
+                   
+  const [previewMode, setPreviewMode] = useState(moduleMode);
+  
+  // Keep preview mode in sync if module changes
+  useEffect(() => {
+    setPreviewMode(moduleMode);
+  }, [moduleMode]);
+  
+  const [savedClasses, setSavedClasses] = useState<Record<string, string>>({
+    'box-sizing': 'box-border p-4 w-64 h-64 bg-indigo-500/20 border-8 border-indigo-500 mx-auto mt-10',
+    'position': 'static p-4 w-64 h-64 bg-emerald-500/20 border-8 border-emerald-500 mx-auto mt-10',
+    'visibility': 'visible p-4 w-64 h-64 bg-rose-500/20 border-8 border-rose-500 mx-auto mt-10'
   });
-  const previewModes = ['display', 'flex', 'grid'];
+  
+  const previewModes = [moduleMode];
   
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
   const [showBasisModal, setShowBasisModal] = useState(false);
@@ -66,7 +80,7 @@ export function TailwindPlayground() {
 
   const handlePropertyClick = (prop: string) => {
     const isWildcard = prop.endsWith('-*') || (prop in wildcards && prop !== 'flex' && prop !== 'grid');
-    const isSpecialWildcard = prop === 'flex' || prop === 'grid';
+    const isSpecialWildcard = prop === 'box-border' || prop === 'box-content';
     const hasVariants = isWildcard || isSpecialWildcard;
 
     if (hasVariants) {
@@ -90,12 +104,12 @@ export function TailwindPlayground() {
         if (isSpecialWildcard) {
           // It's 'flex' or 'grid'. Add it, and remove the other mutually exclusive display classes
           let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
-          const displayClasses = ['block', 'inline', 'inline-block', 'inline-flex', 'inline-grid', 'flex', 'grid', 'hidden'];
+          const displayClasses = ['box-border', 'box-content'];
           
-          if (prop === 'flex') {
-            newClasses = newClasses.filter(c => !displayClasses.includes(c) || c === 'flex');
-          } else if (prop === 'grid') {
-            newClasses = newClasses.filter(c => !displayClasses.includes(c) || c === 'grid');
+          if (prop === 'box-border') {
+            newClasses = newClasses.filter(c => !displayClasses.includes(c) || c === 'box-border');
+          } else if (prop === 'box-content') {
+            newClasses = newClasses.filter(c => !displayClasses.includes(c) || c === 'box-content');
           }
           if (!newClasses.includes(prop)) {
             newClasses.push(prop);
@@ -107,7 +121,11 @@ export function TailwindPlayground() {
       // Toggle individual property without variants
       let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
       
-      const displayClasses = ['block', 'inline', 'inline-block', 'hidden', 'inline-flex', 'inline-grid'];
+      const displayClasses = ['block', 'inline', 'inline-block', 'hidden', 'inline-flex', 'inline-grid', 'flex', 'grid', 'flow-root', 'contents', 'table', 'table-row', 'table-cell'];
+      const positionClasses = ['static', 'fixed', 'absolute', 'relative', 'sticky'];
+      const visibilityClasses = ['visible', 'invisible', 'collapse'];
+      const zIndexClasses = ['z-0', 'z-10', 'z-20', 'z-30', 'z-40', 'z-50', 'z-auto'];
+      const srClasses = ['sr-only', 'not-sr-only'];
       if (displayClasses.includes(prop)) {
          newClasses = newClasses.filter(c => !displayClasses.includes(c) && c !== 'flex' && c !== 'grid');
          newClasses.push(prop);
@@ -254,7 +272,7 @@ export function TailwindPlayground() {
                 <div className="flex flex-wrap items-center gap-1.5">
                   {group.properties.map(prop => {
                     const isWildcard = prop.endsWith('-*') || (prop in wildcards && prop !== 'flex' && prop !== 'grid');
-                    const isSpecialWildcard = prop === 'flex' || prop === 'grid';
+                    const isSpecialWildcard = prop === 'box-border' || prop === 'box-content';
                     
                     let isActive = false;
                     if (isWildcard) {
@@ -290,9 +308,7 @@ export function TailwindPlayground() {
               {gIdx === 0 && (
                 <button
                   onClick={() => {
-                    const defaultClass = previewMode === 'grid' 
-                      ? 'grid grid-cols-3 gap-6 place-content-center w-full h-full' 
-                      : 'flex flex-col flex-wrap items-center gap-10 w-full h-full';
+                    const defaultClass = savedClasses[previewMode] || 'box-border p-4 w-64 h-64 bg-indigo-500/20 border-8 border-indigo-500 mx-auto mt-10';
                     setPlaygroundClasses(defaultClass);
                     setSelectedProperty(null);
                   }}
@@ -397,40 +413,7 @@ export function TailwindPlayground() {
             <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
           </div>
 
-          <div className="absolute top-3 right-4 flex gap-4 items-center z-10">
-            {/* Legend */}
-            <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase bg-[#0f172a]/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300 shadow-lg pointer-events-none">
-              <div className="flex items-center gap-2 text-sky-400">
-                <span className="w-4 h-0 border-t-2 border-dotted border-sky-400"></span>
-                <span>Container</span>
-              </div>
-              <div className="flex items-center gap-2 text-fuchsia-400">
-                <span className="w-3 h-3 flex items-center justify-center rounded bg-fuchsia-500/20 border border-fuchsia-500 text-[8px] font-mono leading-none">1</span>
-                <span>Item (1-9)</span>
-              </div>
-            </div>
-            {/* Preview Modes */}
-            <div className="flex gap-1 bg-[#0f172a]/80 backdrop-blur rounded-lg p-1 border border-slate-700/50 shadow-lg">
-              {previewModes.map(mode => (
-                <button
-                  key={mode}
-                  onClick={() => handleModeChange(mode)}
-                  className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded transition-colors ${previewMode === mode ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
-                >
-                  {mode}
-                </button>
-              ))}
-              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && (
-                <button
-                  onClick={() => setShowBasisModal(true)}
-                  className="shrink-0 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-md transition-colors border bg-indigo-500/10 text-indigo-400 border-indigo-500/30 hover:bg-indigo-500/20 hover:border-indigo-400/50 flex items-center gap-1.5 shadow-sm"
-                >
-                  <Info className="w-4 h-4" />
-                  Custom Values Reference
-                </button>
-              )}
-            </div>
-          </div>
+
 
           <div className="absolute inset-0 flex items-center justify-center p-4 pt-16">
             <IframePreview 

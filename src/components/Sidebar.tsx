@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, BookOpen, List, Code2, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle2, BookOpen, List, Code2, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FileText } from 'lucide-react';
 import { useAppStore } from '../store';
 import { modules } from '../data/modules';
 import { Module } from '../types';
@@ -15,42 +15,109 @@ export function Sidebar() {
   } = useAppStore();
 
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [cssExpanded, setCssExpanded] = useState(false);
   const [tailwindExpanded, setTailwindExpanded] = useState(true);
 
-  const cssModules = modules.filter(m => m.category === 'css');
   const tailwindModules = modules.filter(m => m.category === 'tailwind');
 
-  const renderModuleButton = (module: Module) => (
-    <button
-      key={module.id}
-      onClick={() => setCurrentModuleId(module.id)}
-      title={module.title}
-      className={`w-full text-left flex items-center ${isCollapsed ? 'justify-center p-2 mb-2' : 'gap-3 p-2'} rounded-lg text-sm font-medium transition-colors border border-transparent ${
-        currentModuleId === module.id
-          ? 'bg-zinc-900 border-indigo-500/50 text-white'
-          : 'text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300'
-      } ${
-        completedModules.includes(module.id) && currentModuleId !== module.id ? '!bg-emerald-500/10 !border-emerald-500/20 !text-emerald-100' : ''
-      }`}
-    >
-      <div 
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleModuleComplete(module.id);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+
+  const renderModuleButton = (module: Module, index: number, isSubmenu = false) => {
+    const isActive = currentModuleId === module.id;
+    return (
+      <button
+        key={module.id}
+        onClick={() => {
+          setCurrentModuleId(module.id);
+          setViewMode('curriculum');
         }}
-        className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all ${
-        completedModules.includes(module.id)
-          ? 'bg-emerald-500 text-emerald-950'
-          : currentModuleId === module.id
-            ? 'border-2 border-indigo-500 hover:border-indigo-400 hover:bg-indigo-500/20'
-            : 'border-2 border-zinc-800 hover:border-zinc-500'
-      }`}>
-        {completedModules.includes(module.id) && <CheckCircle2 className="w-3.5 h-3.5" />}
+        title={module.title}
+        className={`w-full text-left flex items-center ${isCollapsed ? (isSubmenu ? 'justify-center p-1 mb-1' : 'justify-center p-2 mb-2') : (isSubmenu ? 'gap-3 p-2 pl-6' : 'gap-3 p-2')} rounded-lg text-sm font-medium transition-all duration-300 border border-transparent ${
+          isActive
+            ? 'bg-zinc-900 border-indigo-500/50 text-white'
+            : 'text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300'
+        }`}
+      >
+        <div 
+          className={`flex-shrink-0 w-5 h-5 flex items-center justify-center transition-all ${
+            isSubmenu ? 'rounded-sm' : 'rounded-full'
+          } ${
+            isActive
+              ? 'border-2 border-indigo-500 text-indigo-400 bg-indigo-500/20'
+              : 'border-2 border-zinc-800 text-zinc-500'
+        }`}>
+          <span className="text-[10px] font-bold">{index + 1}</span>
+        </div>
+        <span className={`truncate overflow-hidden transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>{module.title}</span>
+      </button>
+    );
+  };
+
+  const renderGroup = (group: any, index: number) => {
+    const isExpanded = expandedGroups[group.groupId];
+    const isActiveGroup = group.modules.some((m: any) => m.id === currentModuleId);
+    
+    return (
+      <div key={group.groupId} className="mb-2">
+        <button
+          onClick={() => {
+            const nextExpanded = !isExpanded;
+            setExpandedGroups(nextExpanded ? { [group.groupId]: true } : {});
+            if (nextExpanded && !isActiveGroup) {
+              setCurrentModuleId(group.modules[0].id);
+              setViewMode('curriculum');
+            }
+          }}
+          title={group.groupTitle}
+          className={`w-full text-left flex items-center justify-between ${isCollapsed ? 'p-2' : 'p-2'} rounded-lg text-sm font-medium transition-all duration-300 border border-transparent ${
+            isActiveGroup && !isExpanded
+              ? 'bg-zinc-900/50 border-indigo-500/30 text-zinc-200'
+              : 'text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-300'
+          }`}
+        >
+          <div className={`flex items-center ${isCollapsed ? 'justify-center w-full' : 'gap-3'}`}>
+            <div 
+              className={`flex-shrink-0 w-5 h-5 flex items-center justify-center transition-all rounded-full ${
+                isActiveGroup
+                  ? 'border-2 border-indigo-500 text-indigo-400 bg-indigo-500/10'
+                  : 'border-2 border-zinc-800 text-zinc-500'
+            }`}>
+              <span className="text-[10px] font-bold">{index + 1}</span>
+            </div>
+            <span className={`truncate overflow-hidden transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0 ml-0' : 'max-w-[200px] opacity-100'}`}>{group.groupTitle}</span>
+          </div>
+          <div className={`overflow-hidden transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[20px] opacity-100'}`}>
+            {isExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500 shrink-0" /> : <ChevronDown className="w-4 h-4 text-zinc-500 shrink-0" />}
+          </div>
+        </button>
+        {isExpanded && (
+          <div className={`mt-1 flex flex-col gap-1 relative ${isCollapsed ? 'items-center' : 'before:absolute before:left-4 before:top-2 before:bottom-2 before:w-px before:bg-zinc-800'}`}>
+            {group.modules.map((m: Module, i: number) => renderModuleButton(m, i, true))}
+          </div>
+        )}
       </div>
-      {!isCollapsed && <span className="truncate">{module.title}</span>}
-    </button>
-  );
+    );
+  };
+
+  const groupedModules: any[] = [];
+  const groupMap = new Map<string, any>();
+  
+  tailwindModules.forEach(m => {
+    if (m.groupId) {
+      if (!groupMap.has(m.groupId)) {
+        const groupObj = {
+          isGroup: true,
+          groupId: m.groupId,
+          groupTitle: m.groupTitle,
+          modules: []
+        };
+        groupMap.set(m.groupId, groupObj);
+        groupedModules.push(groupObj);
+      }
+      groupMap.get(m.groupId).modules.push(m);
+    } else {
+      groupedModules.push(m);
+    }
+  });
 
   return (
     <aside className={`${isCollapsed ? 'w-20' : 'w-72'} bg-zinc-950 border-r border-zinc-800 h-screen flex flex-col z-20 shrink-0 transition-all duration-300 relative`}>
@@ -63,42 +130,39 @@ export function Sidebar() {
       <div className={`p-6 border-b border-zinc-800 ${isCollapsed ? 'flex flex-col items-center px-4' : ''}`}>
         <div className={`flex items-center ${isCollapsed ? 'justify-center mb-6' : 'gap-3 mb-6'}`}>
           <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-900/20 shrink-0">P</div>
-          {!isCollapsed && (
-              <h1 className="text-lg font-semibold tracking-tight text-zinc-100">PixelMastery</h1>
-          )}
+          <h1 className={`text-lg font-semibold tracking-tight text-zinc-100 overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[150px] opacity-100'}`}>PixelMastery</h1>
         </div>
         
-        <div className={`flex ${isCollapsed ? 'flex-col gap-2 w-full' : 'gap-2'} p-1 bg-zinc-900 rounded-lg border border-zinc-800`}>
+        <div className={`flex flex-col gap-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800 w-full`}>
+          <button
+            onClick={() => setViewMode('guidelines')}
+            title="Guidelines"
+            className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-all duration-300 ${
+              viewMode === 'guidelines' 
+                ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
+                : 'text-zinc-500 hover:text-zinc-300'
+            }`}
+          >
+            <FileText className="w-4 h-4 shrink-0" />
+            <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Guidelines</span>
+          </button>
           <button
             onClick={() => setViewMode('curriculum')}
             title="Learning"
-            className={`flex-1 flex items-center justify-center ${isCollapsed ? 'py-2 px-0' : 'gap-2 py-1 px-3'} rounded-md text-xs font-medium transition-colors ${
+            className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-all duration-300 ${
               viewMode === 'curriculum' 
                 ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
                 : 'text-zinc-500 hover:text-zinc-300'
             }`}
           >
             <BookOpen className="w-4 h-4 shrink-0" />
-            {!isCollapsed && <span>Learning</span>}
-          </button>
-          <button
-            onClick={() => setViewMode('reference')}
-            title="Reference"
-            className={`flex-1 flex items-center justify-center ${isCollapsed ? 'py-2 px-0' : 'gap-2 py-1 px-3'} rounded-md text-xs font-medium transition-colors ${
-              viewMode === 'reference' 
-                ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
-                : 'text-zinc-500 hover:text-zinc-300'
-            }`}
-          >
-            <List className="w-4 h-4 shrink-0" />
-            {!isCollapsed && <span>Reference</span>}
+            <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Learning</span>
           </button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 scrollbar-thin">
-        {viewMode === 'curriculum' ? (
-          <nav className="space-y-4">
+        <nav className="space-y-4">
             <div>
               {!isCollapsed ? (
                 <button 
@@ -118,33 +182,12 @@ export function Sidebar() {
               )}
               
               <div className="space-y-1">
-                {(isCollapsed || tailwindExpanded) && tailwindModules.map(renderModuleButton)}
+                {(isCollapsed || tailwindExpanded) && groupedModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
               </div>
             </div>
 
-            <div>
-              {!isCollapsed ? (
-                <button 
-                  onClick={() => setCssExpanded(!cssExpanded)} 
-                  className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
-                >
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors">CSS</h3>
-                  {cssExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
-                </button>
-              ) : (
-                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 mt-6 text-center">CSS</h3>
-              )}
-              
-              <div className="space-y-1">
-                {(isCollapsed || cssExpanded) && cssModules.map(renderModuleButton)}
-              </div>
-            </div>
+
           </nav>
-        ) : (
-          <div className="p-3 text-sm text-zinc-500 text-center flex justify-center">
-            {isCollapsed ? <List className="w-5 h-5" /> : 'Select categories from the main reference panel to explore utilities.'}
-          </div>
-        )}
       </div>
     </aside>
   );

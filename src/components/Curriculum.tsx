@@ -33,7 +33,9 @@ export function Curriculum() {
   return (
     <div className="bg-zinc-950 transition-colors">
       <div className="max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto p-8 lg:p-12">
-                                        {/* Quick Reference Guide */}
+                                        {module.id === 'tailwind-flexbox-grid' && (
+          <>
+            {/* Quick Reference Guide */}
         <div className="mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-lg">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2 text-zinc-300">
@@ -385,15 +387,12 @@ export function Curriculum() {
 
         </div>
 
+          </>
+        )}
         <header className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <h2 className="text-3xl font-bold text-zinc-100 tracking-tight">{module.title}</h2>
-            {isCompleted && (
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-100 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Completed
-              </span>
-            )}
+            
           </div>
           <p className="text-lg text-zinc-400">{module.description}</p>
         </header>
@@ -401,7 +400,9 @@ export function Curriculum() {
         <div className="prose prose-invert max-w-none mb-10 text-zinc-400 leading-relaxed">
           <p>{module.content}</p>
 
-          {/* Definitions */}
+          {module.id === 'tailwind-flexbox-grid' && (
+          <>
+            {/* Definitions */}
           <div className="mt-8 mb-6 space-y-6 not-prose">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
@@ -419,38 +420,9 @@ export function Curriculum() {
                     { prop: 'flex-direction', desc: 'Defines the main axis direction (row, column, etc.) of flex items.' },
                     { prop: 'flex-wrap', desc: 'Controls whether flex items stay on one line or wrap.' },
                     { prop: 'flex', desc: 'Shorthand for flex-grow, flex-shrink, and flex-basis.' },
-                    { 
-                      prop: 'flex-grow', 
-                      desc: 'Determines how much a flex item expands to fill available space.',
-                      subprops: [
-                        { class: 'grow', style: 'flex-grow: 1;' },
-                        { class: 'grow-<number>', style: 'flex-grow: <number>;' },
-                        { class: 'grow-[<value>]', style: 'flex-grow: <value>;' },
-                        { class: 'grow-(<custom-property>)', style: 'flex-grow: var(<custom-property>);' }
-                      ]
-                    },
-                    { 
-                      prop: 'flex-shrink', 
-                      desc: 'Determines how much a flex item shrinks when space is limited.',
-                      subprops: [
-                        { class: 'shrink', style: 'flex-shrink: 1;' },
-                        { class: 'shrink-<number>', style: 'flex-shrink: <number>;' },
-                        { class: 'shrink-[<value>]', style: 'flex-shrink: <value>;' },
-                        { class: 'shrink-(<custom-property>)', style: 'flex-shrink: var(<custom-property>);' }
-                      ]
-                    },
-                    { 
-                      prop: 'order', 
-                      desc: 'Changes the visual order of flex or grid items without changing the HTML.',
-                      subprops: [
-                        { class: 'order-<number>', style: 'order: <number>;' },
-                        { class: '-order-<number>', style: 'order: calc(<number> * -1);' },
-                        { class: 'order-first', style: 'order: -9999;' },
-                        { class: 'order-last', style: 'order: 9999;' },
-                        { class: 'order-[<value>]', style: 'order: <value>;' },
-                        { class: 'order-(<custom-property>)', style: 'order: var(<custom-property>);' }
-                      ]
-                    },
+                    { prop: 'flex-grow', desc: 'Determines how much a flex item expands to fill available space.' },
+                    { prop: 'flex-shrink', desc: 'Determines how much a flex item shrinks when space is limited.' },
+                    { prop: 'order', desc: 'Changes the visual order of flex or grid items without changing the HTML.' },
                     { prop: 'grid-template-columns', desc: 'Defines the number and size of explicit grid columns.' },
                     { prop: 'grid-column', desc: 'Specifies which column(s) a grid item occupies.' },
                     { prop: 'grid-template-rows', desc: 'Defines the number and size of explicit grid rows.' },
@@ -460,21 +432,9 @@ export function Curriculum() {
                     { prop: 'grid-auto-rows', desc: 'Sets the size of implicitly created grid rows.' },
                     { prop: 'gap', desc: 'Sets the spacing between rows and columns.' },
                   ].map(item => (
-                    <div key={item.prop} className="flex flex-col gap-2 py-1">
-                      <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
-                        <span className="text-xs font-mono text-zinc-300 min-w-[170px] shrink-0 bg-zinc-800/40 px-1.5 py-0.5 rounded w-fit border border-zinc-700/50">{item.prop}</span>
-                        <span className="text-xs text-zinc-400 leading-relaxed">{item.desc}</span>
-                      </div>
-                      {item.subprops && (
-                        <div className="mt-1 ml-2 sm:ml-[182px] border-l border-zinc-700/50 pl-4 space-y-1.5">
-                          {item.subprops.map(sp => (
-                            <div key={sp.class} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-                              <span className="text-[10px] font-mono text-indigo-300 min-w-[140px] shrink-0 bg-indigo-950/30 px-1.5 py-0.5 rounded w-fit">{sp.class}</span>
-                              <span className="text-[10px] font-mono text-zinc-500">{sp.style}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                    <div key={item.prop} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                      <span className="text-xs font-mono text-zinc-300 min-w-[170px] shrink-0 bg-zinc-800/40 px-1.5 py-0.5 rounded w-fit border border-zinc-700/50">{item.prop}</span>
+                      <span className="text-xs text-zinc-400 leading-relaxed">{item.desc}</span>
                     </div>
                   ))}
                 </div>
@@ -487,6 +447,68 @@ export function Curriculum() {
                     <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500"></span>
                     Alignment Properties
                   </h4>
+                </div>
+                <div className="p-4 border-b border-zinc-800/60 bg-fuchsia-500/5">
+                  <div className="flex flex-col gap-6 text-xs">
+                    <div className="space-y-4">
+                      <div>
+                        <span className="font-semibold text-fuchsia-300 block mb-2">Axis Mapping</span>
+                        <div className="space-y-3 text-zinc-400">
+                          <div className="flex flex-col gap-1">
+                            <span className="text-zinc-200 font-medium">Flexbox</span>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-zinc-400 leading-snug">
+                              <span><code className="text-[10px] bg-zinc-800/80 px-1 py-0.5 rounded text-fuchsia-200 border border-fuchsia-500/20 shadow-sm">justify</code> = main axis (horizontal)</span>
+                              <span><code className="text-[10px] bg-zinc-800/80 px-1 py-0.5 rounded text-fuchsia-200 border border-fuchsia-500/20 shadow-sm">align</code> = cross axis (vertical)</span>
+                              <span className="italic text-zinc-500">(vice versa for flex-col)</span>
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <span className="text-zinc-200 font-medium">Grid</span>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-zinc-400 leading-snug">
+                              <span><code className="text-[10px] bg-zinc-800/80 px-1 py-0.5 rounded text-fuchsia-200 border border-fuchsia-500/20 shadow-sm">justify</code> = horizontal</span>
+                              <span><code className="text-[10px] bg-zinc-800/80 px-1 py-0.5 rounded text-fuchsia-200 border border-fuchsia-500/20 shadow-sm">align</code> = vertical</span>
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <span className="text-zinc-200 font-medium">Place</span>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-zinc-400 leading-snug">
+                              <span><code className="text-[10px] bg-zinc-800/80 px-1 py-0.5 rounded text-fuchsia-200 border border-fuchsia-500/20 shadow-sm">justify</code> + <code className="text-[10px] bg-zinc-800/80 px-1 py-0.5 rounded text-fuchsia-200 border border-fuchsia-500/20 shadow-sm">align</code></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-5">
+                      <div>
+                        <span className="font-semibold text-fuchsia-300 block mb-2">Direction Rules</span>
+                        <div className="space-y-2 text-zinc-400">
+                          <p><code className="text-[10px] font-mono text-zinc-300">justify-*</code> <span className="text-zinc-500 mx-1">→</span> One direction</p>
+                          <p><code className="text-[10px] font-mono text-zinc-300">align-*</code> <span className="text-zinc-500 mx-1">→</span> The other direction</p>
+                          <p><code className="text-[10px] font-mono text-zinc-300">place-*</code> <span className="text-zinc-500 mx-1">→</span> Both directions simultaneously</p>
+                        </div>
+                      </div>
+                      <div>
+                        <span className="font-semibold text-fuchsia-300 block mb-2">Place Shorthands</span>
+                        <div className="space-y-2.5 text-zinc-400 font-mono text-[10px]">
+                          <div className="flex items-center gap-2">
+                            <span className="bg-zinc-800/80 px-1.5 py-0.5 rounded text-fuchsia-200 shrink-0 border border-fuchsia-500/20 shadow-sm">place-content</span>
+                            <span className="text-zinc-500">=</span>
+                            <span className="text-zinc-400">justify-content + align-content</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="bg-zinc-800/80 px-1.5 py-0.5 rounded text-fuchsia-200 shrink-0 border border-fuchsia-500/20 shadow-sm">place-items</span>
+                            <span className="text-zinc-500">=</span>
+                            <span className="text-zinc-400">justify-items + align-items</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="bg-zinc-800/80 px-1.5 py-0.5 rounded text-fuchsia-200 shrink-0 border border-fuchsia-500/20 shadow-sm">place-self</span>
+                            <span className="text-zinc-500">=</span>
+                            <span className="text-zinc-400">justify-self + align-self</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="p-4 flex flex-col gap-3">
                   {[
@@ -512,7 +534,9 @@ export function Curriculum() {
           </div>
 
           
-          {/* Note about v4 changes */}
+                    </>
+        )}
+        {/* Note about v4 changes */}
           <div className="my-6 p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20 flex gap-3 text-sm text-indigo-200">
             <Info className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
             <div>
@@ -545,6 +569,7 @@ export function Curriculum() {
           </div>
         </section>
 
+        {module.challenge.description && (
         <section className="bg-zinc-900 p-6 rounded-2xl shadow-xl shadow-black/50 relative overflow-hidden border border-zinc-800">
           <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
           <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
@@ -576,6 +601,7 @@ export function Curriculum() {
             </div>
           </div>
         </section>
+        )}
       </div>
     </div>
   );

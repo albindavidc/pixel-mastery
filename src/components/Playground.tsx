@@ -131,30 +131,59 @@ export function Playground() {
   };
   
   const handleCustomArbitraryValue = (value: string) => {
-    if (!selectedProperty || !['flex-basis', 'flex'].includes(selectedProperty)) return;
+    if (!selectedProperty || !['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty)) return;
     if (!value) return;
         let formattedValue = value.trim();
-    const prefix = selectedProperty === 'flex-basis' ? 'basis-' : 'flex-';
+        let prefix = '';
+    if (selectedProperty === 'flex-basis') prefix = 'basis-';
+    else if (selectedProperty === 'flex') prefix = 'flex-';
+    else if (selectedProperty === 'flex-grow') prefix = 'grow-';
+    else if (selectedProperty === 'flex-shrink') prefix = 'shrink-';
+    else if (selectedProperty === 'order') prefix = 'order-';
+    else if (selectedProperty === 'grid-template-columns') prefix = 'grid-cols-';
+    else if (selectedProperty === 'grid-template-rows') prefix = 'grid-rows-';
+    else if (selectedProperty === 'grid-auto-columns') prefix = 'auto-cols-';
+    else if (selectedProperty === 'grid-auto-rows') prefix = 'auto-rows-';
+    else if (selectedProperty === 'grid-column') prefix = 'col-';
+    else if (selectedProperty === 'grid-row') prefix = 'row-';
+    else if (selectedProperty === 'gap') prefix = 'gap-';
+    
+    let isNegativeOrder = false;
+    if (['order', 'grid-column', 'grid-row'].includes(selectedProperty) && formattedValue.startsWith('-') && !formattedValue.startsWith('-' + prefix)) {
+       isNegativeOrder = true;
+       formattedValue = formattedValue.substring(1);
+    }
+  
     
     if (!formattedValue.startsWith(prefix)) {
       if (formattedValue.startsWith('[') || formattedValue.startsWith('(')) {
-        formattedValue = `${prefix}${formattedValue}`;
+        formattedValue = isNegativeOrder ? `-${prefix}${formattedValue}` : `${prefix}${formattedValue}`;
       } else if (
         /^\d+\/\d+$/.test(formattedValue) || 
         /^\d+(\.\d+)?$/.test(formattedValue) || 
         ['auto', 'full', 'px', 'none', 'initial', '3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl'].includes(formattedValue)
       ) {
-        formattedValue = `${prefix}${formattedValue}`;
+        formattedValue = isNegativeOrder ? `-${prefix}${formattedValue}` : `${prefix}${formattedValue}`;
       } else {
         formattedValue = `${prefix}[${formattedValue.replace(/\s+/g, '_')}]`;
       }
     }
     
-    const isTargetProp = (c) => {
+    const isTargetProp = (c: string) => {
       if (selectedProperty === 'flex-basis') return c.startsWith('basis-');
       if (selectedProperty === 'flex') {
         return c.startsWith('flex-') && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
       }
+      if (selectedProperty === 'flex-grow') return c === 'grow' || c.startsWith('grow-');
+      if (selectedProperty === 'flex-shrink') return c === 'shrink' || c.startsWith('shrink-');
+      if (selectedProperty === 'order') return c.startsWith('order-') || c.startsWith('-order-');
+      if (selectedProperty === 'grid-template-columns') return c === 'grid-cols-none' || c === 'grid-cols-subgrid' || c.startsWith('grid-cols-');
+      if (selectedProperty === 'grid-template-rows') return c === 'grid-rows-none' || c === 'grid-rows-subgrid' || c.startsWith('grid-rows-');
+      if (selectedProperty === 'grid-auto-columns') return c.startsWith('auto-cols-');
+      if (selectedProperty === 'grid-auto-rows') return c.startsWith('auto-rows-');
+      if (selectedProperty === 'grid-column') return c === 'col-auto' || c === 'col-span-full' || c.startsWith('col-') || c.startsWith('-col-');
+      if (selectedProperty === 'grid-row') return c === 'row-auto' || c === 'row-span-full' || c.startsWith('row-') || c.startsWith('-row-');
+      if (selectedProperty === 'gap') return c.startsWith('gap-');
       return false;
     };
 
@@ -167,7 +196,7 @@ export function Playground() {
   const activeControlData = controlBarData[previewMode as keyof typeof controlBarData] || [];
   
   // Get active classes for checking active state
-  const activeClassesSet = new Set(playgroundClasses.split(' ').filter(c => c.trim() !== ''));
+  const activeClassesSet = new Set<string>(playgroundClasses.split(' ').filter(c => c.trim() !== ''));
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -280,9 +309,12 @@ export function Playground() {
                   {variant}
                 </button>
               ))}
-              {['flex-basis', 'flex'].includes(selectedProperty) && Array.from(activeClassesSet).filter(c => {
+              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && Array.from(activeClassesSet).filter(c => {
                 if (selectedProperty === 'flex-basis') return c.startsWith('basis-') && !wildcards['flex-basis']?.includes(c);
                 if (selectedProperty === 'flex') return c.startsWith('flex-') && !wildcards['flex']?.includes(c) && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
+                if (selectedProperty === 'flex-grow') return (c === 'grow' || c.startsWith('grow-')) && !wildcards['flex-grow']?.includes(c);
+                if (selectedProperty === 'flex-shrink') return (c === 'shrink' || c.startsWith('shrink-')) && !wildcards['flex-shrink']?.includes(c);
+                if (selectedProperty === 'order') return (c.startsWith('order-') || c.startsWith('-order-')) && !wildcards['order']?.includes(c);
                 return false;
               }).map(variant => (
                 <button
@@ -294,7 +326,7 @@ export function Playground() {
                   <X className="w-3 h-3 text-indigo-200" />
                 </button>
               ))}
-              {['flex-basis', 'flex'].includes(selectedProperty) && (
+              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && (
                 <div className="flex items-center gap-1.5 ml-2 border-l border-zinc-800/50 pl-2">
                   <input
                     type="text"
@@ -371,7 +403,7 @@ export function Playground() {
                   {mode}
                 </button>
               ))}
-              {['flex-basis', 'flex'].includes(selectedProperty) && (
+              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && (
                 <button
                   onClick={() => setShowBasisModal(true)}
                   className="shrink-0 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-md transition-colors border bg-indigo-500/10 text-indigo-400 border-indigo-500/30 hover:bg-indigo-500/20 hover:border-indigo-400/50 flex items-center gap-1.5 shadow-sm"
@@ -390,6 +422,7 @@ export function Playground() {
               width={getWidthValue()}
               hover={playgroundState.hover}
               focus={playgroundState.focus}
+              active={playgroundState.active}
               previewMode={previewMode}
             />
           </div>
@@ -463,6 +496,18 @@ export function Playground() {
                 </div>
                 <span className={`text-[10px] font-bold uppercase transition-colors ${playgroundState.focus ? 'text-white italic' : 'text-zinc-400'}`}>Focus State</span>
               </button>
+              
+              <button
+                onClick={() => setPlaygroundState('active', !playgroundState.active)}
+                className="flex items-center gap-2 group"
+                title="Simulate :active"
+              >
+                <div className={`w-8 h-4 rounded-full relative border transition-colors ${playgroundState.active ? 'bg-indigo-600 border-indigo-400' : 'bg-zinc-800 border-zinc-700 group-hover:bg-zinc-700'}`}>
+                  <div className={`absolute top-[3px] w-2 h-2 rounded-full transition-all ${playgroundState.active ? 'right-1 bg-white' : 'left-1 bg-zinc-500'}`}></div>
+                </div>
+                <span className={`text-[10px] font-bold uppercase transition-colors ${playgroundState.active ? 'text-white italic' : 'text-zinc-400'}`}>Active State</span>
+              </button>
+
               <button
                 onClick={() => setPlaygroundState('dark', !playgroundState.dark)}
                 className="flex items-center gap-2 group"

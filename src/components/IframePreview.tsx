@@ -7,10 +7,11 @@ interface IframePreviewProps {
   width: number | null;
   hover: boolean;
   focus: boolean;
+  active: boolean;
   previewMode: string;
 }
 
-export function IframePreview({ classes, dark, width, hover, focus, previewMode }: IframePreviewProps) {
+export function IframePreview({ classes, dark, width, hover, focus, active, previewMode }: IframePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
@@ -94,6 +95,7 @@ export function IframePreview({ classes, dark, width, hover, focus, previewMode 
   let simClasses = classes;
   if (hover) simClasses = simClasses.replace(/hover:/g, '');
   if (focus) simClasses = simClasses.replace(/focus:/g, '');
+  if (active) simClasses = simClasses.replace(/active:/g, '');
 
   const itemPrefixes = [
     'basis-', 'grow', 'shrink', 'order-', 
@@ -122,7 +124,7 @@ export function IframePreview({ classes, dark, width, hover, focus, previewMode 
   const containerClassesStr = containerClassList.join(' ');
   const itemClassesStr = itemClassList.join(' ');
 
-  const isLayoutMode = previewMode === 'layouts' || previewMode === 'tailwind' || previewMode === 'flex' || previewMode === 'grid';
+  const isLayoutMode = ['layouts', 'tailwind', 'flex', 'grid', 'display', 'box-sizing', 'position', 'visibility'].includes(previewMode);
 
   return (
     <div ref={containerRef} className="w-full h-full flex items-center justify-center overflow-hidden relative">
@@ -144,7 +146,19 @@ export function IframePreview({ classes, dark, width, hover, focus, previewMode 
         >
           {mountNode && createPortal(
             <div className="relative group transition-all duration-300 w-full h-full p-4 md:p-8 flex items-center justify-center">
-              {previewMode === 'layouts' || previewMode === 'tailwind' || previewMode === 'flex' || previewMode === 'grid' ? (
+              {['box-sizing', 'position', 'visibility'].includes(previewMode) ? (
+                <div className="w-full max-w-4xl h-[320px] sm:h-[400px] lg:h-[420px] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl flex items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
+                   <div className={`transition-all duration-300 relative group text-center ${containerClassesStr}`}>
+                     <div className="absolute -top-3 -right-3 bg-slate-800 text-slate-300 text-[10px] font-mono px-2 py-1 rounded shadow-xl whitespace-nowrap z-20">
+                        Container
+                     </div>
+                     <div className={`w-full h-full bg-slate-900/80 border-2 border-dashed border-slate-500/50 flex flex-col items-center justify-center text-slate-400 font-mono text-xs shadow-inner rounded-xl backdrop-blur-sm ${itemClassesStr}`}>
+                       <span>Content</span>
+                       <span>Area</span>
+                     </div>
+                   </div>
+                </div>
+              ) : ['layouts', 'tailwind', 'flex', 'grid', 'display'].includes(previewMode) ? (
                 <div className="w-full max-w-4xl h-[320px] sm:h-[400px] lg:h-[420px] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl">
                    {/* Background Grid Layer */}
                    <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-4 p-4 pointer-events-none opacity-30">

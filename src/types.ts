@@ -1,4 +1,4 @@
-export type ViewMode = 'curriculum' | 'reference';
+export type ViewMode = 'guidelines' | 'curriculum';
 
 export interface Module {
   id: string;
@@ -8,6 +8,9 @@ export interface Module {
   content: string; // Markdown or simple HTML
   examples: Example[];
   challenge: Challenge;
+  groupId?: string;
+  groupTitle?: string;
+  subModules?: Module[];
 }
 
 export interface Example {
