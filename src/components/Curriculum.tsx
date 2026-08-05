@@ -259,16 +259,6 @@ export function Curriculum() {
                       );
                     })}
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['place-self'].map(prop => {
-                      const isMostlyUsed = ['align-self'].includes(prop);
-                      return (
-                        <span key={prop} className={`px-2 py-1 rounded text-[10px] font-mono border ${isMostlyUsed ? 'bg-amber-500/10 text-amber-300 border-amber-500/20' : 'bg-fuchsia-500/10 text-fuchsia-300 border-fuchsia-500/20'}`}>
-                          {prop}
-                        </span>
-                      );
-                    })}
-                  </div>
                 </div>
               </div>
             </div>

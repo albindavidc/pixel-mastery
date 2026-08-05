@@ -21,7 +21,7 @@ export const controlBarData = {
     },
     {
       group: 'Flex Item',
-      properties: ['flex-basis', 'flex-grow', 'flex-shrink', 'order', 'align-self', 'place-self']
+      properties: ['flex-basis', 'flex-grow', 'flex-shrink', 'order', 'align-self']
     }
   ],
   grid: [
