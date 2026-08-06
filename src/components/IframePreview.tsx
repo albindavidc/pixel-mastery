@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useAppStore } from '../store';
 import { createPortal } from 'react-dom';
 
 interface IframePreviewProps {
@@ -12,6 +13,7 @@ interface IframePreviewProps {
 }
 
 export function IframePreview({ classes, dark, width, hover, focus, active, previewMode }: IframePreviewProps) {
+  const { currentModuleId } = useAppStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
@@ -46,7 +48,7 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
             body { 
               margin: 0; 
               padding: 0; 
-              min-height: 100vh; 
+              min-height: 100vh; overflow: hidden; 
               display: flex; 
               align-items: center; 
               justify-content: center; 
@@ -99,7 +101,9 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
 
   const itemPrefixes = [
     'basis-', 'grow', 'shrink', 'order-', 
-    'col-', 'row-', 'justify-self-', 'self-', 'place-self-'
+    'col-', 'row-', 'justify-self-', 'self-', 'place-self-',
+    'z-', 'absolute', 'relative', 'fixed', 'sticky', 'static',
+    'inset-', 'top-', 'bottom-', 'left-', 'right-', 'visible', 'invisible', 'collapse'
   ];
 
   const classList = simClasses.split(' ').map(c => c.trim()).filter(Boolean);
@@ -111,7 +115,8 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
     const isItemClass = itemPrefixes.some(prefix => 
       (prefix === 'grow' && c === 'grow') ||
       (prefix === 'shrink' && c === 'shrink') ||
-      (prefix.endsWith('-') && c.startsWith(prefix))
+      (prefix.endsWith('-') && c.startsWith(prefix)) ||
+      (!prefix.endsWith('-') && c === prefix)
     );
     
     if (isItemClass) {
@@ -146,8 +151,17 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
         >
           {mountNode && createPortal(
             <div className="relative group transition-all duration-300 w-full h-full p-4 md:p-8 flex items-center justify-center">
-              {['box-sizing', 'position', 'visibility'].includes(previewMode) ? (
-                <div className="w-full max-w-4xl h-[320px] sm:h-[400px] lg:h-[420px] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl flex items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
+              {previewMode === 'visibility' ? (
+                <div className="w-full max-w-4xl h-[85vh] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl flex items-center justify-center p-8 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
+                   <div className={`absolute inset-0 transition-all duration-300 ${containerClassesStr}`}></div>
+                   <div className="relative w-64 h-64 flex items-center justify-center group">
+                      <div className="absolute top-0 left-0 w-32 h-32 rounded-xl bg-indigo-500/80 border-2 border-indigo-500 flex items-center justify-center text-indigo-100 font-bold text-2xl shadow-xl z-10 transition-all group-hover:-translate-y-2 group-hover:-translate-x-2 backdrop-blur-sm">1</div>
+                      <div className={`absolute top-12 left-12 w-32 h-32 rounded-xl bg-rose-500/80 border-2 border-rose-500 flex items-center justify-center text-rose-100 font-bold text-2xl shadow-xl transition-all group-hover:-translate-y-1 group-hover:-translate-x-1 backdrop-blur-sm ${itemClassesStr}`}>2</div>
+                      <div className="absolute top-24 left-24 w-32 h-32 rounded-xl bg-emerald-500/80 border-2 border-emerald-500 flex items-center justify-center text-emerald-100 font-bold text-2xl shadow-xl z-30 transition-all group-hover:translate-y-1 group-hover:translate-x-1 backdrop-blur-sm">3</div>
+                   </div>
+                </div>
+              ) : ['box-sizing', 'position'].includes(previewMode) ? (
+                <div className="w-full max-w-4xl h-[85vh] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl flex items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
                    <div className={`transition-all duration-300 relative group text-center ${containerClassesStr}`}>
                      <div className="absolute -top-3 -right-3 bg-slate-800 text-slate-300 text-[10px] font-mono px-2 py-1 rounded shadow-xl whitespace-nowrap z-20">
                         Container
@@ -158,8 +172,28 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                      </div>
                    </div>
                 </div>
-              ) : ['layouts', 'tailwind', 'flex', 'grid', 'display'].includes(previewMode) ? (
-                <div className="w-full max-w-4xl h-[320px] sm:h-[400px] lg:h-[420px] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl">
+              ) : previewMode === 'display' ? (
+                <div className="w-full max-w-5xl h-[85vh] lg:max-w-5xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-auto shadow-2xl p-6 sm:p-10 flex flex-col items-center justify-center">
+                  <div className="bg-slate-800/80 rounded-xl border border-slate-700 p-6 text-slate-300 font-medium leading-relaxed w-full text-sm">
+                    <div className="text-slate-400 leading-loose text-justify">
+                      CSS display property determines how an element is rendered in the document. It controls whether an element is treated as a block or inline element, and the layout used for its children. 
+                      Here is some regular text flowing naturally in the document before the target element. We are adding a bit more text here so that it wraps around correctly and forms a continuous paragraph of words. 
+                      This helps demonstrate how inline elements flow with text.
+                      <div className={`p-0.5 rounded-md bg-indigo-500/20 border-2 border-indigo-500 text-indigo-100 font-bold text-base shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all duration-300 align-middle ${containerClassesStr.replace(/p-\d+|w-full/g, '').trim()}`}>
+                        <span className="bg-indigo-500/80 text-white px-2 py-0.5 mx-1 rounded border border-indigo-400/50 inline-flex items-center justify-center">1</span>
+                        <span className="bg-rose-500/80 text-white px-2 py-0.5 mx-1 rounded border border-rose-400/50 inline-flex items-center justify-center">2</span>
+                        <span className="bg-emerald-500/80 text-white px-2 py-0.5 mx-1 rounded border border-emerald-400/50 inline-flex items-center justify-center">3</span>
+                      </div>
+                      This text continues after the target element. Watch the layout change when you toggle the display property. 
+                      Notice how changing between inline, block, and inline-block affects both the element itself and the surrounding content flow. 
+                      Here is an additional line added to the bottom of the content to see the effect more clearly. 
+                      And another line to make sure we have plenty of text surrounding the element. 
+                      This is the final sentence of the paragraph to ensure it looks like a continuous block of text without artificial line breaks.
+                    </div>
+                  </div>
+                </div>
+              ) : ['layouts', 'tailwind', 'flex', 'grid'].includes(previewMode) ? (
+                <div className="w-full max-w-4xl h-[85vh] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl">
                    {/* Background Grid Layer */}
                    <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-4 p-4 pointer-events-none opacity-30">
                       {[...Array(9)].map((_, i) => (

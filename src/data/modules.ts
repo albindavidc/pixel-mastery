@@ -1,11 +1,13 @@
+import { htmlModules } from './htmlModules';
 import { Module } from '../types';
 
 export const modules: Module[] = [
+  ...htmlModules,
   {
     id: 'tailwind-layout-display',
     category: 'tailwind',
-    title: 'Display',
-    description: 'Utilities for controlling the display box type of an element.',
+    title: 'Display, Flexbox & Grid',
+    description: 'Utilities for controlling the display box type, and arranging items via Flexbox and Grid.',
     content: `display
 Utilities for controlling the display box type of an element.
 
@@ -75,12 +77,12 @@ white-space: normal;
 
 Flexbox is essential for one-dimensional layouts (rows or columns), while Grid allows you to define both rows and columns. Use flex or grid to enable them.`,
     examples: [
-      { label: 'Block', classes: 'block p-6 w-full max-w-xs bg-cyan-500/20 border-4 border-cyan-500 rounded-2xl shadow-xl' },
-      { label: 'Inline Block', classes: 'inline-block p-6 w-48 bg-fuchsia-500/20 border-4 border-fuchsia-500 rounded-2xl shadow-xl' },
-      { label: 'Hidden', classes: 'hidden p-6 w-48 bg-rose-500/20 border-4 border-rose-500 rounded-2xl shadow-xl' },
-      { label: 'Flex Row', classes: 'flex flex-row gap-4 bg-slate-100 p-4' },
-      { label: '3 Columns Grid', classes: 'grid grid-cols-3 gap-4 bg-slate-100 p-4' },
-      { label: 'Center Content (Flex)', classes: 'flex justify-center items-center h-32 bg-slate-100' }
+      { label: 'Inline', classes: 'inline' },
+      { label: 'Block', classes: 'block' },
+      { label: 'Inline-Block', classes: 'inline-block' },
+      { label: 'Flex Row', classes: 'flex flex-row gap-4' },
+      { label: 'Flex Center', classes: 'flex justify-center items-center h-full' },
+      { label: 'Grid 3 Cols', classes: 'grid grid-cols-3 gap-4 place-content-center h-full' },
     ],
     challenge: {
       description: 'Create a flex container, stacked in a column, with items centered vertically and horizontally.',
@@ -95,21 +97,15 @@ Flexbox is essential for one-dimensional layouts (rows or columns), while Grid a
     category: 'tailwind',
     description: 'Utilities for controlling how the browser should calculate an element\'s total size.',
     content: `box-sizing
-Utilities for controlling how the browser should calculate an element's total size.
-
-Class
-Styles
-box-border
-box-sizing: border-box;
-box-content
-box-sizing: content-box;`,
+Utilities for controlling how the browser should calculate an element's total size, along with margin and padding spacing scales.`,
     examples: [
-      { label: 'Border Box', classes: 'box-border p-8 size-48 bg-indigo-500/20 border-8 border-indigo-500 shadow-2xl rounded-2xl flex items-center justify-center' },
-      { label: 'Content Box', classes: 'box-content p-8 size-48 bg-emerald-500/20 border-8 border-emerald-500 shadow-2xl rounded-2xl flex items-center justify-center' }
+      { label: 'Border Box with Padding', classes: 'box-border p-4 w-64 border-4 border-indigo-500 bg-indigo-500/20' },
+      { label: 'Margin & Space Between', classes: 'm-4 space-y-4 flex flex-col' },
+      { label: 'Padding & Flex', classes: 'px-6 py-3 space-x-4 flex items-center bg-indigo-500/10' }
     ],
     challenge: { 
-      description: 'Apply the border-box sizing to the container so that padding and borders are included in its total width and height.', 
-      targetClasses: ['box-border'] 
+      description: 'Give this card 6-unit padding on all sides and a 4-unit bottom margin.', 
+      targetClasses: ['p-6', 'mb-4'] 
     },
     groupId: 'layout-group',
     groupTitle: 'Layout'
@@ -137,11 +133,12 @@ position: sticky;`,
     examples: [
       { label: 'Static', classes: 'static p-4 w-64 bg-indigo-500/20 border-4 border-indigo-500 mx-auto mt-10' },
       { label: 'Relative', classes: 'relative p-4 w-64 bg-emerald-500/20 border-4 border-emerald-500 mx-auto mt-10' },
-      { label: 'Absolute', classes: 'absolute top-10 left-10 p-4 w-64 bg-fuchsia-500/20 border-4 border-fuchsia-500' }
+      { label: 'Absolute', classes: 'absolute top-10 left-10 p-4 w-64 bg-fuchsia-500/20 border-4 border-fuchsia-500' },
+      { label: 'Sticky', classes: 'sticky top-0 p-4 w-full bg-amber-500/20 border-4 border-amber-500 z-10' }
     ],
     challenge: { 
-      description: 'Apply the border-box sizing to the container so that padding and borders are included in its total width and height.', 
-      targetClasses: ['box-border'] 
+      description: 'Pin this badge to the top-right corner of its container.', 
+      targetClasses: ['absolute', 'top-2', 'right-2'] 
     },
     groupId: 'layout-group',
     groupTitle: 'Layout'
@@ -184,20 +181,4 @@ z-auto	z-index: auto;`,
     groupId: 'layout-group',
     groupTitle: 'Layout'
   },
-  {
-    id: 'tailwind-flexbox-grid',
-    category: 'tailwind',
-    title: 'Flexbox & Grid',
-    description: 'One and two-dimensional layout methods for arranging items.',
-    content: 'Flexbox is essential for one-dimensional layouts (rows or columns), while Grid allows you to define both rows and columns. Use `flex` or `grid` to enable them.',
-    examples: [
-      { label: 'Flex Row', classes: 'flex flex-row gap-4 bg-slate-100 p-4' },
-      { label: '3 Columns Grid', classes: 'grid grid-cols-3 gap-4 bg-slate-100 p-4' },
-      { label: 'Center Content (Flex)', classes: 'flex justify-center items-center h-32 bg-slate-100' },
-    ],
-    challenge: {
-      description: 'Create a flex container, stacked in a column, with items centered vertically and horizontally.',
-      targetClasses: ['flex', 'flex-col', 'justify-center', 'items-center'],
-    }
-  }
 ];

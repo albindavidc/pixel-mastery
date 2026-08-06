@@ -7,40 +7,46 @@ import { Info } from 'lucide-react';
 import { controlBarData, wildcards } from '../data/controlBar';
 
 export function TailwindPlayground() {
-  const { 
-    playgroundClasses, 
-    setPlaygroundClasses,
-    playgroundState,
-    setPlaygroundState,
-    playgroundSize,
-    setPlaygroundSize
-  } = useAppStore();
+  const {
+  moduleClasses,
+  setModuleClasses,
+  playgroundState,
+  setPlaygroundState,
+  playgroundSize,
+  setPlaygroundSize
+} = useAppStore();
 
   const [copied, setCopied] = useState(false);
   const [previewMode, setPreviewMode] = useState('display');
-  const [savedClasses, setSavedClasses] = useState({
-    display: 'block p-6 w-full max-w-xs bg-cyan-500/20 border-4 border-cyan-500 rounded-2xl shadow-xl',
-    flex: 'flex flex-col flex-wrap items-center gap-10 w-full h-full',
-    grid: 'grid grid-cols-3 gap-6 place-content-center w-full h-full'
-  });
+  
   const previewModes = ['display', 'flex', 'grid'];
   
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
   const [showBasisModal, setShowBasisModal] = useState(false);
 
-  // Track the current classes for the active mode
-  useEffect(() => {
-    setSavedClasses(prev => ({
-      ...prev,
-      [previewMode]: playgroundClasses
-    }));
-  }, [playgroundClasses, previewMode]);
+
+
+  const getStoreKey = (mode: string) => mode === 'display' ? 'tailwind-layout-display' : `tailwind-layout-display-${mode}`;
+
+  // Fallbacks just in case store doesn't merge new keys immediately
+  const getFallback = (mode: string) => mode === 'grid' 
+    ? 'grid p-6 w-full bg-fuchsia-500/20 border-4 border-fuchsia-500 rounded-2xl shadow-xl grid-cols-3 gap-4 place-content-center' 
+    : mode === 'flex'
+    ? 'flex p-6 w-full bg-indigo-500/20 border-4 border-indigo-500 rounded-2xl shadow-xl flex-row flex-wrap gap-4 items-center justify-center'
+    : 'block p-6 w-full bg-cyan-500/20 border-4 border-cyan-500 rounded-2xl shadow-xl';
+
+  const playgroundClasses = moduleClasses[getStoreKey(previewMode)] || getFallback(previewMode);
+  
+  const setPlaygroundClasses = (newClasses: string) => {
+    setModuleClasses(getStoreKey(previewMode), newClasses);
+  };
 
   const handleModeChange = (mode: string) => {
     if (mode === previewMode) return;
     setPreviewMode(mode);
-    setPlaygroundClasses(savedClasses[mode as keyof typeof savedClasses] || '');
   };
+
+
 
   // Close Row 2 if we switch tabs
   useEffect(() => {
@@ -83,6 +89,7 @@ export function TailwindPlayground() {
           let newClasses = playgroundClasses.split(' ');
           const variants = wildcards[prop] || [];
           newClasses = newClasses.filter(c => c !== prop && !variants.includes(c));
+          newClasses.push('block'); // Default back to block
           setPlaygroundClasses(newClasses.join(' ').replace(/\s+/g, ' ').trim());
         }
       } else {
@@ -110,7 +117,22 @@ export function TailwindPlayground() {
       const displayClasses = ['block', 'inline', 'inline-block', 'hidden', 'inline-flex', 'inline-grid'];
       if (displayClasses.includes(prop)) {
          newClasses = newClasses.filter(c => !displayClasses.includes(c) && c !== 'flex' && c !== 'grid');
+         
+         // If switching to a non-flex/grid display class, remove flex/grid specific variants to avoid leftover styles
+         if (prop === 'block' || prop === 'inline' || prop === 'inline-block' || prop === 'hidden') {
+            const flexGridWildcards = ['justify-*', 'items-*', 'content-*', 'self-*', 'place-items-*', 'place-content-*', 'place-self-*', 'gap-*', 'gap-x-*', 'gap-y-*', 'grid-cols-*', 'grid-rows-*', 'auto-cols-*', 'auto-rows-*', 'col-span-*', 'row-span-*', 'col-start-*', 'col-end-*', 'row-start-*', 'row-end-*', 'order-*', 'grow', 'shrink', 'basis-*'];
+            flexGridWildcards.forEach(wc => {
+              if (wc.endsWith('-*')) {
+                const prefix = wc.replace('*', '');
+                newClasses = newClasses.filter(c => !c.startsWith(prefix));
+              } else {
+                newClasses = newClasses.filter(c => c !== wc);
+              }
+            });
+         }
+         
          newClasses.push(prop);
+         
          // if changing display mode, maybe close any selected 'flex' or 'grid' row 2?
          if (selectedProperty === 'flex' || selectedProperty === 'grid') {
             setSelectedProperty(null);
@@ -129,18 +151,17 @@ export function TailwindPlayground() {
   const handleVariantClick = (variant: string) => {
     if (!selectedProperty) return;
     
-    // Replace any existing variant from the same property
     let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
-    const variantsForProp = wildcards[selectedProperty] || [];
     
-    // Custom filter for basis arbitrary values
-    if (selectedProperty === 'flex-basis') {
-      newClasses = newClasses.filter(c => !c.startsWith('basis-'));
+    const customInfo = getCustomValueInfo(selectedProperty);
+    if (customInfo) {
+      const prefix = customInfo.prefix;
+      newClasses = newClasses.filter(c => !(c.startsWith(prefix) || c.startsWith('-' + prefix)));
     } else {
+      const variantsForProp = wildcards[selectedProperty] || [];
       newClasses = newClasses.filter(c => !variantsForProp.includes(c));
     }
     
-    // If not already active (toggle behavior on variants too if they match)
     const wasActive = playgroundClasses.split(' ').includes(variant);
     if (!wasActive) {
       newClasses.push(variant);
@@ -149,31 +170,32 @@ export function TailwindPlayground() {
     setPlaygroundClasses(newClasses.join(' '));
   };
   
+  const getCustomValueInfo = (prop: string | null) => {
+    if (!prop) return null;
+    if (prop.endsWith('-*')) return { prefix: prop.slice(0, -1), isCustom: true };
+    const propToPrefix: Record<string, string> = {
+      'flex-basis': 'basis-', 'flex': 'flex-', 'flex-grow': 'grow-', 'flex-shrink': 'shrink-', 'order': 'order-',
+      'grid-template-columns': 'grid-cols-', 'grid-template-rows': 'grid-rows-', 'grid-auto-columns': 'auto-cols-', 'grid-auto-rows': 'auto-rows-',
+      'grid-column': 'col-', 'grid-row': 'row-', 'gap': 'gap-'
+    };
+    if (propToPrefix[prop]) return { prefix: propToPrefix[prop], isCustom: true };
+    return null;
+  };
+
   const handleCustomArbitraryValue = (value: string) => {
-    if (!selectedProperty || !['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty)) return;
+    const customInfo = getCustomValueInfo(selectedProperty);
+    if (!customInfo) return;
     if (!value) return;
-        let formattedValue = value.trim();
-        let prefix = '';
-    if (selectedProperty === 'flex-basis') prefix = 'basis-';
-    else if (selectedProperty === 'flex') prefix = 'flex-';
-    else if (selectedProperty === 'flex-grow') prefix = 'grow-';
-    else if (selectedProperty === 'flex-shrink') prefix = 'shrink-';
-    else if (selectedProperty === 'order') prefix = 'order-';
-    else if (selectedProperty === 'grid-template-columns') prefix = 'grid-cols-';
-    else if (selectedProperty === 'grid-template-rows') prefix = 'grid-rows-';
-    else if (selectedProperty === 'grid-auto-columns') prefix = 'auto-cols-';
-    else if (selectedProperty === 'grid-auto-rows') prefix = 'auto-rows-';
-    else if (selectedProperty === 'grid-column') prefix = 'col-';
-    else if (selectedProperty === 'grid-row') prefix = 'row-';
-    else if (selectedProperty === 'gap') prefix = 'gap-';
+    
+    let formattedValue = value.trim();
+    let prefix = customInfo.prefix;
     
     let isNegativeOrder = false;
-    if (['order', 'grid-column', 'grid-row'].includes(selectedProperty) && formattedValue.startsWith('-') && !formattedValue.startsWith('-' + prefix)) {
+    if (formattedValue.startsWith('-') && !formattedValue.startsWith('-' + prefix)) {
        isNegativeOrder = true;
        formattedValue = formattedValue.substring(1);
     }
   
-    
     if (!formattedValue.startsWith(prefix)) {
       if (formattedValue.startsWith('[') || formattedValue.startsWith('(')) {
         formattedValue = isNegativeOrder ? `-${prefix}${formattedValue}` : `${prefix}${formattedValue}`;
@@ -189,21 +211,7 @@ export function TailwindPlayground() {
     }
     
     const isTargetProp = (c: string) => {
-      if (selectedProperty === 'flex-basis') return c.startsWith('basis-');
-      if (selectedProperty === 'flex') {
-        return c.startsWith('flex-') && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
-      }
-      if (selectedProperty === 'flex-grow') return c === 'grow' || c.startsWith('grow-');
-      if (selectedProperty === 'flex-shrink') return c === 'shrink' || c.startsWith('shrink-');
-      if (selectedProperty === 'order') return c.startsWith('order-') || c.startsWith('-order-');
-      if (selectedProperty === 'grid-template-columns') return c === 'grid-cols-none' || c === 'grid-cols-subgrid' || c.startsWith('grid-cols-');
-      if (selectedProperty === 'grid-template-rows') return c === 'grid-rows-none' || c === 'grid-rows-subgrid' || c.startsWith('grid-rows-');
-      if (selectedProperty === 'grid-auto-columns') return c.startsWith('auto-cols-');
-      if (selectedProperty === 'grid-auto-rows') return c.startsWith('auto-rows-');
-      if (selectedProperty === 'grid-column') return c === 'col-auto' || c === 'col-span-full' || c.startsWith('col-') || c.startsWith('-col-');
-      if (selectedProperty === 'grid-row') return c === 'row-auto' || c === 'row-span-full' || c.startsWith('row-') || c.startsWith('-row-');
-      if (selectedProperty === 'gap') return c.startsWith('gap-');
-      return false;
+      return c.startsWith(prefix) || c.startsWith('-' + prefix);
     };
 
     let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
@@ -212,11 +220,6 @@ export function TailwindPlayground() {
     setPlaygroundClasses(newClasses.join(' '));
   };
 
-  const activeControlData = controlBarData[previewMode as keyof typeof controlBarData] || [];
-  
-  // Get active classes for checking active state
-  const activeClassesSet = new Set<string>(playgroundClasses.split(' ').filter(c => c.trim() !== ''));
-
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
     if (e.deltaY !== 0) {
@@ -224,9 +227,23 @@ export function TailwindPlayground() {
     }
   };
 
+  const activeClassesSet = new Set(playgroundClasses.split(' '));
+  let activeControlData = controlBarData[previewMode as keyof typeof controlBarData] || controlBarData.layouts || [];
+  
+  if (previewMode === 'display') {
+      const hasFlex = activeClassesSet.has('flex') || activeClassesSet.has('inline-flex');
+      const hasGrid = activeClassesSet.has('grid') || activeClassesSet.has('inline-grid');
+      activeControlData = activeControlData.filter(group => {
+         if (group.group === 'Flex Layout') return hasFlex;
+         if (group.group === 'Grid Layout') return hasGrid;
+         return true;
+      });
+  }
+
   return (
-    <div className="flex-1 bg-zinc-950 flex flex-col h-full overflow-hidden relative transition-colors">
-      <CustomValuesHelpModal isOpen={showBasisModal} onClose={() => setShowBasisModal(false)} property={selectedProperty} />
+    <div className="flex-1 flex flex-col h-full relative overflow-hidden bg-zinc-950">
+      {showBasisModal && <CustomValuesHelpModal isOpen={showBasisModal} onClose={() => setShowBasisModal(false)} property={selectedProperty} />}
+      
       {/* Dynamic Property Control Bar */}
       <div className="flex-shrink-0 bg-zinc-900 border-b border-zinc-800 flex flex-col z-10 shadow-sm transition-colors w-full sticky top-0">
         <div className="flex flex-col border-b border-zinc-800/50">
@@ -254,7 +271,7 @@ export function TailwindPlayground() {
                 <div className="flex flex-wrap items-center gap-1.5">
                   {group.properties.map(prop => {
                     const isWildcard = prop.endsWith('-*') || (prop in wildcards && prop !== 'flex' && prop !== 'grid');
-                    const isSpecialWildcard = prop === 'flex' || prop === 'grid';
+                    const isSpecialWildcard = prop === 'box-border' || prop === 'box-content';
                     
                     let isActive = false;
                     if (isWildcard) {
@@ -291,8 +308,10 @@ export function TailwindPlayground() {
                 <button
                   onClick={() => {
                     const defaultClass = previewMode === 'grid' 
-                      ? 'grid grid-cols-3 gap-6 place-content-center w-full h-full' 
-                      : 'flex flex-col flex-wrap items-center gap-10 w-full h-full';
+                      ? 'grid p-6 w-full bg-fuchsia-500/20 border-4 border-fuchsia-500 rounded-2xl shadow-xl grid-cols-3 gap-4 place-content-center' 
+                      : previewMode === 'flex'
+                      ? 'flex p-6 w-full bg-indigo-500/20 border-4 border-indigo-500 rounded-2xl shadow-xl flex-row flex-wrap gap-4 items-center justify-center'
+                      : 'block p-6 w-full bg-cyan-500/20 border-4 border-cyan-500 rounded-2xl shadow-xl';
                     setPlaygroundClasses(defaultClass);
                     setSelectedProperty(null);
                   }}
@@ -328,13 +347,9 @@ export function TailwindPlayground() {
                   {variant}
                 </button>
               ))}
-              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && Array.from(activeClassesSet).filter(c => {
-                if (selectedProperty === 'flex-basis') return c.startsWith('basis-') && !wildcards['flex-basis']?.includes(c);
-                if (selectedProperty === 'flex') return c.startsWith('flex-') && !wildcards['flex']?.includes(c) && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
-                if (selectedProperty === 'flex-grow') return (c === 'grow' || c.startsWith('grow-')) && !wildcards['flex-grow']?.includes(c);
-                if (selectedProperty === 'flex-shrink') return (c === 'shrink' || c.startsWith('shrink-')) && !wildcards['flex-shrink']?.includes(c);
-                if (selectedProperty === 'order') return (c.startsWith('order-') || c.startsWith('-order-')) && !wildcards['order']?.includes(c);
-                return false;
+              {selectedProperty && getCustomValueInfo(selectedProperty) && Array.from(activeClassesSet as Set<string>).filter((c: string) => {
+                const prefix = getCustomValueInfo(selectedProperty)!.prefix;
+                return (c.startsWith(prefix) || c.startsWith('-' + prefix)) && !wildcards[selectedProperty]?.includes(c);
               }).map(variant => (
                 <button
                   key={variant}
@@ -345,7 +360,7 @@ export function TailwindPlayground() {
                   <X className="w-3 h-3 text-indigo-200" />
                 </button>
               ))}
-              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && (
+              {selectedProperty && getCustomValueInfo(selectedProperty) && (
                 <div className="flex items-center gap-1.5 ml-2 border-l border-zinc-800/50 pl-2">
                   <input
                     type="text"
@@ -384,7 +399,7 @@ export function TailwindPlayground() {
       {/* Canvas Area */}
       <div className="flex-1 overflow-auto p-4 md:p-8 flex flex-col relative bg-zinc-950">
         <div 
-          className="flex-1 w-full max-w-[50%] mx-auto min-h-[80vh] rounded-2xl border-2 border-slate-800/60 overflow-hidden relative shadow-2xl shadow-black/80 bg-[#0B1120]"
+          className="flex-1 w-full max-w-2xl mx-auto min-h-[80vh] rounded-2xl border-2 border-slate-800/60 overflow-hidden relative shadow-2xl shadow-black/80 bg-[#0B1120]"
           style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0)',
             backgroundSize: '24px 24px'

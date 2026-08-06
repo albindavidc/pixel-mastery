@@ -22,6 +22,7 @@ export function LayoutPlayground() {
   // Determine modes based on current module
   const moduleMode = currentModuleId === 'tailwind-layout-position' ? 'position' 
                    : currentModuleId === 'tailwind-layout-visibility' ? 'visibility' 
+                   : currentModuleId === 'tailwind-layout-display' ? 'display'
                    : 'box-sizing';
                    
   const [previewMode, setPreviewMode] = useState(moduleMode);
@@ -30,30 +31,14 @@ export function LayoutPlayground() {
   useEffect(() => {
     setPreviewMode(moduleMode);
   }, [moduleMode]);
-  
-  const [savedClasses, setSavedClasses] = useState<Record<string, string>>({
-    'box-sizing': 'box-border p-4 w-64 h-64 bg-indigo-500/20 border-8 border-indigo-500 mx-auto mt-10',
-    'position': 'static p-4 w-64 h-64 bg-emerald-500/20 border-8 border-emerald-500 mx-auto mt-10',
-    'visibility': 'visible p-4 w-64 h-64 bg-rose-500/20 border-8 border-rose-500 mx-auto mt-10'
-  });
-  
   const previewModes = [moduleMode];
   
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
   const [showBasisModal, setShowBasisModal] = useState(false);
 
-  // Track the current classes for the active mode
-  useEffect(() => {
-    setSavedClasses(prev => ({
-      ...prev,
-      [previewMode]: playgroundClasses
-    }));
-  }, [playgroundClasses, previewMode]);
-
-  const handleModeChange = (mode: string) => {
+const handleModeChange = (mode: string) => {
     if (mode === previewMode) return;
     setPreviewMode(mode);
-    setPlaygroundClasses(savedClasses[mode as keyof typeof savedClasses] || '');
   };
 
   // Close Row 2 if we switch tabs
@@ -147,18 +132,16 @@ export function LayoutPlayground() {
   const handleVariantClick = (variant: string) => {
     if (!selectedProperty) return;
     
-    // Replace any existing variant from the same property
     let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
-    const variantsForProp = wildcards[selectedProperty] || [];
     
-    // Custom filter for basis arbitrary values
-    if (selectedProperty === 'flex-basis') {
-      newClasses = newClasses.filter(c => !c.startsWith('basis-'));
+    if (selectedProperty.endsWith('-*')) {
+      const prefix = selectedProperty.slice(0, -1);
+      newClasses = newClasses.filter(c => !(c.startsWith(prefix) || c.startsWith('-' + prefix)));
     } else {
+      const variantsForProp = wildcards[selectedProperty] || [];
       newClasses = newClasses.filter(c => !variantsForProp.includes(c));
     }
     
-    // If not already active (toggle behavior on variants too if they match)
     const wasActive = playgroundClasses.split(' ').includes(variant);
     if (!wasActive) {
       newClasses.push(variant);
@@ -168,30 +151,18 @@ export function LayoutPlayground() {
   };
   
   const handleCustomArbitraryValue = (value: string) => {
-    if (!selectedProperty || !['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty)) return;
+    if (!selectedProperty || !selectedProperty.endsWith('-*')) return;
     if (!value) return;
-        let formattedValue = value.trim();
-        let prefix = '';
-    if (selectedProperty === 'flex-basis') prefix = 'basis-';
-    else if (selectedProperty === 'flex') prefix = 'flex-';
-    else if (selectedProperty === 'flex-grow') prefix = 'grow-';
-    else if (selectedProperty === 'flex-shrink') prefix = 'shrink-';
-    else if (selectedProperty === 'order') prefix = 'order-';
-    else if (selectedProperty === 'grid-template-columns') prefix = 'grid-cols-';
-    else if (selectedProperty === 'grid-template-rows') prefix = 'grid-rows-';
-    else if (selectedProperty === 'grid-auto-columns') prefix = 'auto-cols-';
-    else if (selectedProperty === 'grid-auto-rows') prefix = 'auto-rows-';
-    else if (selectedProperty === 'grid-column') prefix = 'col-';
-    else if (selectedProperty === 'grid-row') prefix = 'row-';
-    else if (selectedProperty === 'gap') prefix = 'gap-';
+    
+    let formattedValue = value.trim();
+    let prefix = selectedProperty.slice(0, -1);
     
     let isNegativeOrder = false;
-    if (['order', 'grid-column', 'grid-row'].includes(selectedProperty) && formattedValue.startsWith('-') && !formattedValue.startsWith('-' + prefix)) {
+    if (formattedValue.startsWith('-') && !formattedValue.startsWith('-' + prefix)) {
        isNegativeOrder = true;
        formattedValue = formattedValue.substring(1);
     }
   
-    
     if (!formattedValue.startsWith(prefix)) {
       if (formattedValue.startsWith('[') || formattedValue.startsWith('(')) {
         formattedValue = isNegativeOrder ? `-${prefix}${formattedValue}` : `${prefix}${formattedValue}`;
@@ -207,21 +178,7 @@ export function LayoutPlayground() {
     }
     
     const isTargetProp = (c: string) => {
-      if (selectedProperty === 'flex-basis') return c.startsWith('basis-');
-      if (selectedProperty === 'flex') {
-        return c.startsWith('flex-') && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
-      }
-      if (selectedProperty === 'flex-grow') return c === 'grow' || c.startsWith('grow-');
-      if (selectedProperty === 'flex-shrink') return c === 'shrink' || c.startsWith('shrink-');
-      if (selectedProperty === 'order') return c.startsWith('order-') || c.startsWith('-order-');
-      if (selectedProperty === 'grid-template-columns') return c === 'grid-cols-none' || c === 'grid-cols-subgrid' || c.startsWith('grid-cols-');
-      if (selectedProperty === 'grid-template-rows') return c === 'grid-rows-none' || c === 'grid-rows-subgrid' || c.startsWith('grid-rows-');
-      if (selectedProperty === 'grid-auto-columns') return c.startsWith('auto-cols-');
-      if (selectedProperty === 'grid-auto-rows') return c.startsWith('auto-rows-');
-      if (selectedProperty === 'grid-column') return c === 'col-auto' || c === 'col-span-full' || c.startsWith('col-') || c.startsWith('-col-');
-      if (selectedProperty === 'grid-row') return c === 'row-auto' || c === 'row-span-full' || c.startsWith('row-') || c.startsWith('-row-');
-      if (selectedProperty === 'gap') return c.startsWith('gap-');
-      return false;
+      return c.startsWith(prefix) || c.startsWith('-' + prefix);
     };
 
     let newClasses = playgroundClasses.split(' ').filter(c => c.trim() !== '');
@@ -308,7 +265,10 @@ export function LayoutPlayground() {
               {gIdx === 0 && (
                 <button
                   onClick={() => {
-                    const defaultClass = savedClasses[previewMode] || 'box-border p-4 w-64 h-64 bg-indigo-500/20 border-8 border-indigo-500 mx-auto mt-10';
+                    const defaultClass = previewMode === 'display' ? 'block' 
+                                       : previewMode === 'visibility' ? 'visible'
+                                       : previewMode === 'position' ? 'relative'
+                                       : 'box-border p-4 w-64 h-64 bg-indigo-500/20 border-8 border-indigo-500 mx-auto mt-10';
                     setPlaygroundClasses(defaultClass);
                     setSelectedProperty(null);
                   }}
@@ -344,13 +304,9 @@ export function LayoutPlayground() {
                   {variant}
                 </button>
               ))}
-              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && Array.from(activeClassesSet).filter(c => {
-                if (selectedProperty === 'flex-basis') return c.startsWith('basis-') && !wildcards['flex-basis']?.includes(c);
-                if (selectedProperty === 'flex') return c.startsWith('flex-') && !wildcards['flex']?.includes(c) && !['flex-row', 'flex-row-reverse', 'flex-col', 'flex-col-reverse', 'flex-wrap', 'flex-wrap-reverse', 'flex-nowrap'].includes(c);
-                if (selectedProperty === 'flex-grow') return (c === 'grow' || c.startsWith('grow-')) && !wildcards['flex-grow']?.includes(c);
-                if (selectedProperty === 'flex-shrink') return (c === 'shrink' || c.startsWith('shrink-')) && !wildcards['flex-shrink']?.includes(c);
-                if (selectedProperty === 'order') return (c.startsWith('order-') || c.startsWith('-order-')) && !wildcards['order']?.includes(c);
-                return false;
+              {selectedProperty && selectedProperty.endsWith('-*') && Array.from(activeClassesSet).filter(c => {
+                const prefix = selectedProperty.slice(0, -1);
+                return (c.startsWith(prefix) || c.startsWith('-' + prefix)) && !wildcards[selectedProperty]?.includes(c);
               }).map(variant => (
                 <button
                   key={variant}
@@ -361,7 +317,7 @@ export function LayoutPlayground() {
                   <X className="w-3 h-3 text-indigo-200" />
                 </button>
               ))}
-              {['flex-basis', 'flex', 'flex-grow', 'flex-shrink', 'order', 'grid-template-columns', 'grid-template-rows', 'grid-auto-columns', 'grid-auto-rows', 'grid-column', 'grid-row', 'gap'].includes(selectedProperty) && (
+              {selectedProperty && selectedProperty.endsWith('-*') && (
                 <div className="flex items-center gap-1.5 ml-2 border-l border-zinc-800/50 pl-2">
                   <input
                     type="text"

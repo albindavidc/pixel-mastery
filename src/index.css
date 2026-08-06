@@ -16,6 +16,9 @@
   --color-ds-blue: var(--color-blue-500);
   --color-ds-pink: var(--color-pink-500);
   --color-ds-violet: var(--color-violet-500);
+  --color-ds-orange: var(--color-orange-500);
+  --color-ds-lime: var(--color-lime-500);
+  --color-ds-fuchsia: var(--color-fuchsia-500);
   
   --color-primary: var(--color-indigo-500);
   --color-success: var(--color-emerald-500);

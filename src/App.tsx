@@ -1,3 +1,4 @@
+import { HtmlPlayground } from './components/HtmlPlayground';
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -19,7 +20,12 @@ function MainLayout() {
       <Sidebar />
       <div className="flex-1 overflow-y-auto bg-zinc-950">
         <div className="flex flex-col min-h-max">
-                    {(currentModuleId.startsWith('tailwind-layout') && currentModuleId !== 'tailwind-layout-display') && viewMode !== 'guidelines' && (
+                              {currentModuleId.startsWith('html-') && viewMode !== 'guidelines' && (
+            <div className="h-[60vh] min-h-[600px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
+              <HtmlPlayground />
+            </div>
+          )}
+          {(currentModuleId.startsWith('tailwind-layout') && currentModuleId !== 'tailwind-layout-display') && viewMode !== 'guidelines' && (
             <div className="h-[100vh] min-h-[700px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
               <LayoutPlayground />
             </div>

@@ -16,6 +16,8 @@ export function Sidebar() {
 
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [tailwindExpanded, setTailwindExpanded] = useState(true);
+  const [htmlExpanded, setHtmlExpanded] = useState(true);
+  const htmlModules = modules.filter(m => m.category === 'html');
 
   const tailwindModules = modules.filter(m => m.category === 'tailwind');
 
@@ -56,6 +58,27 @@ export function Sidebar() {
     const isExpanded = expandedGroups[group.groupId];
     const isActiveGroup = group.modules.some((m: any) => m.id === currentModuleId);
     
+    let ringColor = 'border-zinc-800 text-zinc-500';
+    let activeRingColor = 'border-indigo-500 text-indigo-400 bg-indigo-500/10';
+    
+    if (group.groupId === 'html-beginner') {
+      ringColor = 'border-emerald-500/30 text-emerald-500';
+      activeRingColor = 'border-emerald-500 text-emerald-400 bg-emerald-500/10';
+    } else if (group.groupId === 'html-intermediate') {
+      ringColor = 'border-amber-500/30 text-amber-500';
+      activeRingColor = 'border-amber-500 text-amber-400 bg-amber-500/10';
+    } else if (group.groupId === 'html-master') {
+      ringColor = 'border-rose-500/30 text-rose-500';
+      activeRingColor = 'border-rose-500 text-rose-400 bg-rose-500/10';
+    }
+    
+    let activeBgClass = 'bg-zinc-900/50 border-indigo-500/30 text-zinc-200';
+    if (group.groupId.startsWith('html-')) {
+       if (group.groupId.includes('beginner')) activeBgClass = 'bg-zinc-900/50 border-emerald-500/30 text-zinc-200';
+       if (group.groupId.includes('intermediate')) activeBgClass = 'bg-zinc-900/50 border-amber-500/30 text-zinc-200';
+       if (group.groupId.includes('master')) activeBgClass = 'bg-zinc-900/50 border-rose-500/30 text-zinc-200';
+    }
+
     return (
       <div key={group.groupId} className="mb-2">
         <button
@@ -70,18 +93,16 @@ export function Sidebar() {
           title={group.groupTitle}
           className={`w-full text-left flex items-center justify-between ${isCollapsed ? 'p-2' : 'p-2'} rounded-lg text-sm font-medium transition-all duration-300 border border-transparent ${
             isActiveGroup && !isExpanded
-              ? 'bg-zinc-900/50 border-indigo-500/30 text-zinc-200'
+              ? activeBgClass
               : 'text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-300'
           }`}
         >
           <div className={`flex items-center ${isCollapsed ? 'justify-center w-full' : 'gap-3'}`}>
             <div 
               className={`flex-shrink-0 w-5 h-5 flex items-center justify-center transition-all rounded-full ${
-                isActiveGroup
-                  ? 'border-2 border-indigo-500 text-indigo-400 bg-indigo-500/10'
-                  : 'border-2 border-zinc-800 text-zinc-500'
+                isActiveGroup ? activeRingColor : `border-2 ${ringColor}`
             }`}>
-              <span className="text-[10px] font-bold">{index + 1}</span>
+              <span className="text-[10px] font-bold">{group && group.groupId && group.groupId.startsWith('html-') ? (index === 0 ? '①' : index === 1 ? '②' : '③') : (index + 1)}</span>
             </div>
             <span className={`truncate overflow-hidden transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0 ml-0' : 'max-w-[200px] opacity-100'}`}>{group.groupTitle}</span>
           </div>
@@ -101,6 +122,27 @@ export function Sidebar() {
   const groupedModules: any[] = [];
   const groupMap = new Map<string, any>();
   
+    const groupedHtmlModules: any[] = [];
+  const htmlGroupMap = new Map<string, any>();
+  
+  htmlModules.forEach(m => {
+    if (m.groupId) {
+      if (!htmlGroupMap.has(m.groupId)) {
+        const groupObj = {
+          isGroup: true,
+          groupId: m.groupId,
+          groupTitle: m.groupTitle,
+          modules: []
+        };
+        htmlGroupMap.set(m.groupId, groupObj);
+        groupedHtmlModules.push(groupObj);
+      }
+      htmlGroupMap.get(m.groupId).modules.push(m);
+    } else {
+      groupedHtmlModules.push(m);
+    }
+  });
+
   tailwindModules.forEach(m => {
     if (m.groupId) {
       if (!groupMap.has(m.groupId)) {
@@ -163,6 +205,28 @@ export function Sidebar() {
 
       <div className="flex-1 overflow-y-auto p-4 scrollbar-thin">
         <nav className="space-y-4">
+            <div className="mb-6">
+              {!isCollapsed ? (
+                <button 
+                  onClick={() => setHtmlExpanded(!htmlExpanded)}
+                  className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
+                >
+                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
+                    HTML
+                    {htmlExpanded && (
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">[HTML5]</span>
+                    )}
+                  </h3>
+                  {htmlExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
+                </button>
+              ) : (
+                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">HTML</h3>
+              )}
+              
+              <div className="space-y-1">
+                {(isCollapsed || htmlExpanded) && groupedHtmlModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
+              </div>
+            </div>
             <div>
               {!isCollapsed ? (
                 <button 

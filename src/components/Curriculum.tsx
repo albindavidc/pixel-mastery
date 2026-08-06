@@ -2,9 +2,10 @@ import { useAppStore } from '../store';
 import { modules } from '../data/modules';
 import { CheckCircle2, Play, Info } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { ModuleDetails } from './ModuleDetails';
 
 export function Curriculum() {
-  const { currentModuleId, setPlaygroundClasses, completedModules, toggleModuleComplete } = useAppStore();
+  const { currentModuleId, setPlaygroundClasses, completedModules, toggleModuleComplete, moduleClasses } = useAppStore();
   const module = modules.find(m => m.id === currentModuleId);
   const isCompleted = module ? completedModules.includes(module.id) : false;
 
@@ -14,7 +15,16 @@ export function Curriculum() {
 
   useEffect(() => {
     if (!module) return;
-    const currentClasses = playgroundClasses.split(' ').map(c => c.trim()).filter(Boolean);
+    
+    let classesToCheck = playgroundClasses;
+    if (module.id === 'tailwind-layout-display') {
+      const classes1 = moduleClasses['tailwind-layout-display'] || '';
+      const classes2 = moduleClasses['tailwind-layout-display-flex'] || '';
+      const classes3 = moduleClasses['tailwind-layout-display-grid'] || '';
+      classesToCheck = `${classes1} ${classes2} ${classes3}`;
+    }
+    
+    const currentClasses = classesToCheck.split(' ').map(c => c.trim()).filter(Boolean);
     const passed = module.challenge.targetClasses.every(target => currentClasses.includes(target));
     setChallengePassed(passed);
     
@@ -33,7 +43,7 @@ export function Curriculum() {
   return (
     <div className="bg-zinc-950 transition-colors">
       <div className="max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto p-8 lg:p-12">
-                                        {module.id === 'tailwind-flexbox-grid' && (
+                                        {(module.id === 'tailwind-flexbox-grid' || module.id === 'tailwind-layout-display') && (
           <>
             {/* Quick Reference Guide */}
         <div className="mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-lg">
@@ -387,6 +397,7 @@ export function Curriculum() {
 
         </div>
 
+
           </>
         )}
         <header className="mb-8">
@@ -398,9 +409,46 @@ export function Curriculum() {
         </header>
 
         <div className="prose prose-invert max-w-none mb-10 text-zinc-400 leading-relaxed">
-          <p>{module.content}</p>
+          {module.id !== 'tailwind-layout-display' && !module.id.startsWith('html-') && <p>{module.content}</p>}
+          {module.id === 'tailwind-layout-box-sizing' && (
+            <div className="mt-8 mb-6 not-prose">
 
-          {module.id === 'tailwind-flexbox-grid' && (
+            {/* Box Model Visual */}
+            <div className="mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-5 shadow-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-2 text-zinc-300">
+                  <Info className="w-5 h-5 text-indigo-400" />
+                  <h3 className="font-bold text-sm tracking-wide uppercase">The Box Model</h3>
+                </div>
+              </div>
+              
+              <div className="flex justify-center p-4">
+                {/* Margin */}
+                <div className="relative border border-orange-500/50 bg-orange-500/10 p-4 sm:p-6 rounded-lg flex flex-col items-center justify-center w-full max-w-lg border-dashed">
+                  <span className="text-[10px] sm:text-xs font-bold text-orange-400 uppercase tracking-widest mb-2 sm:mb-3">Margin</span>
+                  
+                  {/* Border */}
+                  <div className="relative border-4 border-amber-500/70 bg-amber-500/20 p-4 sm:p-6 rounded-lg flex flex-col items-center justify-center w-full">
+                    <span className="text-[10px] sm:text-xs font-bold text-amber-500 uppercase tracking-widest mb-2 sm:mb-3">Border</span>
+                    
+                    {/* Padding */}
+                    <div className="relative border border-emerald-500/50 bg-emerald-500/20 p-4 sm:p-6 rounded-lg flex flex-col items-center justify-center w-full border-dashed">
+                      <span className="text-[10px] sm:text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2 sm:mb-3">Padding</span>
+                      
+                      {/* Content */}
+                      <div className="relative border border-sky-500/50 bg-sky-500/30 py-8 sm:py-12 rounded-lg flex flex-col items-center justify-center w-full shadow-inner">
+                        <span className="text-xs sm:text-sm font-bold text-sky-200 uppercase tracking-widest">Content</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          )}
+
+
+          {(module.id === 'tailwind-flexbox-grid' || module.id === 'tailwind-layout-display') && (
           <>
             {/* Definitions */}
           <div className="mt-8 mb-6 space-y-6 not-prose">
@@ -512,15 +560,15 @@ export function Curriculum() {
                 </div>
                 <div className="p-4 flex flex-col gap-3">
                   {[
-                    { prop: 'justify-content', desc: 'Aligns all items as a group along the main (or inline) axis.' },
-                    { prop: 'justify-items', desc: 'Sets the default inline-axis alignment for all grid items inside their cells.' },
-                    { prop: 'justify-self', desc: 'Aligns a single grid item along the inline axis within its own cell.' },
-                    { prop: 'align-content', desc: 'Aligns multiple rows or columns as a group along the cross (or block) axis.' },
-                    { prop: 'align-items', desc: 'Sets the default cross-axis alignment for all flex or grid items.' },
-                    { prop: 'align-self', desc: 'Overrides align-items for one flex or grid item.' },
-                    { prop: 'place-content', desc: 'Shorthand for align-content and justify-content.' },
-                    { prop: 'place-items', desc: 'Shorthand for align-items and justify-items.' },
-                    { prop: 'place-self', desc: 'Shorthand for align-self and justify-self.' },
+                    { prop: 'justify-content', desc: 'Aligns all items as a group along the main (or inline) axis. (Move the whole group left/right)' },
+                    { prop: 'justify-items', desc: 'Sets the default inline-axis alignment for all grid items inside their cells. (Move every item left/right inside its own cell)' },
+                    { prop: 'justify-self', desc: 'Aligns a single grid item along the inline axis within its own cell. (Move one item left/right inside its own cell)' },
+                    { prop: 'align-content', desc: 'Aligns multiple rows or columns as a group along the cross (or block) axis. (Move the whole group up/down)' },
+                    { prop: 'align-items', desc: 'Sets the default cross-axis alignment for all flex or grid items. (Move every item up/down inside its space)' },
+                    { prop: 'align-self', desc: 'Overrides align-items for one flex or grid item. (Move one item up/down inside its space)' },
+                    { prop: 'place-content', desc: 'Shorthand for align-content and justify-content. (Move the whole group both ways)' },
+                    { prop: 'place-items', desc: 'Shorthand for align-items and justify-items. (Move every item both ways)' },
+                    { prop: 'place-self', desc: 'Shorthand for align-self and justify-self. (Move one item both ways)' },
                   ].map(item => (
                     <div key={item.prop} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
                       <span className="text-xs font-mono text-zinc-300 min-w-[140px] shrink-0 bg-zinc-800/40 px-1.5 py-0.5 rounded w-fit border border-zinc-700/50">{item.prop}</span>
@@ -536,7 +584,10 @@ export function Curriculum() {
           
                     </>
         )}
+        
+          <ModuleDetails moduleId={module.id} />
         {/* Note about v4 changes */}
+        {!module.id.startsWith('html-') && (
           <div className="my-6 p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20 flex gap-3 text-sm text-indigo-200">
             <Info className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
             <div>
@@ -544,6 +595,7 @@ export function Curriculum() {
               Most utility syntax remains identical to v3.4. v4 drops deprecated utilities (like `-opacity` suffix aliases) and changes how configuration is managed via CSS variables instead of tailwind.config.js.
             </div>
           </div>
+        )}
         </div>
 
         <section className="mb-12">
