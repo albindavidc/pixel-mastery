@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import SvgBrace from './SvgBrace';
+import CssAnatomyGuidelines from './CssAnatomyGuidelines';
+import TailwindAnatomyGuidelines from './TailwindAnatomyGuidelines';
+import SemanticLayoutWidget from './SemanticLayoutWidget';
 
 const coreHtml = [
   { category: 'Document Structure', elements: ['<!DOCTYPE>', '<html>', '<head>', '<body>', '<title>', '<meta>', '<link>', '<script>'] },
@@ -515,41 +519,19 @@ function HtmlAttributesGuidelines() {
   );
 }
 
-function SvgBrace({ label, colorClass, position = 'top', className = '' }: { label: string, colorClass: string, position?: 'top' | 'bottom', className?: string }) {
-  const isTop = position === 'top';
-  
-  return (
-    <div className={`absolute left-0 right-0 flex flex-col items-center justify-center ${className}`}>
-      {isTop && <div className={`text-xs md:text-sm font-sans font-medium mb-1 whitespace-nowrap ${colorClass}`}>{label}</div>}
-      
-      {isTop ? (
-        <div className={`flex w-full h-[16px] ${colorClass}`}>
-          <svg width="12" height="16" className="shrink-0"><path d="M 1 15 Q 1 8 12 8" fill="none" strokeWidth="2" className="stroke-current"/></svg>
-          <div className="flex-1 border-t-2 border-current mt-[7px] h-0"></div>
-          <svg width="24" height="16" className="shrink-0"><path d="M 0 8 Q 12 8 12 1 Q 12 8 24 8" fill="none" strokeWidth="2" className="stroke-current"/></svg>
-          <div className="flex-1 border-t-2 border-current mt-[7px] h-0"></div>
-          <svg width="12" height="16" className="shrink-0"><path d="M 0 8 Q 11 8 11 15" fill="none" strokeWidth="2" className="stroke-current"/></svg>
-        </div>
-      ) : (
-        <div className={`flex w-full h-[16px] ${colorClass}`}>
-          <svg width="12" height="16" className="shrink-0"><path d="M 1 1 Q 1 8 12 8" fill="none" strokeWidth="2" className="stroke-current"/></svg>
-          <div className="flex-1 border-t-2 border-current mt-[7px] h-0"></div>
-          <svg width="24" height="16" className="shrink-0"><path d="M 0 8 Q 12 8 12 15 Q 12 8 24 8" fill="none" strokeWidth="2" className="stroke-current"/></svg>
-          <div className="flex-1 border-t-2 border-current mt-[7px] h-0"></div>
-          <svg width="12" height="16" className="shrink-0"><path d="M 0 8 Q 11 8 11 1" fill="none" strokeWidth="2" className="stroke-current"/></svg>
-        </div>
-      )}
 
-      {!isTop && <div className={`text-xs md:text-sm font-sans font-medium mt-2 whitespace-nowrap ${colorClass}`}>{label}</div>}
-    </div>
-  );
-}
 
 function HtmlAnatomyGuidelines() {
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl p-8 md:p-12 xl:p-20 flex flex-col items-center justify-center min-h-[500px] overflow-x-auto">
-      
-      <div className="relative flex flex-col items-center w-max mx-auto mt-32 mb-16">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl flex flex-col min-h-[500px] mb-6">
+      <div className="p-5 border-b border-zinc-800 bg-zinc-900/50">
+        <h2 className="text-xl font-semibold text-zinc-100 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          HTML Element Anatomy
+        </h2>
+      </div>
+      <div className="flex-1 p-8 md:p-12 xl:p-20 flex flex-col items-center justify-center overflow-x-auto">
+        <div className="relative flex flex-col items-center w-max mx-auto mt-32 mb-16">
         
         {/* Top Global Brace - Element */}
         <SvgBrace label="Element" colorClass="text-emerald-400" position="top" className="bottom-full mb-[7.5rem]" />
@@ -602,6 +584,8 @@ function HtmlAnatomyGuidelines() {
 
         </div>
       </div>
+      </div>
+
     </div>
   );
 }
@@ -668,7 +652,7 @@ function TailwindGuidelines() {
 }
 
 export function Guidelines() {
-  const [activeTab, setActiveTab] = useState<'anatomy' | 'html' | 'attributes' | 'tailwind'>('anatomy');
+  const [activeTab, setActiveTab] = useState<'anatomy' | 'html' | 'attributes' | 'tailwind' | 'layout'>('anatomy');
 
   return (
     <div className="p-8 max-w-[90rem] mx-auto w-full">
@@ -686,6 +670,14 @@ export function Guidelines() {
               }`}
             >
               Anatomy
+            </button>
+            <button
+              onClick={() => setActiveTab('layout')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+                activeTab === 'layout' ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-400 hover:text-zinc-200'
+              }`}
+            >
+              Semantic Layout
             </button>
             <button
               onClick={() => setActiveTab('html')}
@@ -716,7 +708,14 @@ export function Guidelines() {
       </div>
       
       <div className="transition-opacity duration-300">
-        {activeTab === 'anatomy' && <HtmlAnatomyGuidelines />}
+        {activeTab === 'anatomy' && (
+          <div className="flex flex-col gap-6">
+            <HtmlAnatomyGuidelines />
+            <CssAnatomyGuidelines />
+            <TailwindAnatomyGuidelines />
+          </div>
+        )}
+        {activeTab === 'layout' && <SemanticLayoutWidget />}
         {activeTab === 'html' && <HtmlGuidelines />}
         {activeTab === 'attributes' && <HtmlAttributesGuidelines />}
         {activeTab === 'tailwind' && <TailwindGuidelines />}
