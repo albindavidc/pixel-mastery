@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Search, ArrowUp } from 'lucide-react';
 import { LayoutAndStructure } from './showcase/categories/LayoutAndStructure';
 import { Navigation } from './showcase/categories/Navigation';
 import { ActionsAndControls } from './showcase/categories/ActionsAndControls';
@@ -14,6 +14,7 @@ import { UtilityComponents } from './showcase/categories/UtilityComponents';
 import { SpecializedComponents } from './showcase/categories/SpecializedComponents';
 import { Accessibility } from './showcase/categories/Accessibility';
 import { Infrastructure } from './showcase/categories/Infrastructure';
+import { componentMap } from './showcase/componentMap';
 
 const ESSENTIAL_20 = [
   'Button', 'Input', 'Textarea', 'Select', 'Checkbox', 'Radio Button', 'Switch', 'Form',
@@ -57,6 +58,39 @@ export default function ComponentsShowcase() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDomain, setActiveDomain] = useState('Authentication');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const scrollContainer = document.getElementById('main-scroll-container');
+    if (!scrollContainer) return;
+
+    const handleScroll = (e: Event) => {
+      const target = e.target as HTMLElement;
+      setShowScrollTop(target.scrollTop > 50);
+    };
+
+    scrollContainer.addEventListener('scroll', handleScroll);
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleCategoryChange = (id: string) => {
+    setActiveCategory(id);
+    if (!['all', 'essential', 'top50'].includes(id)) {
+      setTimeout(() => {
+        const scrollContainer = document.getElementById('main-scroll-container');
+        if (scrollContainer) {
+          scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 10);
+    }
+  };
+
+  const scrollToTop = () => {
+    const scrollContainer = document.getElementById('main-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const getFilterList = () => {
     if (activeCategory === 'essential') return ESSENTIAL_20;
@@ -89,7 +123,7 @@ export default function ComponentsShowcase() {
 
   return (
     <div className="flex flex-col h-full bg-zinc-950 font-sans text-zinc-100">
-      <div className="sticky top-0 z-20 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
+      <div className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
         <div className="p-4 md:px-6">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
             <h1 className="text-2xl font-display font-bold text-white tracking-tight">Components</h1>
@@ -109,7 +143,7 @@ export default function ComponentsShowcase() {
             {CATEGORIES.map(cat => (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() => handleCategoryChange(cat.id)}
                 className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
                   activeCategory === cat.id 
                     ? 'bg-indigo-500 text-white' 
@@ -142,15 +176,59 @@ export default function ComponentsShowcase() {
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+      <div className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="max-w-[1600px] mx-auto space-y-16">
+          {(activeCategory === 'all' || activeCategory === 'essential' || activeCategory === 'top50') && (
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-lg">
+              <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <span className="text-indigo-400">📋</span> Category Index
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {CATEGORIES.filter(c => !['all', 'essential', 'top50'].includes(c.id)).map(cat => {
+                  const allComps = componentMap[cat.id] || [];
+                  const catFiltered = allComps.filter(name => !filterList || filterList.some(f => name.toLowerCase().includes(f.toLowerCase())));
+                  
+                  if (catFiltered.length === 0) return null;
+                  
+                  return (
+                    <a 
+                      key={cat.id} 
+                      href={`#category-${cat.id}`}
+                      className="p-3 rounded-lg bg-zinc-950 border border-zinc-800 hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-colors shadow-sm flex flex-col gap-1.5 group"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{cat.icon}</span>
+                        <span className="font-semibold text-zinc-200 group-hover:text-indigo-300">{cat.label}</span>
+                        <span className="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                          {catFiltered.length} {catFiltered.length === 1 ? 'component' : 'components'}
+                        </span>
+                      </div>
+                      <div className="text-xs text-zinc-500 leading-relaxed pl-8 pr-4">
+                        {catFiltered.join(', ')}
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
           {visibleComponents.map(c => (
-            <div key={c.id}>
+            <div key={c.id} id={`category-${c.id}`} className="scroll-mt-40">
               {c.component}
             </div>
           ))}
         </div>
       </div>
+      
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 bg-indigo-500 hover:bg-indigo-400 text-white rounded-full shadow-xl transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
+          title="Scroll to top"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
+      )}
     </div>
   );
 }

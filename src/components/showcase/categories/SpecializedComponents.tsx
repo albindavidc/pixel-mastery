@@ -215,9 +215,9 @@ export function SpecializedComponents({ searchQuery, activeDomain, filterList }:
   );
 
   return (
-    <CategorySection title={`🧩 Specialized - ${activeDomain}`}>
-      {filtered.map(c => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn}>
+    <CategorySection title={`🧩 Specialized - ${activeDomain}`} count={filtered.length} componentsList={filtered}>
+      {filtered.map((c, idx) => (
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

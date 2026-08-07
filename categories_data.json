@@ -1,0 +1,222 @@
+[
+  {
+    "id": "accessibility",
+    "title": "Accessibility",
+    "components": [
+      "Skip Link",
+      "Focus Trap",
+      "Visually Hidden",
+      "ARIA Live Region"
+    ]
+  },
+  {
+    "id": "actionsandcontrols",
+    "title": "ActionsAndControls",
+    "components": [
+      "Button",
+      "Icon Button",
+      "Button Toggle",
+      "Button Group",
+      "Split Button",
+      "Floating Action Button (FAB)",
+      "Toggle Button",
+      "Slide Toggle / Switch",
+      "Checkbox",
+      "Checkbox Group",
+      "Radio Button",
+      "Radio Group",
+      "Slider",
+      "Range Slider",
+      "Chip / Tag",
+      "Badge",
+      "Icon",
+      "Link"
+    ]
+  },
+  {
+    "id": "datadisplay",
+    "title": "DataDisplay",
+    "components": [
+      "Table",
+      "Data Grid",
+      "List",
+      "Tree View",
+      "Accordion / Collapse",
+      "Description List",
+      "Avatar",
+      "Avatar Group",
+      "Calendar",
+      "Timeline",
+      "Chart / Statistics",
+      "Metric Card / KPI Card"
+    ]
+  },
+  {
+    "id": "feedbackandstatus",
+    "title": "FeedbackAndStatus",
+    "components": [
+      "Alert / Banner",
+      "Toast / Snackbar",
+      "Notification",
+      "Progress Bar",
+      "Circular Progress / Spinner",
+      "Skeleton",
+      "Empty State",
+      "Status Dot / Indicator"
+    ]
+  },
+  {
+    "id": "formanddataentry",
+    "title": "FormAndDataEntry",
+    "components": [
+      "Form",
+      "Form Field",
+      "Fieldset",
+      "Label",
+      "Input",
+      "Textarea",
+      "Select",
+      "Multi Select",
+      "Date Picker",
+      "Color Picker",
+      "File Upload / Dropzone",
+      "OTP Input",
+      "Rating",
+      "Signature Pad"
+    ]
+  },
+  {
+    "id": "infrastructure",
+    "title": "Infrastructure",
+    "components": [
+      "Router",
+      "App Shell",
+      "Provider / Context",
+      "Portal",
+      "ErrorBoundary"
+    ]
+  },
+  {
+    "id": "layoutandstructure",
+    "title": "LayoutAndStructure",
+    "components": [
+      "Container",
+      "Section",
+      "Box",
+      "Card",
+      "Paper",
+      "Panel",
+      "Grid",
+      "Grid List",
+      "Flex",
+      "Stack",
+      "Divider",
+      "Separator",
+      "Spacer",
+      "Header",
+      "Footer",
+      "Sidebar",
+      "Sidenav",
+      "Toolbar",
+      "Split Pane",
+      "Resizable Panel",
+      "Scroll Area",
+      "Aspect Ratio"
+    ]
+  },
+  {
+    "id": "media",
+    "title": "Media",
+    "components": [
+      "Image",
+      "Thumbnail",
+      "Lightbox / Carousel",
+      "Video Player",
+      "Audio Player"
+    ]
+  },
+  {
+    "id": "navigation",
+    "title": "Navigation",
+    "components": [
+      "Navbar",
+      "App Bar",
+      "Toolbar",
+      "Navigation Rail",
+      "Bottom Navigation",
+      "Menu",
+      "Dropdown Menu",
+      "Mega Menu",
+      "Context Menu",
+      "Breadcrumb",
+      "Tabs",
+      "Stepper",
+      "Pagination",
+      "Paginator",
+      "Command Palette",
+      "Sort Header"
+    ]
+  },
+  {
+    "id": "overlayandpopups",
+    "title": "OverlayAndPopups",
+    "components": [
+      "Modal / Dialog",
+      "Drawer / Offcanvas",
+      "Tooltip",
+      "Popover",
+      "Backdrop / Overlay"
+    ]
+  },
+  {
+    "id": "specializedcomponents",
+    "title": "🧩 Specialized - ${activeDomain",
+    "components": [
+      "Login Form",
+      "SSO Buttons",
+      "Product Card",
+      "Shopping Cart",
+      "Checkout Form",
+      "Chat Bubble",
+      "Message Composer",
+      "Stat Widget",
+      "Activity Feed",
+      "Prompt Input",
+      "AI Response Block"
+    ]
+  },
+  {
+    "id": "typography",
+    "title": "Typography",
+    "components": [
+      "Heading (h1-h6)",
+      "Paragraph (p)",
+      "Blockquote",
+      "Code Block / Inline Code",
+      "Keyboard Input (kbd)",
+      "Mark / Highlight"
+    ]
+  },
+  {
+    "id": "utilitycomponents",
+    "title": "UtilityComponents",
+    "components": [
+      "Portal",
+      "Provider / Context",
+      "ErrorBoundary",
+      "Visually Hidden",
+      "Clipboard / Copy"
+    ]
+  },
+  {
+    "id": "visualeffects",
+    "title": "VisualEffects",
+    "components": [
+      "Shadow / Elevation",
+      "Gradient",
+      "Glassmorphism",
+      "Mask",
+      "Animation / Transition"
+    ]
+  }
+]

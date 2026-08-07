@@ -119,9 +119,9 @@ export function FeedbackAndStatus({ searchQuery, filterList }: { searchQuery: st
   if (filtered.length === 0) return null;
 
   return (
-    <CategorySection title="🚦 Feedback & Status">
-      {filtered.map(c => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn}>
+    <CategorySection title="🚦 Feedback & Status" count={filtered.length} componentsList={filtered}>
+      {filtered.map((c, idx) => (
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

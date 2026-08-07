@@ -87,9 +87,9 @@ export function Media({ searchQuery, filterList }: { searchQuery: string, filter
   if (filtered.length === 0) return null;
 
   return (
-    <CategorySection title="🖼️ Media">
-      {filtered.map(c => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn}>
+    <CategorySection title="🖼️ Media" count={filtered.length} componentsList={filtered}>
+      {filtered.map((c, idx) => (
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

@@ -67,9 +67,9 @@ export function VisualEffects({ searchQuery, filterList }: { searchQuery: string
   if (filtered.length === 0) return null;
 
   return (
-    <CategorySection title="🎨 Visual Effects">
-      {filtered.map(c => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn}>
+    <CategorySection title="🎨 Visual Effects" count={filtered.length} componentsList={filtered}>
+      {filtered.map((c, idx) => (
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

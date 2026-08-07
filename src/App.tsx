@@ -19,7 +19,7 @@ function MainLayout() {
   return (
     <div className="flex h-screen bg-zinc-950 overflow-hidden text-zinc-100 font-sans">
       <Sidebar />
-      <div className="flex-1 overflow-y-auto bg-zinc-950">
+      <div id="main-scroll-container" className="flex-1 overflow-y-auto bg-zinc-950">
         <div className="flex flex-col min-h-max">
                               {currentModuleId.startsWith('html-') && viewMode !== 'guidelines' && viewMode !== 'components' && (
             <div className="h-[60vh] min-h-[600px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">

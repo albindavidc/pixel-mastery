@@ -88,9 +88,9 @@ export function OverlayAndPopups({ searchQuery, filterList }: { searchQuery: str
   if (filtered.length === 0) return null;
 
   return (
-    <CategorySection title="🪟 Overlay & Popups">
-      {filtered.map(c => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn}>
+    <CategorySection title="🪟 Overlay & Popups" count={filtered.length} componentsList={filtered}>
+      {filtered.map((c, idx) => (
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}
