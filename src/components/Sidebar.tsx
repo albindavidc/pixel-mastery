@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, BookOpen, List, Code2, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FileText } from 'lucide-react';
+import { CheckCircle2, BookOpen, List, Code2, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FileText, Component } from 'lucide-react';
 import { useAppStore } from '../store';
 import { modules } from '../data/modules';
 import { Module } from '../types';
@@ -199,6 +199,18 @@ export function Sidebar() {
           >
             <BookOpen className="w-4 h-4 shrink-0" />
             <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Learning</span>
+          </button>
+          <button
+            onClick={() => setViewMode('components')}
+            title="Components"
+            className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-all duration-300 ${
+              viewMode === 'components' 
+                ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
+                : 'text-zinc-500 hover:text-zinc-300'
+            }`}
+          >
+            <Component className="w-4 h-4 shrink-0" />
+            <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Components</span>
           </button>
         </div>
       </div>

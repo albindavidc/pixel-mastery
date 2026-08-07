@@ -1,4 +1,4 @@
-export type ViewMode = 'guidelines' | 'curriculum';
+export type ViewMode = 'guidelines' | 'curriculum' | 'components';
 
 export interface Module {
   id: string;
