@@ -22,7 +22,7 @@ function MainLayout() {
       <div id="main-scroll-container" className="flex-1 overflow-y-auto bg-zinc-950">
         <div className="flex flex-col min-h-max">
                               {currentModuleId.startsWith('html-') && viewMode !== 'guidelines' && viewMode !== 'components' && (
-            <div className="h-[60vh] min-h-[600px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
+            <div className="min-h-[1500px] h-[150vh] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
               <HtmlPlayground />
             </div>
           )}

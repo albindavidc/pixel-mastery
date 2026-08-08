@@ -17,8 +17,10 @@ export function Sidebar() {
 
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [tailwindExpanded, setTailwindExpanded] = useState(true);
+  const [jsExpanded, setJsExpanded] = useState(true);
   const [htmlExpanded, setHtmlExpanded] = useState(true);
   const htmlModules = modules.filter(m => m.category === 'html');
+  const jsModules = modules.filter(m => m.category === 'javascript' || m.category === 'js');
 
   const tailwindModules = modules.filter(m => m.category === 'tailwind');
 
@@ -120,6 +122,27 @@ export function Sidebar() {
     );
   };
 
+
+  const groupedJsModules: any[] = [];
+  const jsGroupMap = new Map<string, any>();
+  
+  jsModules.forEach(m => {
+    if (m.groupId) {
+      if (!jsGroupMap.has(m.groupId)) {
+        const groupObj = {
+          isGroup: true,
+          groupId: m.groupId,
+          groupTitle: m.groupTitle,
+          modules: []
+        };
+        jsGroupMap.set(m.groupId, groupObj);
+        groupedJsModules.push(groupObj);
+      }
+      jsGroupMap.get(m.groupId).modules.push(m);
+    } else {
+      groupedJsModules.push(m);
+    }
+  });
   const groupedModules: any[] = [];
   const groupMap = new Map<string, any>();
   
@@ -269,6 +292,33 @@ export function Sidebar() {
               
               <div className="space-y-1">
                 {(isCollapsed || tailwindExpanded) && groupedModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
+              </div>
+            </div>
+            <div>
+              {!isCollapsed ? (
+                <button 
+                  onClick={() => setJsExpanded(!jsExpanded)} 
+                  className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
+                >
+                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
+                    JavaScript
+                    {jsExpanded && (
+                      <div className="flex items-center gap-1">
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">ES6+</span>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="JavaScript Documentation">
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                    )}
+                  </h3>
+                  {jsExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
+                </button>
+              ) : (
+                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">JS</h3>
+              )}
+              
+              <div className="space-y-1">
+                {(isCollapsed || jsExpanded) && groupedJsModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
               </div>
             </div>
 

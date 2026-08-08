@@ -1,8 +1,10 @@
 import { htmlModules } from './htmlModules';
+import { jsModules } from './jsModules';
 import { Module } from '../types';
 
 export const modules: Module[] = [
   ...htmlModules,
+  ...jsModules,
   {
     id: 'tailwind-layout-display',
     category: 'tailwind',

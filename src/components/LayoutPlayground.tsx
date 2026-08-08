@@ -356,7 +356,7 @@ const handleModeChange = (mode: string) => {
       {/* Canvas Area */}
       <div className="flex-1 overflow-auto p-4 md:p-8 flex flex-col relative bg-zinc-950">
         <div 
-          className="flex-1 w-full max-w-[50%] mx-auto min-h-[80vh] rounded-2xl border-2 border-slate-800/60 overflow-hidden relative shadow-2xl shadow-black/80 bg-[#0B1120]"
+          className="flex-1 w-full max-w-[50%] mx-auto min-h-[80vh] rounded-2xl border-2 border-slate-800/60 overflow-hidden relative shadow-2xl shadow-black/80 bg-zinc-900"
           style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0)',
             backgroundSize: '24px 24px'
@@ -407,7 +407,7 @@ const handleModeChange = (mode: string) => {
             <textarea
               value={playgroundClasses}
               onChange={(e) => setPlaygroundClasses(e.target.value)}
-              className="w-full bg-zinc-950 text-indigo-100 font-mono text-sm p-4 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none min-h-[100px]"
+              className="w-full bg-zinc-950 text-indigo-100 font-mono text-sm p-4 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none min-h-[180px] overflow-y-scroll editor-scrollbar"
               placeholder="Enter Tailwind classes here..."
               spellCheck="false"
             />

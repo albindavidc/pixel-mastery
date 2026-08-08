@@ -72,3 +72,22 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
 }
+
+.editor-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.editor-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.editor-scrollbar::-webkit-scrollbar-thumb {
+  background: #52525b; /* zinc-600 */
+  border-radius: 4px;
+}
+.editor-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #71717a; /* zinc-500 */
+}
+.editor-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #52525b transparent;
+}

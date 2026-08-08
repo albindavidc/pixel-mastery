@@ -2,7 +2,7 @@ export type ViewMode = 'guidelines' | 'curriculum' | 'components';
 
 export interface Module {
   id: string;
-  category?: 'css' | 'tailwind' | 'html';
+  category?: 'css' | 'tailwind' | 'html' | 'javascript' | 'js';
   title: string;
   description: string;
   content: string; // Markdown or simple HTML

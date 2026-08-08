@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import SvgBrace from './SvgBrace';
 import CssAnatomyGuidelines from './CssAnatomyGuidelines';
 import TailwindAnatomyGuidelines from './TailwindAnatomyGuidelines';
+import HtmlTerminology from './HtmlTerminology';
 import SemanticLayoutWidget from './SemanticLayoutWidget';
 
 const coreHtml = [
@@ -58,24 +59,56 @@ const frameworksReducedHtml = [
 ];
 
 const mostlyUsedGlobalAttributes = [
-  { attr: 'id', desc: 'Unique identifier' },
-  { attr: 'class', desc: 'CSS classes' },
-  { attr: 'style', desc: 'Inline styles (occasionally)' },
-  { attr: 'title', desc: 'Tooltip / additional information' },
-  { attr: 'hidden', desc: 'Hide an element' },
-  { attr: 'tabindex', desc: 'Keyboard navigation' },
-  { attr: 'lang', desc: 'Language of content' },
-  { attr: 'dir', desc: 'Text direction (ltr, rtl)' },
-  { attr: 'role', desc: 'Accessibility (ARIA role)' },
-  { attr: 'data-*', desc: 'Custom data attributes' },
-  { attr: 'contenteditable', desc: 'Editable content' },
-  { attr: 'draggable', desc: 'Enable drag-and-drop' },
-  { attr: 'spellcheck', desc: 'Enable/disable spell checking' },
-  { attr: 'translate', desc: 'Translation hint' },
-  { attr: 'autofocus', desc: 'Automatically focus an element' },
-  { attr: 'inputmode', desc: 'Virtual keyboard type on mobile' },
-  { attr: 'enterkeyhint', desc: 'Customize mobile Enter key label' },
-  { attr: 'popover', desc: 'Native popover API (modern browsers)' },
+  { 
+    grouped: [
+      { attr: 'id', desc: 'Unique identifier' },
+      { attr: 'class', desc: 'CSS classes' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'style', desc: 'Inline styles (occasionally)' },
+      { attr: 'hidden', desc: 'Hide an element' },
+      { attr: 'title', desc: 'Tooltip / additional information' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'role', desc: 'Accessibility (ARIA role)' },
+      { attr: 'tabindex', desc: 'Keyboard navigation' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'lang', desc: 'Language of content' },
+      { attr: 'dir', desc: 'Text direction (ltr, rtl)' },
+      { attr: 'translate', desc: 'Translation hint' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'contenteditable', desc: 'Editable content' },
+      { attr: 'spellcheck', desc: 'Enable/disable spell checking' },
+      { attr: 'draggable', desc: 'Enable drag-and-drop' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'autofocus', desc: 'Automatically focus an element' },
+      { attr: 'inputmode', desc: 'Virtual keyboard type on mobile' },
+      { attr: 'enterkeyhint', desc: 'Customize mobile Enter key label' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'data-*', desc: 'Custom data attributes' }
+    ]
+  },
+  { 
+    grouped: [
+      { attr: 'popover', desc: 'Native popover API (modern browsers)' }
+    ]
+  }
 ];
 
 const occasionallyUsedGlobalAttributes = [
@@ -99,15 +132,76 @@ const rarelyUsedGlobalAttributes = [
 ];
 
 const mostlyUsedEventAttributes = [
-  { attr: 'onclick, ondblclick, oncontextmenu', desc: 'Mouse events' },
-  { attr: 'onkeydown, onkeyup', desc: 'Keyboard events' },
-  { attr: 'oninput, onchange, onsubmit, onreset, oninvalid', desc: 'Form events' },
-  { attr: 'onfocus, onblur', desc: 'Focus events' },
-  { attr: 'onmousedown, onmouseup, onmousemove, onmouseenter, onmouseleave', desc: 'Pointer / Mouse events' },
-  { attr: 'oncopy, oncut, onpaste', desc: 'Clipboard events' },
-  { attr: 'ondragstart, ondrag, ondragend, ondragenter, ondragleave, ondragover, ondrop', desc: 'Drag & Drop events' },
-  { attr: 'onload, onerror, onresize, onscroll', desc: 'Window / Loading events' },
-  { attr: 'ontouchstart, ontouchmove, ontouchend', desc: 'Touch (Mobile) events' },
+  {
+    grouped: [
+      { attr: 'onclick', desc: 'Mouse click' },
+      { attr: 'ondblclick', desc: 'Mouse double-click' },
+      { attr: 'oncontextmenu', desc: 'Right-click (context menu)' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'onmousedown', desc: 'Mouse button pressed' },
+      { attr: 'onmouseup', desc: 'Mouse button released' },
+      { attr: 'onmousemove', desc: 'Mouse pointer moved' },
+      { attr: 'onmouseenter', desc: 'Mouse pointer enters element' },
+      { attr: 'onmouseleave', desc: 'Mouse pointer leaves element' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'ondragstart', desc: 'Drag started' },
+      { attr: 'ondrag', desc: 'Element is being dragged' },
+      { attr: 'ondragend', desc: 'Drag ended' },
+      { attr: 'ondragenter', desc: 'Dragged element enters drop target' },
+      { attr: 'ondragleave', desc: 'Dragged element leaves drop target' },
+      { attr: 'ondragover', desc: 'Dragged element is over drop target' },
+      { attr: 'ondrop', desc: 'Dragged element is dropped' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'ontouchstart', desc: 'Touch started' },
+      { attr: 'ontouchmove', desc: 'Touch moved' },
+      { attr: 'ontouchend', desc: 'Touch ended' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'onkeydown', desc: 'Key pressed down' },
+      { attr: 'onkeyup', desc: 'Key released' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'oninput', desc: 'User input detected' },
+      { attr: 'onchange', desc: 'Value changed and focus lost' },
+      { attr: 'onsubmit', desc: 'Form submitted' },
+      { attr: 'onreset', desc: 'Form reset' },
+      { attr: 'oninvalid', desc: 'Form input invalid' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'onfocus', desc: 'Element received focus' },
+      { attr: 'onblur', desc: 'Element lost focus' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'oncopy', desc: 'Content copied' },
+      { attr: 'oncut', desc: 'Content cut' },
+      { attr: 'onpaste', desc: 'Content pasted' }
+    ]
+  },
+  {
+    grouped: [
+      { attr: 'onload', desc: 'Resource loaded' },
+      { attr: 'onerror', desc: 'Error loading resource' },
+      { attr: 'onresize', desc: 'Window resized' },
+      { attr: 'onscroll', desc: 'Element scrolled' }
+    ]
+  }
 ];
 
 const occasionallyUsedEventAttributes = [
@@ -346,8 +440,42 @@ function HtmlGuidelines() {
 
 function HtmlAttributesGuidelines() {
   const attrColumns = [
-    { key: 'attr', label: 'Attribute', render: (val: string) => <CodeBadge color="sky">{val}</CodeBadge> },
-    { key: 'desc', label: 'Description', render: (val: string) => <span className="text-zinc-400 text-sm leading-relaxed">{val}</span> }
+    { 
+      key: 'attr', 
+      label: 'Attribute', 
+      render: (val: any, item: any) => {
+        if (item.grouped) {
+          return (
+            <div className="flex flex-col gap-2">
+              {item.grouped.map((g: any, i: number) => (
+                <div key={i} className="flex h-6 items-center">
+                  <CodeBadge color="sky">{g.attr}</CodeBadge>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        return <CodeBadge color="sky">{val}</CodeBadge>;
+      }
+    },
+    { 
+      key: 'desc', 
+      label: 'Description', 
+      render: (val: any, item: any) => {
+        if (item.grouped) {
+          return (
+            <div className="flex flex-col gap-2">
+              {item.grouped.map((g: any, i: number) => (
+                <div key={i} className="flex h-6 items-center">
+                  <span className="text-zinc-400 text-sm leading-relaxed">{g.desc}</span>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        return <span className="text-zinc-400 text-sm leading-relaxed">{val}</span>;
+      }
+    }
   ];
 
   const elementAttrColumns = [
@@ -401,12 +529,36 @@ function HtmlAttributesGuidelines() {
 
   return (
     <div className="flex flex-col gap-6">
+      
       <GuidelineCard 
         title="🧠 Attribute Mental Model" 
         description="Understanding these four categories makes it much easier to remember how different HTML attributes behave." 
         items={attributeCategories} 
         columns={categoryColumns}
       />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-5">
+          <h3 className="text-sm font-semibold text-zinc-200 mb-4 uppercase tracking-wider">Common Boolean Attributes</h3>
+          <div className="flex flex-wrap gap-2">
+            {["disabled", "checked", "selected", "readonly", "required", "multiple", "autofocus", "hidden", "controls", "autoplay", "loop", "muted", "open", "novalidate", "download", "reversed", "async", "defer", "ismap", "default", "allowfullscreen"].map((attr, i) => (
+              <span key={i} className="px-2 py-1 rounded-md bg-zinc-800 border border-zinc-700 text-blue-400 font-mono text-xs shadow-sm hover:bg-zinc-700/50 transition-colors">
+                {attr}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-5">
+          <h3 className="text-sm font-semibold text-zinc-200 mb-4 uppercase tracking-wider">Common Global Attributes</h3>
+          <div className="flex flex-wrap gap-2">
+            {["id", "class", "style", "hidden", "title", "role", "tabindex", "data-*"].map((attr, i) => (
+              <span key={i} className="px-2 py-1 rounded-md bg-zinc-800 border border-zinc-700 text-blue-400 font-mono text-xs shadow-sm hover:bg-zinc-700/50 transition-colors">
+                {attr}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
         <div className="flex flex-col gap-6">
           <GuidelineCard 
@@ -414,6 +566,7 @@ function HtmlAttributesGuidelines() {
             description="These are the attributes you'll use regularly in modern frontend development." 
             items={mostlyUsedGlobalAttributes} 
             columns={attrColumns}
+            collapsible={true}
           />
           
           <GuidelineCard 
@@ -449,55 +602,9 @@ function HtmlAttributesGuidelines() {
         </div>
 
         <div className="flex flex-col gap-6">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl break-inside-avoid">
-          <div className="p-5 border-b border-zinc-800 bg-zinc-900/50">
-            <h2 className="text-lg font-semibold text-indigo-400 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-              For Angular / React Developers
-            </h2>
-            <p className="text-zinc-400 mt-2 text-sm leading-relaxed">
-              In modern frameworks, avoid writing inline HTML event attributes like:
-              <br />
-              <code className="text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded font-mono text-xs mt-1.5 inline-block">{'<button onclick="save()">'}</code>
-            </p>
-          </div>
-          <div className="p-5 bg-zinc-800/20">
-            <p className="text-zinc-300 text-sm mb-4">Instead, use the framework's event binding:</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg p-4 shadow-sm">
-                <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">Angular</div>
-                <code className="text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded font-mono text-xs block truncate" title={'<button (click)="save()">'}>{'<button (click)="save()">'}</code>
-              </div>
-              <div className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg p-4 shadow-sm">
-                <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">React</div>
-                <code className="text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded font-mono text-xs block truncate" title={'<button onClick={save}>'}>{'<button onClick={save}>'}</code>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <GuidelineCard 
-          title="🟢 Mostly Used Global Event Attributes" 
-          description="Although frameworks usually prefer JavaScript event listeners (or Angular/React bindings) over inline HTML event attributes, these represent the events you'll work with most." 
-          items={mostlyUsedEventAttributes} 
-          columns={attrColumns}
-        />
-        
-        <GuidelineCard 
-          title="🟡 Occasionally Used Event Attributes" 
-          description="" 
-          items={occasionallyUsedEventAttributes} 
-          columns={attrColumns}
-          collapsible={true}
-        />
 
-        <GuidelineCard 
-          title="🔴 Rarely Used Event Attributes" 
-          description="These are mostly related to media playback, browser internals, or specialized features." 
-          items={rarelyUsedEventAttributes} 
-          columns={attrColumns}
-          collapsible={true}
-        />
+
 
         <GuidelineCard 
           title="🎯 Common Element-Specific Attributes" 
@@ -651,8 +758,110 @@ function TailwindGuidelines() {
   );
 }
 
+
+function DomEventsGuidelines() {
+  const attrColumns = [
+    { 
+      key: 'attr', 
+      label: 'Attribute', 
+      render: (val: any, item: any) => {
+        if (item.grouped) {
+          return (
+            <div className="flex flex-col gap-2">
+              {item.grouped.map((g: any, i: number) => (
+                <div key={i} className="flex h-6 items-center">
+                  <CodeBadge color="sky">{g.attr}</CodeBadge>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        return <CodeBadge color="sky">{val}</CodeBadge>;
+      }
+    },
+    { 
+      key: 'desc', 
+      label: 'Description', 
+      render: (val: any, item: any) => {
+        if (item.grouped) {
+          return (
+            <div className="flex flex-col gap-2">
+              {item.grouped.map((g: any, i: number) => (
+                <div key={i} className="flex h-6 items-center">
+                  <span className="text-zinc-400 text-sm leading-relaxed">{g.desc}</span>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        return <span className="text-zinc-400 text-sm leading-relaxed">{val}</span>;
+      }
+    }
+  ];
+
+  return (
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+      <div className="flex flex-col gap-6">
+        <GuidelineCard 
+          title="🟢 Mostly Used Global Event Attributes" 
+          description="Although frameworks usually prefer JavaScript event listeners (or Angular/React bindings) over inline HTML event attributes, these represent the events you'll work with most." 
+          items={mostlyUsedEventAttributes} 
+          columns={attrColumns}
+        />
+      </div>
+      <div className="flex flex-col gap-6">
+                <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl break-inside-avoid">
+          <div className="p-5 border-b border-zinc-800 bg-zinc-900/50">
+            <h2 className="text-lg font-semibold text-indigo-400 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+              For Angular / React Developers
+            </h2>
+            <p className="text-zinc-400 mt-2 text-sm leading-relaxed">
+              In modern frameworks, avoid writing inline HTML event attributes like:
+              <br />
+              <code className="text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded font-mono text-xs mt-1.5 inline-block">{'<button onclick="save()">'}</code>
+            </p>
+          </div>
+          <div className="p-5 bg-zinc-800/20">
+            <p className="text-zinc-300 text-sm mb-4">Instead, use the framework's event binding:</p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg p-4 shadow-sm">
+                <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">Angular</div>
+                <code className="text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded font-mono text-xs block truncate" title={'<button (click)="save()">'}>{'<button (click)="save()">'}</code>
+              </div>
+              <div className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg p-4 shadow-sm">
+                <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">React</div>
+                <code className="text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded font-mono text-xs block truncate" title={'<button onClick={save}>'}>{'<button onClick={save}>'}</code>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <GuidelineCard 
+          title="🟡 Occasionally Used Event Attributes" 
+          description="Useful in specific situations like transitions and animations." 
+          items={occasionallyUsedEventAttributes} 
+          columns={attrColumns}
+          collapsible={true}
+        />
+
+        <GuidelineCard 
+          title="🔴 Rarely Used Event Attributes" 
+          description="These are mostly related to media playback, browser internals, or specialized features." 
+          items={rarelyUsedEventAttributes} 
+          columns={attrColumns}
+          collapsible={true}
+        />
+      </div>
+    </div>
+  );
+}
+
+
+
+
 export function Guidelines() {
-  const [activeTab, setActiveTab] = useState<'anatomy' | 'html' | 'attributes' | 'tailwind' | 'layout'>('anatomy');
+  const [activeTab, setActiveTab] = useState<'anatomy' | 'html' | 'attributes' | 'event-attributes' | 'tailwind' | 'layout'>('anatomy');
 
   return (
     <div className="p-8 max-w-[90rem] mx-auto w-full">
@@ -696,6 +905,15 @@ export function Guidelines() {
               HTML Attributes
             </button>
             <button
+              onClick={() => setActiveTab('event-attributes')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+                activeTab === 'event-attributes' ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-400 hover:text-zinc-200'
+              }`}
+            >
+              Event Attributes
+            </button>
+
+            <button
               onClick={() => setActiveTab('tailwind')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                 activeTab === 'tailwind' ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-400 hover:text-zinc-200'
@@ -713,11 +931,13 @@ export function Guidelines() {
             <HtmlAnatomyGuidelines />
             <CssAnatomyGuidelines />
             <TailwindAnatomyGuidelines />
+            <HtmlTerminology />
           </div>
         )}
         {activeTab === 'layout' && <SemanticLayoutWidget />}
         {activeTab === 'html' && <HtmlGuidelines />}
         {activeTab === 'attributes' && <HtmlAttributesGuidelines />}
+        {activeTab === 'event-attributes' && <DomEventsGuidelines />}
         {activeTab === 'tailwind' && <TailwindGuidelines />}
       </div>
     </div>

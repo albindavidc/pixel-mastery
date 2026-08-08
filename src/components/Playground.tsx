@@ -346,7 +346,7 @@ export function Playground() {
       {/* Canvas Area */}
       <div className="flex-1 overflow-auto p-4 md:p-8 flex flex-col relative bg-zinc-950">
         <div 
-          className="flex-1 w-full max-w-[50%] mx-auto min-h-[80vh] rounded-2xl border-2 border-slate-800/60 overflow-hidden relative shadow-2xl shadow-black/80 bg-[#0B1120]"
+          className="flex-1 w-full max-w-[50%] mx-auto min-h-[80vh] rounded-2xl border-2 border-slate-800/60 overflow-hidden relative shadow-2xl shadow-black/80 bg-zinc-900"
           style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, #1e293b 1px, transparent 0)',
             backgroundSize: '24px 24px'
@@ -362,7 +362,7 @@ export function Playground() {
           <div className="absolute top-3 right-4 flex gap-4 items-center z-10">
             {/* Legend */}
             {(previewMode === 'layouts' || previewMode === 'tailwind' || previewMode === 'flex' || previewMode === 'grid') && (
-              <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase bg-[#0f172a]/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300 shadow-lg pointer-events-none">
+              <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase bg-zinc-800/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300 shadow-lg pointer-events-none">
                 <div className="flex items-center gap-2 text-sky-400">
                   <span className="w-4 h-0 border-t-2 border-dotted border-sky-400"></span>
                   <span>Container</span>
@@ -374,7 +374,7 @@ export function Playground() {
               </div>
             )}
             {/* Preview Modes */}
-            <div className="flex gap-1 bg-[#0f172a]/80 backdrop-blur rounded-lg p-1 border border-slate-700/50 shadow-lg">
+            <div className="flex gap-1 bg-zinc-800/80 backdrop-blur rounded-lg p-1 border border-slate-700/50 shadow-lg">
               {previewModes.map(mode => (
                 <button
                   key={mode}
@@ -432,7 +432,7 @@ export function Playground() {
             <textarea
               value={playgroundClasses}
               onChange={(e) => setPlaygroundClasses(e.target.value)}
-              className="w-full bg-zinc-950 text-indigo-100 font-mono text-sm p-4 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none min-h-[100px]"
+              className="w-full bg-zinc-950 text-indigo-100 font-mono text-sm p-4 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none min-h-[180px] overflow-y-scroll editor-scrollbar"
               placeholder="Enter Tailwind classes here..."
               spellCheck="false"
             />
