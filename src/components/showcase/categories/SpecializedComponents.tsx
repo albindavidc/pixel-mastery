@@ -2,7 +2,8 @@ import React from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 import { Lock, Search, ShoppingCart, MessageSquare, LayoutDashboard, Sparkles, User, Settings, Check, CreditCard } from 'lucide-react';
 
-export function SpecializedComponents({ searchQuery, activeDomain, filterList }: { searchQuery: string, activeDomain: string, filterList?: string[] }) {
+export function useSpecializedComponentsComponents() {
+
   const allComponents = [
     {
       domain: 'Authentication',
@@ -205,8 +206,21 @@ export function SpecializedComponents({ searchQuery, activeDomain, filterList }:
     }
   ];
 
+    const unique = [];
+  const seen = new Set();
+  for (const c of allComponents) {
+    if (!seen.has(c.name.toLowerCase())) {
+      seen.add(c.name.toLowerCase());
+      unique.push(c);
+    }
+  }
+  return unique;
+}
+
+export function SpecializedComponents({ searchQuery, activeDomain, filterList, startIndex = 0 }: { searchQuery: string, activeDomain: string, filterList?: string[], startIndex?: number }) {
+  const allComponents = useSpecializedComponentsComponents();
   const domainComponents = allComponents.filter(c => c.domain === activeDomain);
-  const filtered = domainComponents.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+  const filtered = domainComponents.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   
   if (filtered.length === 0) return (
     <div className="text-center text-zinc-500 py-12 text-sm">
@@ -217,7 +231,7 @@ export function SpecializedComponents({ searchQuery, activeDomain, filterList }:
   return (
     <CategorySection title={`🧩 Specialized - ${activeDomain}`} count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

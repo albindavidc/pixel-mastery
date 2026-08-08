@@ -2,22 +2,9 @@ import React from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 import { Image as ImageIcon, PlayCircle, Maximize2, Headphones } from 'lucide-react';
 
-export function Media({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+export function useMediaComponents() {
+
   const components = [
-    {
-      name: 'Image',
-      description: 'Standard graphic display with optional captions.',
-      render: () => (
-        <div className="w-full max-w-[200px]">
-          <div className="w-full h-24 bg-zinc-800 rounded-t-lg flex items-center justify-center border border-zinc-700">
-            <ImageIcon className="w-6 h-6 text-zinc-600" />
-          </div>
-          <div className="bg-zinc-900 border-x border-b border-zinc-800 rounded-b-lg p-2 text-[10px] text-zinc-400 text-center">
-            Figure 1. Abstract placeholder.
-          </div>
-        </div>
-      )
-    },
     {
       name: 'Thumbnail',
       description: 'A small preview image for galleries or lists.',
@@ -36,18 +23,27 @@ export function Media({ searchQuery, filterList }: { searchQuery: string, filter
       )
     },
     {
-      name: 'Lightbox / Carousel',
-      description: 'An overlay for viewing full-size images or sliding through a gallery.',
+      name: 'Lightbox',
+      description: 'An overlay for viewing full-size images or sliding through a gallery. Component for Lightbox',
       render: () => (
-        <div className="relative w-full max-w-[200px] h-24 bg-zinc-900 border border-zinc-700 rounded overflow-hidden flex items-center justify-center group cursor-pointer">
-          <ImageIcon className="w-8 h-8 text-zinc-600" />
-          <div className="absolute inset-0 bg-zinc-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-             <Maximize2 className="w-5 h-5 text-white" />
-          </div>
-          <div className="absolute left-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-zinc-800/80 rounded-full flex items-center justify-center text-[8px] text-white">&lt;</div>
-          <div className="absolute right-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-zinc-800/80 rounded-full flex items-center justify-center text-[8px] text-white">&gt;</div>
-        </div>
-      )
+                <div className="flex flex-col gap-4 w-full h-full justify-center">
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+                    <div className="relative w-full max-w-[200px] h-24 bg-zinc-900 border border-zinc-700 rounded overflow-hidden flex items-center justify-center group cursor-pointer">
+                <ImageIcon className="w-8 h-8 text-zinc-600" />
+                <div className="absolute inset-0 bg-zinc-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                   <Maximize2 className="w-5 h-5 text-white" />
+                </div>
+                <div className="absolute left-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-zinc-800/80 rounded-full flex items-center justify-center text-[8px] text-white">&lt;</div>
+                <div className="absolute right-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-zinc-800/80 rounded-full flex items-center justify-center text-[8px] text-white">&gt;</div>
+              </div>
+                  </div>
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+                    <div className="w-full h-32 relative bg-zinc-950 rounded flex items-center justify-center overflow-hidden border border-zinc-800"><div className="absolute inset-0 bg-black/80 z-10 flex items-center justify-center"><div className="w-3/4 h-3/4 border-2 border-white/10 rounded overflow-hidden relative"><img src="https://images.unsplash.com/photo-1707343843437-caacff5cfa74?w=400&q=80" className="w-full h-full object-cover" /><button className="absolute top-2 right-2 text-white bg-black/50 w-6 h-6 rounded-full text-xs">×</button></div></div></div>
+                  </div>
+                </div>
+             )
     },
     {
       name: 'Video Player',
@@ -80,16 +76,27 @@ export function Media({ searchQuery, filterList }: { searchQuery: string, filter
           <Headphones className="w-4 h-4 text-zinc-500" />
         </div>
       )
-    }
+    },
+    {
+      name: 'PDF Viewer',
+      description: 'Component for PDF Viewer',
+      render: () => (
+        <div className="w-full h-32 bg-zinc-800 rounded border border-zinc-700 p-2 flex flex-col"><div className="w-full h-4 bg-zinc-700 rounded mb-2"></div><div className="w-full h-2 bg-zinc-700 rounded mb-1"></div><div className="w-3/4 h-2 bg-zinc-700 rounded"></div></div>
+      )
+    },
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function Media({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useMediaComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
     <CategorySection title="🖼️ Media" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

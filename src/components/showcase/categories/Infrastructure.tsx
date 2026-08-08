@@ -1,7 +1,8 @@
 import React from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 
-export function Infrastructure({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+export function useInfrastructureComponents() {
+
   const components = [
     {
       name: 'Router',
@@ -36,51 +37,126 @@ export function Infrastructure({ searchQuery, filterList }: { searchQuery: strin
       )
     },
     {
-      name: 'Provider / Context',
+      name: 'Provider',
       description: 'Wraps components to provide shared state without prop drilling.',
       alsoIn: ['Utility Components'],
       render: () => (
-        <div className="w-full p-2 border border-emerald-500/50 rounded-lg bg-emerald-500/5 flex flex-col gap-2">
-          <div className="text-[10px] text-emerald-500 font-bold px-1">&lt;AuthProvider&gt;</div>
-          <div className="p-2 border border-zinc-700 rounded bg-zinc-900 ml-4 flex flex-col gap-2">
-             <div className="text-[10px] text-zinc-500">&lt;App /&gt;</div>
-          </div>
-        </div>
-      )
+                <div className="flex flex-col gap-4 w-full h-full justify-center">
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+                    <div className="w-full p-2 border border-emerald-500/50 rounded-lg bg-emerald-500/5 flex flex-col gap-2">
+                <div className="text-[10px] text-emerald-500 font-bold px-1">&lt;AuthProvider&gt;</div>
+                <div className="p-2 border border-zinc-700 rounded bg-zinc-900 ml-4 flex flex-col gap-2">
+                   <div className="text-[10px] text-zinc-500">&lt;App /&gt;</div>
+                </div>
+              </div>
+                  </div>
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+                    <div className="w-full p-2 border border-emerald-500/50 rounded-lg bg-emerald-500/5 flex flex-col gap-2">
+                <div className="text-[10px] text-emerald-500 font-bold px-1">&lt;ThemeProvider&gt;</div>
+                <div className="p-2 border border-zinc-700 rounded bg-zinc-900 ml-4 flex flex-col gap-2">
+                   <div className="text-[10px] text-zinc-500">Child Component</div>
+                   <div className="p-2 border border-zinc-600 rounded bg-zinc-800 ml-4">
+                      <div className="text-[10px] text-emerald-400">Deep Child (Accesses Theme)</div>
+                   </div>
+                </div>
+              </div>
+                  </div>
+                </div>
+             )
     },
     {
       name: 'Portal',
       description: 'Renders children into a DOM node outside the parent hierarchy.',
       alsoIn: ['Utility Components'],
       render: () => (
-        <div className="w-full p-4 border-2 border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center bg-indigo-500/5 relative overflow-hidden">
-          <div className="text-xs text-indigo-400 mb-2">React Tree Parent</div>
-          <div className="absolute -right-4 -top-4 w-12 h-12 bg-rose-500/20 border border-rose-500/50 rounded-full flex items-center justify-center transform rotate-45">
-            <span className="text-[8px] text-rose-400">Portal</span>
-          </div>
-        </div>
-      )
+                <div className="flex flex-col gap-4 w-full h-full justify-center">
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+                    <div className="w-full p-4 border-2 border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center bg-indigo-500/5 relative overflow-hidden">
+                <div className="text-xs text-indigo-400 mb-2">React Tree Parent</div>
+                <div className="absolute -right-4 -top-4 w-12 h-12 bg-rose-500/20 border border-rose-500/50 rounded-full flex items-center justify-center transform rotate-45">
+                  <span className="text-[8px] text-rose-400">Portal</span>
+                </div>
+              </div>
+                  </div>
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+                    <div className="w-full p-4 border-2 border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center bg-indigo-500/5 relative overflow-hidden">
+                <div className="text-xs text-indigo-400 mb-2">React Tree Parent</div>
+                <div className="absolute -right-4 -top-4 w-12 h-12 bg-rose-500/20 border border-rose-500/50 rounded-full flex items-center justify-center transform rotate-45">
+                  <span className="text-[8px] text-rose-400">Portal</span>
+                </div>
+              </div>
+                  </div>
+                </div>
+             )
     },
     {
       name: 'ErrorBoundary',
       description: 'Catches JavaScript errors in their child component tree.',
       alsoIn: ['Utility Components'],
       render: () => (
-        <div className="w-full p-3 border border-rose-500 rounded-lg bg-rose-500/10 flex flex-col items-center justify-center gap-1">
-          <div className="text-xs font-bold text-rose-500">Something went wrong.</div>
-          <button className="text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded mt-1 hover:bg-rose-600">Try again</button>
-        </div>
+                <div className="flex flex-col gap-4 w-full h-full justify-center">
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+                    <div className="w-full p-3 border border-rose-500 rounded-lg bg-rose-500/10 flex flex-col items-center justify-center gap-1">
+                <div className="text-xs font-bold text-rose-500">Something went wrong.</div>
+                <button className="text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded mt-1 hover:bg-rose-600">Try again</button>
+              </div>
+                  </div>
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+                    <div className="w-full p-3 border border-rose-500 rounded-lg bg-rose-500/10 flex flex-col items-center justify-center gap-1">
+                <div className="text-xs font-bold text-rose-500">Something went wrong.</div>
+                <button className="text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded mt-1 hover:bg-rose-600">Try again</button>
+              </div>
+                  </div>
+                </div>
+             )
+    },
+    {
+      name: 'Core',
+      description: 'Component for Core',
+      render: () => (
+        <div className="w-full p-2 bg-zinc-900 border border-zinc-800 rounded border-dashed text-center text-xs text-zinc-500 font-mono">Core Configured</div>
       )
-    }
+    },
+    {
+      name: 'Localization (i18n)',
+      description: 'Component for Localization (i18n)',
+      render: () => (
+        <div className="w-full p-2 bg-zinc-900 border border-zinc-800 rounded border-dashed text-center text-xs text-zinc-500 font-mono">Localization (i18n) Configured</div>
+      )
+    },
+    {
+      name: 'Overlay Service',
+      description: 'Component for Overlay Service',
+      render: () => (
+        <div className="w-full p-2 bg-zinc-900 border border-zinc-800 rounded border-dashed text-center text-xs text-zinc-500 font-mono">Overlay Service Configured</div>
+      )
+    },
+    {
+      name: 'Theme',
+      description: 'Component for Theme',
+      render: () => (
+        <div className="w-full p-2 bg-zinc-900 border border-zinc-800 rounded border-dashed text-center text-xs text-zinc-500 font-mono">Theme Configured</div>
+      )
+    },
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function Infrastructure({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useInfrastructureComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
     <CategorySection title="⚙️ Infrastructure" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

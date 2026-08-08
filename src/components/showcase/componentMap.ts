@@ -1,60 +1,197 @@
 export const componentMap: Record<string, string[]> = {
-  layout: [
-    "Container", "Section", "Box", "Card", "Paper", "Panel", "Grid", "Grid List",
-    "Flex", "Stack", "Divider", "Separator", "Spacer", "Header", "Footer", 
-    "Sidebar", "Sidenav", "Toolbar", "Split Pane", "Resizable Panel", 
-    "Scroll Area", "Aspect Ratio"
+  "accessibility": [
+    "Skip Link",
+    "Focus Trap",
+    "Visually Hidden",
+    "ARIA Live Region",
+    "Keyboard Input"
   ],
-  navigation: [
-    "Navbar", "App Bar", "Toolbar", "Navigation Rail", "Bottom Navigation", 
-    "Menu", "Dropdown Menu", "Mega Menu", "Context Menu", "Breadcrumb", 
-    "Tabs", "Stepper", "Pagination", "Paginator", "Command Palette", "Sort Header"
+  "actions": [
+    "Button",
+    "Icon Button",
+    "Toggle Button",
+    "Button Group",
+    "Split Button",
+    "FAB",
+    "Toggle Switch",
+    "Checkbox",
+    "Checkbox Group",
+    "Radio Button",
+    "Radio Group",
+    "Slider",
+    "Range Slider",
+    "Chip",
+    "Badge",
+    "Icon",
+    "Link",
+    "Speed Dial",
+    "Knob"
   ],
-  actions: [
-    "Button", "Icon Button", "Button Toggle", "Button Group", "Split Button", 
-    "Floating Action Button (FAB)", "Toggle Button", "Slide Toggle / Switch", 
-    "Checkbox", "Checkbox Group", "Radio Button", "Radio Group", "Slider", 
-    "Range Slider", "Chip / Tag", "Badge", "Icon", "Link"
+  "data": [
+    "Table",
+    "Data Grid",
+    "List",
+    "Tree",
+    "Accordion",
+    "Description List",
+    "Avatar",
+    "Avatar Group",
+    "Calendar",
+    "Timeline",
+    "Chart",
+    "Metric Card",
+    "Carousel",
+    "Compare",
+    "Data View",
+    "Gallery",
+    "Image",
+    "Organization Chart",
+    "Pagination",
+    "Virtual Scroll"
   ],
-  form: [
-    "Form", "Form Field", "Fieldset", "Label", "Input", "Textarea", "Select", 
-    "Multi Select", "Date Picker", "Color Picker", "File Upload / Dropzone", 
-    "OTP Input", "Rating", "Signature Pad"
+  "feedback": [
+    "Alert",
+    "Toast",
+    "Notification",
+    "Progress Bar",
+    "Spinner",
+    "Skeleton",
+    "Empty State",
+    "Status Indicator",
+    "Message"
   ],
-  data: [
-    "Table", "Data Grid", "List", "Tree View", "Accordion / Collapse", 
-    "Description List", "Avatar", "Avatar Group", "Calendar", "Timeline", 
-    "Chart / Statistics", "Metric Card / KPI Card"
+  "form": [
+    "Form",
+    "Form Field",
+    "Fieldset",
+    "Label",
+    "Input",
+    "Textarea",
+    "Select",
+    "Multi Select",
+    "Date Picker",
+    "Color Picker",
+    "File Upload",
+    "OTP Input",
+    "Rating",
+    "Signature Pad",
+    "Autocomplete",
+    "Time Picker",
+    "DateTime Picker",
+    "Icon Field",
+    "Key Filter",
+    "Listbox"
   ],
-  feedback: [
-    "Alert / Banner", "Toast / Snackbar", "Notification", "Progress Bar", 
-    "Circular Progress / Spinner", "Skeleton", "Empty State", "Status Dot / Indicator"
+  "infrastructure": [
+    "Router",
+    "App Shell",
+    "Provider",
+    "Portal",
+    "ErrorBoundary",
+    "Core",
+    "Localization (i18n)",
+    "Overlay Service",
+    "Theme"
   ],
-  overlay: [
-    "Modal / Dialog", "Drawer / Offcanvas", "Tooltip", "Popover", "Backdrop / Overlay"
+  "layout": [
+    "Container",
+    "Section",
+    "Box",
+    "Card",
+    "Paper",
+    "Panel",
+    "Grid",
+    "Grid List",
+    "Flex",
+    "Stack",
+    "Divider",
+    "Separator",
+    "Spacer",
+    "Header",
+    "Footer",
+    "Sidebar",
+    "Toolbar",
+    "Split Pane/Panel/Screen/View",
+    "Resizable Panel",
+    "Scroll Area",
+    "Aspect Ratio",
+    "Splitter"
   ],
-  media: [
-    "Image", "Thumbnail", "Lightbox / Carousel", "Video Player", "Audio Player"
+  "media": [
+    "Thumbnail",
+    "Lightbox",
+    "Video Player",
+    "Audio Player",
+    "PDF Viewer"
   ],
-  typography: [
-    "Heading (h1-h6)", "Paragraph (p)", "Blockquote", "Code Block / Inline Code", 
-    "Keyboard Input (kbd)", "Mark / Highlight"
+  "navigation": [
+    "Navbar",
+    "Navigation Rail",
+    "Bottom Navigation",
+    "Menu",
+    "Dropdown Menu",
+    "Mega Menu",
+    "Context Menu",
+    "Breadcrumb",
+    "Tabs",
+    "Stepper",
+    "Command Palette",
+    "Sort Header",
+    "Dock",
+    "Drawer",
+    "Filter Drawer",
+    "Sidenav"
   ],
-  visual: [
-    "Shadow / Elevation", "Gradient", "Glassmorphism", "Mask", "Animation / Transition"
+  "overlay": [
+    "Dialog",
+    "Tooltip",
+    "Popover",
+    "Overlay",
+    "Bottom Sheet",
+    "Confirm Dialog",
+    "Confirm Popup",
+    "Hover Card"
   ],
-  utility: [
-    "Portal", "Provider / Context", "ErrorBoundary", "Visually Hidden", "Clipboard / Copy"
+  "specialized": [
+    "Login Form",
+    "SSO Buttons",
+    "Product Card",
+    "Shopping Cart",
+    "Checkout Form",
+    "Chat Bubble",
+    "Message Composer",
+    "Stat Widget",
+    "Activity Feed",
+    "Prompt Input",
+    "AI Response Block"
   ],
-  specialized: [
-    "Login Form", "SSO Buttons", "Product Card", "Shopping Cart", "Checkout Form", 
-    "Chat Bubble", "Message Composer", "Stat Widget", "Activity Feed", 
-    "Prompt Input", "AI Response Block"
+  "typography": [
+    "Heading (h1-h6)",
+    "Paragraph (p)",
+    "Blockquote",
+    "Code Block",
+    "Mark / Highlight",
+    "Caption",
+    "Text"
   ],
-  accessibility: [
-    "Skip Link", "Focus Trap", "Visually Hidden", "ARIA Live Region"
+  "utility": [
+    "Copy To Clipboard",
+    "Bind",
+    "Class Names",
+    "Filter Service",
+    "Fluid",
+    "Scroll Top"
   ],
-  infrastructure: [
-    "Router", "App Shell", "Provider / Context", "Portal", "ErrorBoundary"
+  "visual": [
+    "Shadow / Elevation",
+    "Gradient",
+    "Glassmorphism",
+    "Mask",
+    "Animation",
+    "Animate On Scroll",
+    "Auto Focus",
+    "Block UI",
+    "Ripple",
+    "Style Class"
   ]
 };

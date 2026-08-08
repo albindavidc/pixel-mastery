@@ -1,7 +1,8 @@
 import React from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 
-export function LayoutAndStructure({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+export function useLayoutAndStructureComponents() {
+
   const components = [
     {
       name: 'Container',
@@ -180,27 +181,32 @@ export function LayoutAndStructure({ searchQuery, filterList }: { searchQuery: s
       name: 'Sidebar',
       description: 'A side-anchored container for navigation or tools.',
       render: () => (
-        <div className="w-full h-32 bg-zinc-950 flex border border-zinc-800 rounded-lg overflow-hidden">
-          <div className="w-1/3 bg-zinc-900 border-r border-zinc-800 p-2 flex flex-col gap-2">
-            <div className="h-2 bg-zinc-700 rounded w-full"></div>
-            <div className="h-2 bg-zinc-700 rounded w-3/4"></div>
-            <div className="h-2 bg-zinc-700 rounded w-5/6"></div>
+        <div className="flex flex-col gap-4 w-full h-full justify-center">
+          <div className="w-full relative group">
+            <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+            <div className="w-full h-32 bg-zinc-950 flex border border-zinc-800 rounded-lg overflow-hidden">
+              <div className="w-1/3 bg-zinc-900 border-r border-zinc-800 p-2 flex flex-col gap-2">
+                <div className="h-2 bg-zinc-700 rounded w-full"></div>
+                <div className="h-2 bg-zinc-700 rounded w-3/4"></div>
+                <div className="h-2 bg-zinc-700 rounded w-5/6"></div>
+              </div>
+              <div className="flex-1 p-3">
+                <div className="h-4 bg-zinc-800 rounded w-1/2 mb-2"></div>
+                <div className="h-full bg-zinc-800/50 rounded border border-dashed border-zinc-700"></div>
+              </div>
+            </div>
           </div>
-          <div className="flex-1 p-3">
-            <div className="h-4 bg-zinc-800 rounded w-1/2 mb-2"></div>
-            <div className="h-full bg-zinc-800/50 rounded border border-dashed border-zinc-700"></div>
+          <div className="w-full relative group">
+            <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+            <div className="w-full h-32 flex border border-zinc-800 rounded overflow-hidden">
+              <div className="w-20 bg-zinc-900 border-r border-zinc-800 p-2 flex flex-col gap-3 items-center">
+                <div className="w-6 h-6 bg-indigo-500/20 rounded"></div>
+                <div className="w-6 h-6 bg-zinc-800 rounded"></div>
+                <div className="w-6 h-6 bg-zinc-800 rounded"></div>
+              </div>
+              <div className="flex-1 bg-zinc-950 flex items-center justify-center text-xs text-zinc-600">Main Content</div>
+            </div>
           </div>
-        </div>
-      )
-    },
-    {
-      name: 'Sidenav',
-      description: 'A specialized sidebar specifically for site navigation.',
-      render: () => (
-        <div className="w-24 h-32 bg-zinc-900 rounded-lg border border-zinc-800 flex flex-col items-center py-2 gap-3 shadow-lg">
-          <div className="w-6 h-6 rounded bg-indigo-500/20 border border-indigo-500/50"></div>
-          <div className="w-6 h-6 rounded bg-zinc-800"></div>
-          <div className="w-6 h-6 rounded bg-zinc-800"></div>
         </div>
       )
     },
@@ -210,15 +216,15 @@ export function LayoutAndStructure({ searchQuery, filterList }: { searchQuery: s
       alsoIn: ['Navigation'],
       render: () => (
         <div className="w-full bg-zinc-800 rounded-md p-1.5 flex gap-1 items-center shadow-sm">
-          <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
-          <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
-          <div className="w-px h-4 bg-zinc-600 mx-1"></div>
-          <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
-        </div>
+                <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
+                <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
+                <div className="w-px h-4 bg-zinc-600 mx-1"></div>
+                <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
+              </div>
       )
     },
     {
-      name: 'Split Pane',
+      name: 'Split Pane/Panel/Screen/View',
       description: 'A layout divided into adjustable resizable sections.',
       render: () => (
         <div className="w-full h-24 border border-zinc-700 rounded flex overflow-hidden">
@@ -242,14 +248,7 @@ export function LayoutAndStructure({ searchQuery, filterList }: { searchQuery: s
       description: 'A container that manages scrolling for overflowing content.',
       alsoIn: ['Utility Components'],
       render: () => (
-        <div className="w-full max-w-[200px] h-24 border border-zinc-700 rounded-md bg-zinc-900 relative overflow-hidden">
-          <div className="p-3 space-y-2">
-            {[1,2,3,4,5].map(i => <div key={i} className="h-3 bg-zinc-800 rounded w-full"></div>)}
-          </div>
-          <div className="absolute right-1 top-1 bottom-1 w-1.5 bg-zinc-800 rounded-full">
-            <div className="w-full h-8 bg-zinc-600 rounded-full"></div>
-          </div>
-        </div>
+        <div className="w-full h-24 bg-zinc-900 border border-zinc-800 rounded relative overflow-hidden p-2"><div className="space-y-2"><div className="h-4 bg-zinc-800 w-full rounded"></div><div className="h-4 bg-zinc-800 w-5/6 rounded"></div><div className="h-4 bg-zinc-800 w-4/6 rounded"></div><div className="h-4 bg-zinc-800 w-full rounded"></div></div><div className="absolute top-1 right-1 w-1.5 h-10 bg-zinc-700 rounded-full"></div></div>
       )
     },
     {
@@ -261,16 +260,27 @@ export function LayoutAndStructure({ searchQuery, filterList }: { searchQuery: s
            <div className="absolute inset-0 flex items-center justify-center text-zinc-500 font-mono text-sm">16:9</div>
         </div>
       )
-    }
+    },
+    {
+      name: 'Splitter',
+      description: 'Component for Splitter',
+      render: () => (
+        <div className="w-full h-24 border border-zinc-800 rounded flex overflow-hidden"><div className="flex-1 bg-zinc-900 flex items-center justify-center text-zinc-500 text-sm">Pane 1</div><div className="w-1 bg-zinc-700 cursor-col-resize hover:bg-indigo-500 transition-colors"></div><div className="flex-1 bg-zinc-900 flex items-center justify-center text-zinc-500 text-sm">Pane 2</div></div>
+      )
+    },
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function LayoutAndStructure({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useLayoutAndStructureComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
     <CategorySection title="🏗️ Layout & Structure" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

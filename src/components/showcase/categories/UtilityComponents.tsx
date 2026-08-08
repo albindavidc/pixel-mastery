@@ -1,65 +1,13 @@
 import React, { useState } from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 
-export function UtilityComponents({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+export function useUtilityComponentsComponents() {
+
   const [copied, setCopied] = useState(false);
   
   const components = [
     {
-      name: 'Portal',
-      description: 'Renders children into a DOM node outside the parent hierarchy.',
-      alsoIn: ['Infrastructure'],
-      render: () => (
-        <div className="w-full p-4 border-2 border-dashed border-indigo-500/50 rounded-lg flex flex-col items-center justify-center bg-indigo-500/5 relative overflow-hidden">
-          <div className="text-xs text-indigo-400 mb-2">React Tree Parent</div>
-          <div className="absolute -right-4 -top-4 w-12 h-12 bg-rose-500/20 border border-rose-500/50 rounded-full flex items-center justify-center transform rotate-45">
-            <span className="text-[8px] text-rose-400">Portal</span>
-          </div>
-        </div>
-      )
-    },
-    {
-      name: 'Provider / Context',
-      description: 'Wraps components to provide shared state without prop drilling.',
-      alsoIn: ['Infrastructure'],
-      render: () => (
-        <div className="w-full p-2 border border-emerald-500/50 rounded-lg bg-emerald-500/5 flex flex-col gap-2">
-          <div className="text-[10px] text-emerald-500 font-bold px-1">&lt;ThemeProvider&gt;</div>
-          <div className="p-2 border border-zinc-700 rounded bg-zinc-900 ml-4 flex flex-col gap-2">
-             <div className="text-[10px] text-zinc-500">Child Component</div>
-             <div className="p-2 border border-zinc-600 rounded bg-zinc-800 ml-4">
-                <div className="text-[10px] text-emerald-400">Deep Child (Accesses Theme)</div>
-             </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      name: 'ErrorBoundary',
-      description: 'Catches JavaScript errors in their child component tree.',
-      alsoIn: ['Infrastructure'],
-      render: () => (
-        <div className="w-full p-3 border border-rose-500 rounded-lg bg-rose-500/10 flex flex-col items-center justify-center gap-1">
-          <div className="text-xs font-bold text-rose-500">Something went wrong.</div>
-          <button className="text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded mt-1 hover:bg-rose-600">Try again</button>
-        </div>
-      )
-    },
-    {
-      name: 'Visually Hidden',
-      description: 'Hides content visually while remaining accessible to screen readers.',
-      alsoIn: ['Accessibility'],
-      render: () => (
-        <div className="w-full flex items-center justify-center h-20 border border-dashed border-zinc-700 bg-zinc-900 rounded relative">
-          <span className="text-xs text-zinc-500">Visible content only</span>
-          <div className="absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0 [clip:rect(0,0,0,0)]">
-            This text is read by screen readers but invisible on screen.
-          </div>
-        </div>
-      )
-    },
-    {
-      name: 'Clipboard / Copy',
+      name: 'Copy To Clipboard',
       description: 'Utility wrapper for copy-to-clipboard functionality.',
       render: () => (
         <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-700 rounded p-1 pl-3">
@@ -72,16 +20,55 @@ export function UtilityComponents({ searchQuery, filterList }: { searchQuery: st
           </button>
         </div>
       )
+    },
+    {
+      name: 'Bind',
+      description: 'Component for Bind',
+      render: () => (
+        <div className="flex flex-col gap-2 w-full max-w-xs"><input type="text" className="bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm" defaultValue="Two-way bound" /><div className="p-2 bg-zinc-800/50 rounded border border-zinc-800 text-sm text-zinc-300 font-mono">Output: Two-way bound</div></div>
+      )
+    },
+    {
+      name: 'Class Names',
+      description: 'Component for Class Names',
+      render: () => (
+        <div className="p-3 border border-zinc-800 rounded bg-zinc-900 text-sm font-mono text-zinc-400 break-all"><span className="text-indigo-400">clsx</span>('px-4', 'py-2', active && 'bg-indigo-500')<br/>// "px-4 py-2 bg-indigo-500"</div>
+      )
+    },
+    {
+      name: 'Filter Service',
+      description: 'Component for Filter Service',
+      render: () => (
+        <div className="w-full max-w-xs flex flex-col gap-2"><div className="flex gap-2"><input type="text" className="flex-1 bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-sm" placeholder="Filter..." defaultValue="app"/><select className="bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-sm"><option>Contains</option></select></div><div className="p-2 border border-zinc-800 rounded bg-zinc-900/50 flex flex-col gap-1 text-sm"><div className="text-zinc-500">Banana</div><div className="text-indigo-400 font-bold bg-indigo-500/10 px-1 rounded w-max">Apple</div><div className="text-zinc-500">Orange</div></div></div>
+      )
+    },
+    {
+      name: 'Fluid',
+      description: 'Component for Fluid',
+      render: () => (
+        <div className="w-full p-4 border border-zinc-800 rounded border-dashed bg-zinc-900/30 flex flex-col gap-2"><div className="w-full p-2 bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-center rounded text-sm">w-full (100%)</div><input type="text" className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm" placeholder="w-full input" /></div>
+      )
+    },
+    {
+      name: 'Scroll Top',
+      description: 'Component for Scroll To Top',
+      render: () => (
+        <div className="w-full h-24 border border-zinc-800 rounded bg-zinc-900 overflow-y-auto relative p-2"><div className="h-48 text-xs text-zinc-600 flex flex-col justify-between"><span>Top of content</span><span>Scroll down ↓</span><span>Bottom of content</span></div><button className="absolute bottom-2 right-2 w-8 h-8 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg">↑</button></div>
+      )
     }
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function UtilityComponents({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useUtilityComponentsComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
-    <CategorySection title="🧰 Utility Components" count={filtered.length} componentsList={filtered}>
+    <CategorySection title="🧰 Utilities" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

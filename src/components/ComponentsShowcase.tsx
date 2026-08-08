@@ -1,41 +1,33 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Search, ArrowUp } from 'lucide-react';
-import { LayoutAndStructure } from './showcase/categories/LayoutAndStructure';
-import { Navigation } from './showcase/categories/Navigation';
-import { ActionsAndControls } from './showcase/categories/ActionsAndControls';
-import { FormAndDataEntry } from './showcase/categories/FormAndDataEntry';
-import { DataDisplay } from './showcase/categories/DataDisplay';
-import { FeedbackAndStatus } from './showcase/categories/FeedbackAndStatus';
-import { OverlayAndPopups } from './showcase/categories/OverlayAndPopups';
-import { Media } from './showcase/categories/Media';
-import { Typography } from './showcase/categories/Typography';
-import { VisualEffects } from './showcase/categories/VisualEffects';
-import { UtilityComponents } from './showcase/categories/UtilityComponents';
-import { SpecializedComponents } from './showcase/categories/SpecializedComponents';
-import { Accessibility } from './showcase/categories/Accessibility';
-import { Infrastructure } from './showcase/categories/Infrastructure';
+import { LayoutAndStructure, useLayoutAndStructureComponents } from './showcase/categories/LayoutAndStructure';
+import { Navigation, useNavigationComponents } from './showcase/categories/Navigation';
+import { ActionsAndControls, useActionsAndControlsComponents } from './showcase/categories/ActionsAndControls';
+import { FormAndDataEntry, useFormAndDataEntryComponents } from './showcase/categories/FormAndDataEntry';
+import { DataDisplay, useDataDisplayComponents } from './showcase/categories/DataDisplay';
+import { FeedbackAndStatus, useFeedbackAndStatusComponents } from './showcase/categories/FeedbackAndStatus';
+import { OverlayAndPopups, useOverlayAndPopupsComponents } from './showcase/categories/OverlayAndPopups';
+import { Media, useMediaComponents } from './showcase/categories/Media';
+import { Typography, useTypographyComponents } from './showcase/categories/Typography';
+import { VisualEffects, useVisualEffectsComponents } from './showcase/categories/VisualEffects';
+import { UtilityComponents, useUtilityComponentsComponents } from './showcase/categories/UtilityComponents';
+import { SpecializedComponents, useSpecializedComponentsComponents } from './showcase/categories/SpecializedComponents';
+import { Accessibility, useAccessibilityComponents } from './showcase/categories/Accessibility';
+import { Infrastructure, useInfrastructureComponents } from './showcase/categories/Infrastructure';
 import { componentMap } from './showcase/componentMap';
 
 const ESSENTIAL_20 = [
-  'Button', 'Input', 'Textarea', 'Select', 'Checkbox', 'Radio Button', 'Switch', 'Form',
-  'Card', 'Table', 'List', 'Navbar', 'Sidebar', 'Menu', 'Tabs', 'Modal', 'Dialog', 'Tooltip',
-  'Toast', 'Snackbar'
+  "Button", "Input", "Textarea", "Select", "Autocomplete", "Checkbox", "Radio Button", "Toggle Switch", "Slider", "Date Picker", "Time Picker", "File Upload", "Card", "Table", "Data Grid", "List", "Accordion", "Tabs", "Tree", "Avatar"
 ];
 
 const TOP_50 = [
-  'Container', 'Card', 'Grid', 'Flex', 'Navbar', 'Sidebar', 'Menu', 'Dropdown Menu', 'Tabs',
-  'Breadcrumb', 'Pagination', 'Button', 'Icon Button', 'Toggle Button', 'Badge', 'Chip', 'Form',
-  'Input', 'Label', 'Textarea', 'Select', 'Checkbox', 'Radio Button', 'Switch', 'Slider',
-  'Autocomplete', 'Search Input', 'Date Picker', 'File Upload', 'Table', 'Data Grid', 'List',
-  'Accordion', 'Avatar', 'Chart', 'Toast', 'Snackbar', 'Alert', 'Notification', 'Progress Bar',
-  'Spinner', 'Skeleton Loader', 'Modal', 'Dialog', 'Drawer', 'Tooltip', 'Popover', 'Image',
-  'Video Player', 'Code Block'
+  "Button", "Input", "Textarea", "Select", "Autocomplete", "Checkbox", "Radio Button", "Toggle Switch", "Slider", "Date Picker", "Time Picker", "File Upload", "Card", "Table", "Data Grid", "List", "Accordion", "Tabs", "Tree", "Avatar", "Navbar", "Sidebar", "Menu", "Dropdown Menu", "Breadcrumb", "Pagination", "Stepper", "Dialog", "Confirm Dialog", "Drawer", "Popover", "Tooltip", "Bottom Sheet", "Toast", "Status Indicator", "Alert", "Message", "Notification", "Progress Bar", "Spinner", "Skeleton", "Badge", "Image", "Carousel", "Toolbar", "Divider", "Grid", "Container", "Form", "Form Field", "Label"
 ];
 
 const CATEGORIES = [
   { id: 'all', label: 'All', icon: '' },
   { id: 'essential', label: 'Essential 20', icon: '⭐' },
-  { id: 'top50', label: 'Most Used 50', icon: '🔥' },
+  { id: 'top50', label: 'Most Used 51', icon: '🔥' },
   { id: 'layout', label: 'Layout & Structure', icon: '🏗️' },
   { id: 'navigation', label: 'Navigation', icon: '🧭' },
   { id: 'actions', label: 'Actions & Controls', icon: '🎯' },
@@ -45,8 +37,8 @@ const CATEGORIES = [
   { id: 'overlay', label: 'Overlay & Popups', icon: '🪟' },
   { id: 'media', label: 'Media', icon: '🖼️' },
   { id: 'typography', label: 'Typography', icon: '🔤' },
-  { id: 'visual', label: 'Visual Effects', icon: '🎨' },
-  { id: 'utility', label: 'Utility Components', icon: '🧰' },
+  { id: 'visual', label: 'Effects & Interaction', icon: '🎨' },
+  { id: 'utility', label: 'Utilities', icon: '🧰' },
   { id: 'specialized', label: 'Specialized Components', icon: '🧩' },
   { id: 'accessibility', label: 'Accessibility', icon: '♿' },
   { id: 'infrastructure', label: 'Infrastructure', icon: '⚙️' }
@@ -54,7 +46,52 @@ const CATEGORIES = [
 
 const SPECIALIZED_DOMAINS = ['Authentication', 'Commerce', 'Messaging', 'Dashboard', 'AI'];
 
+
+import { ComponentCard } from './showcase/ComponentCard';
+import { CategorySection } from './showcase/ComponentCard';
+
+
+
 export default function ComponentsShowcase() {
+  const LayoutAndStructureComps = useLayoutAndStructureComponents();
+  const NavigationComps = useNavigationComponents();
+  const ActionsAndControlsComps = useActionsAndControlsComponents();
+  const FormAndDataEntryComps = useFormAndDataEntryComponents();
+  const DataDisplayComps = useDataDisplayComponents();
+  const FeedbackAndStatusComps = useFeedbackAndStatusComponents();
+  const OverlayAndPopupsComps = useOverlayAndPopupsComponents();
+  const MediaComps = useMediaComponents();
+  const TypographyComps = useTypographyComponents();
+  const VisualEffectsComps = useVisualEffectsComponents();
+  const UtilityComponentsComps = useUtilityComponentsComponents();
+  const SpecializedComponentsComps = useSpecializedComponentsComponents();
+  const AccessibilityComps = useAccessibilityComponents();
+  const InfrastructureComps = useInfrastructureComponents();
+
+  const ALL_COMPONENTS = [
+    ...LayoutAndStructureComps,
+    ...NavigationComps,
+    ...ActionsAndControlsComps,
+    ...FormAndDataEntryComps,
+    ...DataDisplayComps,
+    ...FeedbackAndStatusComps,
+    ...OverlayAndPopupsComps,
+    ...MediaComps,
+    ...TypographyComps,
+    ...VisualEffectsComps,
+    ...UtilityComponentsComps,
+    ...SpecializedComponentsComps,
+    ...AccessibilityComps,
+    ...InfrastructureComps
+  ];
+
+  const COMPONENT_MAP_LOWER = new Map();
+  ALL_COMPONENTS.forEach(c => {
+    if (!COMPONENT_MAP_LOWER.has(c.name.toLowerCase())) {
+      COMPONENT_MAP_LOWER.set(c.name.toLowerCase(), c);
+    }
+  });
+
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDomain, setActiveDomain] = useState('Authentication');
@@ -92,30 +129,90 @@ export default function ComponentsShowcase() {
     }
   };
 
+  
   const getFilterList = () => {
     if (activeCategory === 'essential') return ESSENTIAL_20;
     if (activeCategory === 'top50') return TOP_50;
     return undefined;
   };
-
   const filterList = getFilterList();
 
+  
+  // Calculate start indices
+  const categoryStartIndices = {};
+  let currentIndex = 0;
+  
+  for (const cat of CATEGORIES) {
+    if (['all', 'essential', 'top50'].includes(cat.id)) continue;
+    const catList = activeCategory === 'all' ? deduplicateList(cat.id) : filterList;
+    
+    // In activeCategory !== 'all', if it's the active category, start at 0
+    // Actually, if it's not 'all', it's just one category, so it starts at 0 anyway.
+    
+    categoryStartIndices[cat.id] = currentIndex;
+    
+    if (activeCategory === 'all') {
+      const allComps = componentMap[cat.id] || [];
+      const catFiltered = allComps.filter(name => !catList || catList.some(f => name.toLowerCase().includes(f.toLowerCase())));
+      // Wait, we need to filter by searchQuery
+      const catSearchFiltered = catFiltered.filter(name => !searchQuery || name.toLowerCase().includes(searchQuery.toLowerCase()));
+      currentIndex += catSearchFiltered.length;
+    }
+  }
+
   const components = [
-    { id: 'layout', component: <LayoutAndStructure searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'navigation', component: <Navigation searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'actions', component: <ActionsAndControls searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'form', component: <FormAndDataEntry searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'data', component: <DataDisplay searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'feedback', component: <FeedbackAndStatus searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'overlay', component: <OverlayAndPopups searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'media', component: <Media searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'typography', component: <Typography searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'visual', component: <VisualEffects searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'utility', component: <UtilityComponents searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'specialized', component: <SpecializedComponents searchQuery={searchQuery} activeDomain={activeDomain} filterList={filterList} /> },
-    { id: 'accessibility', component: <Accessibility searchQuery={searchQuery} filterList={filterList} /> },
-    { id: 'infrastructure', component: <Infrastructure searchQuery={searchQuery} filterList={filterList} /> }
+    { id: 'layout', component: <LayoutAndStructure searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('layout') : filterList} startIndex={categoryStartIndices['layout'] || 0} /> },
+    { id: 'navigation', component: <Navigation searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('navigation') : filterList} startIndex={categoryStartIndices['navigation'] || 0} /> },
+    { id: 'actions', component: <ActionsAndControls searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('actions') : filterList} startIndex={categoryStartIndices['actions'] || 0} /> },
+    { id: 'form', component: <FormAndDataEntry searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('form') : filterList} startIndex={categoryStartIndices['form'] || 0} /> },
+    { id: 'data', component: <DataDisplay searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('data') : filterList} startIndex={categoryStartIndices['data'] || 0} /> },
+    { id: 'feedback', component: <FeedbackAndStatus searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('feedback') : filterList} startIndex={categoryStartIndices['feedback'] || 0} /> },
+    { id: 'overlay', component: <OverlayAndPopups searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('overlay') : filterList} startIndex={categoryStartIndices['overlay'] || 0} /> },
+    { id: 'media', component: <Media searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('media') : filterList} startIndex={categoryStartIndices['media'] || 0} /> },
+    { id: 'typography', component: <Typography searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('typography') : filterList} startIndex={categoryStartIndices['typography'] || 0} /> },
+    { id: 'visual', component: <VisualEffects searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('visual') : filterList} startIndex={categoryStartIndices['visual'] || 0} /> },
+    { id: 'utility', component: <UtilityComponents searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('utility') : filterList} startIndex={categoryStartIndices['utility'] || 0} /> },
+    { id: 'specialized', component: <SpecializedComponents searchQuery={searchQuery} activeDomain={activeDomain} filterList={activeCategory === 'all' ? deduplicateList('specialized') : filterList} startIndex={categoryStartIndices['specialized'] || 0} /> },
+    { id: 'accessibility', component: <Accessibility searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('accessibility') : filterList} startIndex={categoryStartIndices['accessibility'] || 0} /> },
+    { id: 'infrastructure', component: <Infrastructure searchQuery={searchQuery} filterList={activeCategory === 'all' ? deduplicateList('infrastructure') : filterList} startIndex={categoryStartIndices['infrastructure'] || 0} /> }
   ];
+
+
+  function deduplicateList(catId) {
+    // Return undefined if not 'all'
+    if (activeCategory !== 'all') return undefined;
+    
+    // Calculate global seen list across all categories in order
+    const seen = new Set();
+    const result = [];
+    for (const cat of CATEGORIES) {
+      if (['all', 'essential', 'top50'].includes(cat.id)) continue;
+      const comps = componentMap[cat.id] || [];
+      for (const comp of comps) {
+        if (!seen.has(comp.toLowerCase())) {
+          seen.add(comp.toLowerCase());
+          if (cat.id === catId) result.push(comp);
+        }
+      }
+    }
+    return result;
+  }
+
+    const renderCustomTab = (title, list) => {
+    let validList = list.map(name => COMPONENT_MAP_LOWER.get(name.toLowerCase())).filter(Boolean);
+    let filteredList = validList.filter(comp => !searchQuery || comp.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    return (
+      <CategorySection title={title} count={filteredList.length} componentsList={filteredList.map(comp => ({name: comp.name}))}>
+        {filteredList.map((comp, idx) => (
+          <ComponentCard key={comp.name} name={comp.name} description={comp.description} alsoIn={comp.alsoIn} index={idx + 1}>
+            {comp.render()}
+          </ComponentCard>
+        ))}
+      </CategorySection>
+    );
+  };
+
 
   const visibleComponents = (activeCategory === 'all' || activeCategory === 'essential' || activeCategory === 'top50') 
     ? components 
@@ -151,7 +248,7 @@ export default function ComponentsShowcase() {
                 }`}
               >
                 {cat.icon && <span>{cat.icon}</span>}
-                {cat.label}
+                {cat.label} {cat.id === 'all' && `(${Object.values(componentMap).flat().filter((v, i, a) => a.indexOf(v) === i).length})`} {!['all', 'essential', 'top50'].includes(cat.id) && componentMap[cat.id] && `(${componentMap[cat.id].length})`}
               </button>
             ))}
           </div>
@@ -212,7 +309,9 @@ export default function ComponentsShowcase() {
               </div>
             </div>
           )}
-          {visibleComponents.map(c => (
+          {activeCategory === 'essential' && renderCustomTab('⭐ Essential 20', ESSENTIAL_20)}
+          {activeCategory === 'top50' && renderCustomTab('🔥 Most Used 51', TOP_50)}
+          {activeCategory !== 'essential' && activeCategory !== 'top50' && components.filter(c => activeCategory === 'all' || c.id === activeCategory).map(c => (
             <div key={c.id} id={`category-${c.id}`} className="scroll-mt-40">
               {c.component}
             </div>

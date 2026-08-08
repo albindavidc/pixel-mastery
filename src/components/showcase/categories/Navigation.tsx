@@ -1,51 +1,41 @@
 import React, { useState } from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
-import { ChevronDown, MoreVertical, Search, Menu, Home, Settings, User } from 'lucide-react';
+import { ChevronDown, MoreVertical, Search, Menu, Home, Settings, User, X } from 'lucide-react';
 
-export function Navigation({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+export function useNavigationComponents() {
+
   const [activeTab, setActiveTab] = useState(0);
 
   const components = [
     {
       name: 'Navbar',
-      description: 'Top-level navigation header with brand and primary links.',
+      description: 'Top-level navigation header with brand and primary links. A dedicated application header, often with context actions.',
       render: () => (
-        <div className="w-full bg-zinc-900 border-b border-zinc-800 p-2 flex justify-between items-center rounded">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-indigo-500 rounded"></div>
-            <div className="text-sm font-semibold text-white">Brand</div>
-          </div>
-          <div className="flex gap-3 text-xs text-zinc-400">
-            <span className="text-zinc-200">Home</span>
-            <span>About</span>
-            <span>Contact</span>
-          </div>
-        </div>
-      )
-    },
-    {
-      name: 'App Bar',
-      description: 'A dedicated application header, often with context actions.',
-      render: () => (
-        <div className="w-full bg-indigo-600 p-2 flex justify-between items-center rounded shadow-md text-white">
-          <Menu className="w-4 h-4" />
-          <div className="text-sm font-medium">Dashboard</div>
-          <Search className="w-4 h-4" />
-        </div>
-      )
-    },
-    {
-      name: 'Toolbar',
-      description: 'A horizontal container grouping action buttons.',
-      alsoIn: ['Layout & Structure'],
-      render: () => (
-        <div className="w-full bg-zinc-800 rounded-md p-1.5 flex gap-1 items-center shadow-sm">
-          <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
-          <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
-          <div className="w-px h-4 bg-zinc-600 mx-1"></div>
-          <div className="w-6 h-6 bg-zinc-700 rounded hover:bg-zinc-600 transition-colors"></div>
-        </div>
-      )
+                  <div className="flex flex-col gap-4 w-full">
+                    <div className="w-full relative group">
+                      <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+                      <div className="w-full bg-zinc-900 border-b border-zinc-800 p-2 flex justify-between items-center rounded">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 bg-indigo-500 rounded"></div>
+                  <div className="text-sm font-semibold text-white">Brand</div>
+                </div>
+                <div className="flex gap-3 text-xs text-zinc-400">
+                  <span className="text-zinc-200">Home</span>
+                  <span>About</span>
+                  <span>Contact</span>
+                </div>
+              </div>
+                    </div>
+                    <div className="w-full relative group">
+                      <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+                      <div className="w-full bg-indigo-600 p-2 flex justify-between items-center rounded shadow-md text-white">
+                <Menu className="w-4 h-4" />
+                <div className="text-sm font-medium">Dashboard</div>
+                <Search className="w-4 h-4" />
+              </div>
+                    </div>
+                  </div>
+               )
     },
     {
       name: 'Navigation Rail',
@@ -197,32 +187,6 @@ export function Navigation({ searchQuery, filterList }: { searchQuery: string, f
       )
     },
     {
-      name: 'Pagination',
-      description: 'Controls for navigating between pages of content.',
-      render: () => (
-        <div className="flex items-center gap-1">
-          <button className="px-2 py-1 bg-zinc-800 rounded border border-zinc-700 text-zinc-400">&lt;</button>
-          <button className="px-2.5 py-1 bg-indigo-500 rounded text-white text-sm">1</button>
-          <button className="px-2.5 py-1 hover:bg-zinc-800 rounded text-zinc-400 text-sm">2</button>
-          <button className="px-2.5 py-1 hover:bg-zinc-800 rounded text-zinc-400 text-sm">3</button>
-          <button className="px-2 py-1 bg-zinc-800 rounded border border-zinc-700 text-zinc-400">&gt;</button>
-        </div>
-      )
-    },
-    {
-      name: 'Paginator',
-      description: 'Advanced pagination with page size controls.',
-      render: () => (
-        <div className="w-full flex justify-between items-center bg-zinc-900 p-2 rounded border border-zinc-800 text-xs">
-          <div className="text-zinc-500">1-10 of 42</div>
-          <div className="flex gap-2 items-center">
-            <span className="text-zinc-500">Rows:</span>
-            <span className="bg-zinc-800 px-2 py-1 rounded">10</span>
-          </div>
-        </div>
-      )
-    },
-    {
       name: 'Command Palette',
       description: 'A global search and command execution interface (Cmd+K).',
       render: () => (
@@ -247,16 +211,75 @@ export function Navigation({ searchQuery, filterList }: { searchQuery: string, f
           <ChevronDown className="w-3 h-3 text-indigo-400" />
         </div>
       )
+    },
+    {
+      name: 'Dock',
+      description: 'Component for Dock',
+      render: () => (
+        <div className="flex justify-center gap-2 p-3 bg-zinc-900/80 backdrop-blur rounded-2xl border border-zinc-800 w-max mx-auto shadow-2xl"><div className="w-10 h-10 bg-indigo-500/20 border border-indigo-500/50 rounded-xl hover:-translate-y-2 transition-transform cursor-pointer"></div><div className="w-10 h-10 bg-rose-500/20 border border-rose-500/50 rounded-xl hover:-translate-y-2 transition-transform cursor-pointer"></div><div className="w-px h-10 bg-zinc-700 mx-1"></div><div className="w-10 h-10 bg-emerald-500/20 border border-emerald-500/50 rounded-xl hover:-translate-y-2 transition-transform cursor-pointer"></div></div>
+      )
+    },
+    {
+      name: 'Drawer',
+      description: 'A panel that slides in from the edge of the screen.',
+      render: () => (
+        <div className="w-full h-32 relative bg-zinc-950 border border-zinc-800 rounded overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center text-zinc-600 text-xs">Content Area</div>
+                <div className="absolute top-0 bottom-0 left-0 w-24 bg-zinc-900 border-r border-zinc-700 shadow-xl p-2 flex flex-col gap-2">
+                  <div className="w-full h-2 bg-zinc-700 rounded-sm"></div>
+                  <div className="w-3/4 h-2 bg-zinc-800 rounded-sm"></div>
+                  <div className="w-5/6 h-2 bg-zinc-800 rounded-sm"></div>
+                </div>
+              </div>
+      )
+    },
+    {
+      name: 'Filter Drawer',
+      description: 'A drawer specialized for filtering content.',
+      render: () => (
+        <div className="relative w-full h-32 bg-zinc-950 rounded overflow-hidden border border-dashed border-zinc-800 flex justify-end">
+                <div className="absolute inset-0 bg-zinc-950/40 z-10"></div>
+                <div className="relative z-20 w-1/2 h-full bg-zinc-900 border-l border-zinc-700 shadow-2xl p-3 flex flex-col">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-xs font-bold text-white">Filters</span>
+                    <X className="w-3 h-3 text-zinc-500" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-2 bg-zinc-800 rounded w-full"></div>
+                    <div className="h-2 bg-zinc-800 rounded w-3/4"></div>
+                  </div>
+                </div>
+              </div>
+      )
+    },
+    {
+      name: 'Sidenav',
+      description: 'Component for Sidenav',
+      render: () => (
+        <div className="w-full h-32 flex border border-zinc-800 rounded overflow-hidden">
+          <div className="w-24 bg-zinc-900 border-r border-zinc-800 p-2 flex flex-col gap-2">
+            <div className="text-[10px] uppercase text-zinc-500 font-semibold mb-1">Menu</div>
+            <div className="w-full h-4 bg-indigo-500/20 border-l-2 border-indigo-500 rounded-r-sm"></div>
+            <div className="w-full h-4 bg-zinc-800 rounded-sm"></div>
+            <div className="w-full h-4 bg-zinc-800 rounded-sm"></div>
+          </div>
+          <div className="flex-1 bg-zinc-950 flex items-center justify-center text-xs text-zinc-600">Page</div>
+        </div>
+      )
     }
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function Navigation({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useNavigationComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
     <CategorySection title="🧭 Navigation" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

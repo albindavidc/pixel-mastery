@@ -2,7 +2,51 @@ import React, { useState } from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 import { ChevronDown, Calendar as CalendarIcon, Upload, Star } from 'lucide-react';
 
-export function FormAndDataEntry({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+
+function DatePickerDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="relative w-full max-w-[240px]">
+      <div 
+        className="w-full bg-zinc-950 border border-indigo-500 rounded-md py-2 pl-10 pr-3 text-sm text-zinc-100 flex items-center justify-between cursor-pointer"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>2024-05-15</span>
+      </div>
+      <CalendarIcon className="absolute left-3 top-2.5 w-4 h-4 text-indigo-400 pointer-events-none" />
+      
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-2 w-64 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl p-3 z-10">
+          <div className="flex justify-between items-center mb-3">
+            <button className="text-zinc-400 hover:text-white">&lt;</button>
+            <div className="text-sm font-medium text-white">May 2024</div>
+            <button className="text-zinc-400 hover:text-white">&gt;</button>
+          </div>
+          <div className="grid grid-cols-7 gap-1 text-center mb-1">
+            {['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => (
+              <div key={d} className="text-[10px] text-zinc-500">{d}</div>
+            ))}
+          </div>
+          <div className="grid grid-cols-7 gap-1">
+            {Array.from({length: 31}, (_, i) => i + 1).map(d => (
+              <button 
+                key={d} 
+                className={`w-6 h-6 rounded-full text-xs flex items-center justify-center ${
+                  d === 15 ? 'bg-indigo-500 text-white' : 'text-zinc-300 hover:bg-zinc-800'
+                }`}
+              >
+                {d}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function useFormAndDataEntryComponents() {
+
   const [rating, setRating] = useState(3);
 
   const components = [
@@ -45,13 +89,22 @@ export function FormAndDataEntry({ searchQuery, filterList }: { searchQuery: str
     },
     {
       name: 'Label',
-      description: 'An accessible caption for a form control.',
+      description: 'An accessible caption for a form control. Component for Label',
       render: () => (
-        <label className="text-sm font-medium text-zinc-200 flex items-center gap-2">
-          Password
-          <span className="text-[10px] bg-zinc-800 text-zinc-400 px-1.5 rounded">Required</span>
-        </label>
-      )
+                <div className="flex flex-col gap-4 w-full h-full justify-center">
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 1</div>
+                    <label className="text-sm font-medium text-zinc-200 flex items-center gap-2">
+                Password
+                <span className="text-[10px] bg-zinc-800 text-zinc-400 px-1.5 rounded">Required</span>
+              </label>
+                  </div>
+                  <div className="w-full relative group">
+                    <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
+                    <div className="text-sm text-zinc-400">Sample typography for Label</div>
+                  </div>
+                </div>
+             )
     },
     {
       name: 'Input',
@@ -101,13 +154,8 @@ export function FormAndDataEntry({ searchQuery, filterList }: { searchQuery: str
     },
     {
       name: 'Date Picker',
-      description: 'A field for selecting a specific date.',
-      render: () => (
-        <div className="relative w-full">
-          <input type="text" placeholder="YYYY-MM-DD" className="w-full bg-zinc-950 border border-zinc-700 rounded-md py-2 pl-10 pr-3 text-sm text-zinc-100" />
-          <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
-        </div>
-      )
+      description: 'A field for selecting a specific date with a calendar.',
+      render: () => <DatePickerDemo />
     },
     {
       name: 'Color Picker',
@@ -122,7 +170,7 @@ export function FormAndDataEntry({ searchQuery, filterList }: { searchQuery: str
       )
     },
     {
-      name: 'File Upload / Dropzone',
+      name: 'File Upload',
       description: 'An area for uploading files via drag-and-drop or selection.',
       render: () => (
         <div className="w-full border-2 border-dashed border-zinc-700 hover:border-indigo-500 hover:bg-indigo-500/5 bg-zinc-900/50 rounded-lg p-6 flex flex-col items-center justify-center gap-2 transition-colors cursor-pointer">
@@ -179,16 +227,70 @@ export function FormAndDataEntry({ searchQuery, filterList }: { searchQuery: str
           </div>
         </div>
       )
+    },
+    {
+      name: 'Autocomplete',
+      description: 'Component for Autocomplete',
+      render: () => (
+        <div className="flex flex-col gap-1 w-full max-w-xs"><div className="relative"><input type="text" className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm" placeholder="Search..." defaultValue="Ap"/><div className="absolute top-full left-0 right-0 mt-1 bg-zinc-900 border border-zinc-800 rounded shadow-lg overflow-hidden z-10"><div className="px-3 py-1.5 text-sm hover:bg-zinc-800 cursor-pointer">Apple</div><div className="px-3 py-1.5 text-sm hover:bg-zinc-800 cursor-pointer">Apricot</div></div></div></div>
+      )
+    },
+    {
+      name: 'Time Picker',
+      description: 'A component to select a specific time of day.',
+      render: () => (
+        <div className="flex gap-2 items-center bg-zinc-950 border border-zinc-800 rounded-md p-2">
+          <input type="text" defaultValue="12" className="w-8 text-center bg-transparent outline-none text-zinc-100" />
+          <span className="text-zinc-500">:</span>
+          <input type="text" defaultValue="30" className="w-8 text-center bg-transparent outline-none text-zinc-100" />
+          <select className="bg-zinc-900 text-zinc-300 border border-zinc-800 rounded text-xs px-1 py-0.5 outline-none">
+            <option>AM</option>
+            <option>PM</option>
+          </select>
+        </div>
+      )
+    },
+    {
+      name: 'DateTime Picker',
+      description: 'Component for DateTime Picker',
+      render: () => (
+        <div className="flex gap-2 w-full max-w-sm"><input type="date" className="flex-1 bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm" /><input type="time" className="flex-1 bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm" /></div>
+      )
+    },
+    {
+      name: 'Icon Field',
+      description: 'Component for Icon Field',
+      render: () => (
+        <div className="relative w-full max-w-xs"><div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><span className="text-zinc-500">✉</span></div><input type="email" className="w-full bg-zinc-900 border border-zinc-800 rounded py-1.5 pl-8 pr-3 text-sm" placeholder="Email address" /></div>
+      )
+    },
+    {
+      name: 'Key Filter',
+      description: 'Component for Key Filter',
+      render: () => (
+        <input type="text" className="w-full max-w-xs bg-zinc-900 border border-zinc-800 rounded px-3 py-1.5 text-sm" placeholder="Numbers only..." defaultValue="12345" />
+      )
+    },
+    {
+      name: 'Listbox',
+      description: 'Component for Listbox',
+      render: () => (
+        <div className="w-full max-w-xs bg-zinc-900 border border-zinc-800 rounded overflow-hidden flex flex-col"><div className="px-3 py-2 text-sm hover:bg-zinc-800 cursor-pointer">New York</div><div className="px-3 py-2 text-sm bg-indigo-500/20 text-indigo-300 border-l-2 border-indigo-500">San Francisco</div><div className="px-3 py-2 text-sm hover:bg-zinc-800 cursor-pointer">London</div></div>
+      )
     }
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function FormAndDataEntry({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useFormAndDataEntryComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
     <CategorySection title="📝 Form & Data Entry" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

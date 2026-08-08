@@ -2,7 +2,8 @@ import React from 'react';
 import { ComponentCard, CategorySection, matchSearch } from '../ComponentCard';
 import { Quote } from 'lucide-react';
 
-export function Typography({ searchQuery, filterList }: { searchQuery: string, filterList?: string[] }) {
+export function useTypographyComponents() {
+
   const components = [
     {
       name: 'Heading (h1-h6)',
@@ -37,7 +38,7 @@ export function Typography({ searchQuery, filterList }: { searchQuery: string, f
       )
     },
     {
-      name: 'Code Block / Inline Code',
+      name: 'Code Block',
       description: 'Formatted text representing computer code.',
       render: () => (
         <div className="w-full flex flex-col gap-3">
@@ -55,19 +56,6 @@ export function Typography({ searchQuery, filterList }: { searchQuery: string, f
       )
     },
     {
-      name: 'Keyboard Input (kbd)',
-      description: 'Indicates user input from a keyboard.',
-      render: () => (
-        <div className="flex items-center gap-2 text-sm text-zinc-400">
-          Press 
-          <kbd className="px-2 py-1 bg-zinc-800 border border-zinc-700 border-b-2 rounded text-xs font-mono text-zinc-200">Cmd</kbd>
-          +
-          <kbd className="px-2 py-1 bg-zinc-800 border border-zinc-700 border-b-2 rounded text-xs font-mono text-zinc-200">K</kbd>
-          to search
-        </div>
-      )
-    },
-    {
       name: 'Mark / Highlight',
       description: 'Text highlighted for reference or search results.',
       render: () => (
@@ -75,16 +63,34 @@ export function Typography({ searchQuery, filterList }: { searchQuery: string, f
           The search query matched <mark className="bg-amber-500/30 text-amber-200 px-1 rounded">this specific phrase</mark> in the document.
         </div>
       )
-    }
+    },
+    {
+      name: 'Caption',
+      description: 'Component for Caption',
+      render: () => (
+        <div className="text-sm text-zinc-400">Sample typography for Caption</div>
+      )
+    },
+    {
+      name: 'Text',
+      description: 'Component for Text',
+      render: () => (
+        <div className="text-sm text-zinc-400">Sample typography for Text</div>
+      )
+    },
   ];
+    return components;
+}
 
-  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase().includes(f.toLowerCase()))));
+export function Typography({ searchQuery, filterList, startIndex = 0 }: { searchQuery: string, filterList?: string[] , startIndex?: number }) {
+  const components = useTypographyComponents();
+  const filtered = components.filter(c => matchSearch(c.name, searchQuery) && (!filterList || filterList.some(f => c.name.toLowerCase() === f.toLowerCase())));
   if (filtered.length === 0) return null;
 
   return (
     <CategorySection title="🔤 Typography" count={filtered.length} componentsList={filtered}>
       {filtered.map((c, idx) => (
-        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={idx + 1}>
+        <ComponentCard key={c.name} name={c.name} description={c.description} alsoIn={(c as any).alsoIn} index={startIndex + idx + 1}>
           {c.render()}
         </ComponentCard>
       ))}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { CheckCircle2, BookOpen, List, Code2, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FileText, Component } from 'lucide-react';
+import { CheckCircle2, BookOpen, List, Code2, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FileText, Component, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useAppStore } from '../store';
 import { modules } from '../data/modules';
 import { Module } from '../types';
@@ -41,7 +42,7 @@ export function Sidebar() {
       >
         <div 
           className={`flex-shrink-0 w-5 h-5 flex items-center justify-center transition-all ${
-            isSubmenu ? 'rounded-sm' : 'rounded-full'
+            isSubmenu ? 'rounded-full' : 'rounded-sm'
           } ${
             isActive
               ? 'border-2 border-indigo-500 text-indigo-400 bg-indigo-500/20'
@@ -99,7 +100,7 @@ export function Sidebar() {
         >
           <div className={`flex items-center ${isCollapsed ? 'justify-center w-full' : 'gap-3'}`}>
             <div 
-              className={`flex-shrink-0 w-5 h-5 flex items-center justify-center transition-all rounded-full ${
+              className={`flex-shrink-0 w-5 h-5 flex items-center justify-center transition-all rounded-md ${
                 isActiveGroup ? activeRingColor : `border-2 ${ringColor}`
             }`}>
               <span className="text-[10px] font-bold">{group && group.groupId && group.groupId.startsWith('html-') ? (index === 0 ? '①' : index === 1 ? '②' : '③') : (index + 1)}</span>
@@ -175,43 +176,42 @@ export function Sidebar() {
           <h1 className={`text-lg font-semibold tracking-tight text-zinc-100 overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[150px] opacity-100'}`}>PixelMastery</h1>
         </div>
         
-        <div className={`flex flex-col gap-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800 w-full`}>
-          <button
-            onClick={() => setViewMode('guidelines')}
-            title="Guidelines"
-            className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-all duration-300 ${
-              viewMode === 'guidelines' 
-                ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
-                : 'text-zinc-500 hover:text-zinc-300'
-            }`}
-          >
-            <FileText className="w-4 h-4 shrink-0" />
-            <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Guidelines</span>
-          </button>
-          <button
-            onClick={() => setViewMode('curriculum')}
-            title="Learning"
-            className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-all duration-300 ${
-              viewMode === 'curriculum' 
-                ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
-                : 'text-zinc-500 hover:text-zinc-300'
-            }`}
-          >
-            <BookOpen className="w-4 h-4 shrink-0" />
-            <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Learning</span>
-          </button>
-          <button
-            onClick={() => setViewMode('components')}
-            title="Components"
-            className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-all duration-300 ${
-              viewMode === 'components' 
-                ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
-                : 'text-zinc-500 hover:text-zinc-300'
-            }`}
-          >
-            <Component className="w-4 h-4 shrink-0" />
-            <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>Components</span>
-          </button>
+                <div className={`flex flex-col gap-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800 w-full relative`}>
+          {[
+            { id: 'guidelines', label: 'Guidelines', icon: FileText },
+            { id: 'curriculum', label: 'Learning', icon: BookOpen },
+            { id: 'components', label: 'Components', icon: Component }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = viewMode === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setViewMode(tab.id as any)}
+                title={tab.label}
+                className={`w-full flex items-center ${isCollapsed ? 'justify-center py-2' : 'justify-start gap-3 py-2 px-3'} rounded-md text-xs font-medium transition-colors duration-200 relative ${
+                  isActive
+                    ? 'text-white' 
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-zinc-800 shadow-sm border border-zinc-700 rounded-md z-0"
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                )}
+                <div className={`relative z-10 flex items-center w-full ${isCollapsed ? 'justify-center' : 'justify-start gap-3'}`}>
+                  <Icon className="w-4 h-4 shrink-0" />
+                  <span className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[100px] opacity-100'}`}>
+                    {tab.label}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -226,7 +226,12 @@ export function Sidebar() {
                   <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
                     HTML
                     {htmlExpanded && (
-                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">[HTML5]</span>
+                      <div className="flex items-center gap-1">
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">[HTML5]</span>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="HTML Documentation">
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
                     )}
                   </h3>
                   {htmlExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
@@ -248,7 +253,12 @@ export function Sidebar() {
                   <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
                     Tailwind
                     {tailwindExpanded && (
-                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">v4.3</span>
+                      <div className="flex items-center gap-1">
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">v4.3</span>
+                        <a href="https://tailwindcss.com/docs" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="Tailwind Documentation">
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
                     )}
                   </h3>
                   {tailwindExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
