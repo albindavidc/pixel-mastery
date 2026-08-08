@@ -1,86 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useAppStore } from '../store';
-import { htmlModules } from '../data/htmlModules';
-import { CodeEditorPreview } from './CodeEditorPreview';
+const fs = require('fs');
+let content = fs.readFileSync('src/components/HtmlPlayground.tsx', 'utf8');
 
-export function HtmlPlayground() {
-  const { currentModuleId } = useAppStore();
-  const module = htmlModules.find(m => m.id === currentModuleId);
-  const contentData = module && module.content ? JSON.parse(module.content) : { tags: [], categories: [] };
-  const categories = contentData.categories || [];
-  
-  // Use category name instead of tag if categories exist
-  const [activeCategory, setActiveCategory] = useState(categories.length > 0 ? categories[0].name : '');
-  
-  const activeCatObj = categories.find((c: any) => c.name === activeCategory) || categories[0];
-
-    // Create a default code block based on active category
-  const getDefaultCode = (categoryName: string) => {
-     if (!categoryName) return '';
-     const cat = categories.find((c: any) => c.name === categoryName);
-     if (!cat) return '';
-
-     if (currentModuleId === 'html-semantic-layout') {
-       return `<header style="border: 2px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
-  <div>Logo</div>
-  <nav>
-    <ul style="display: flex; gap: 1rem; list-style: none; padding: 0;">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-<main style="border: 2px solid #000; padding: 1rem; margin-bottom: 1rem;">
-  <section style="background: #f0f0f0; padding: 2rem; text-align: center; margin-bottom: 1rem;">
-    <h1>Hero / Banner / Introduction</h1>
-  </section>
-</main>`;
-     }
-     
-     let code = '';
-     if (cat.tags) {
-       cat.tags.forEach((tag: string) => {
-         let t = tag.replace('<', '').replace('>', '');
-         
-         if (['!DOCTYPE'].includes(t)) {
-           code += `<!DOCTYPE html>\n`;
-         } else if (['html'].includes(t)) {
-           code += `<html lang="en">\n  <!-- HTML Content -->\n</html>\n`;
-         } else if (['head', 'body', 'title', 'meta', 'link', 'script', 'style'].includes(t)) {
-           if (t === 'title') code += `<title>My Website</title>\n`;
-           if (t === 'meta') code += `<meta charset="UTF-8" />\n`;
-           if (t === 'link') code += `<link rel="stylesheet" href="styles.css" />\n`;
-           if (t === 'script') code += `<script>\n  // Write your internal JS here\n  console.log("Hello from Javascript!");\n</script>\n`;
-           if (t === 'style') code += `<style>\n  /* Write your internal CSS here */\n  h1 { color: blue; }\n</style>\n`;
-           if (t === 'head') code += `<head>\n  <!-- Head Content -->\n</head>\n`;
-           if (t === 'body') code += `<body>\n  <!-- Body Content -->\n</body>\n`;
-         } else if (['img', 'br', 'hr', 'input', 'source', 'wbr', 'col'].includes(t)) {
-           if (t === 'input') code += `<input type="text" placeholder="Enter text..." />\n`;
-           else if (t === 'img') code += `<img src="https://shorturl.at/PtCQB" alt="Beautiful landscape" class="rounded-lg shadow-md max-w-full" />\n`;
-           else code += `<${t} />\n`;
-         } else if (['form'].includes(t)) {
-           code += `<form>\n  <!-- Form inputs -->\n</form>\n`;
-         } else if (['table'].includes(t)) {
-           code += `<table>\n  <tr>\n    <th>Header</th>\n  </tr>\n  <tr>\n    <td>Data</td>\n  </tr>\n</table>\n`;
-         } else if (['ul', 'ol'].includes(t)) {
-           code += `<${t}>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</${t}>\n`;
-         } else if (['a'].includes(t)) {
-           code += `<a href="#">Click me</a>\n`;
-         } else if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'strong', 'em', 'button', 'label'].includes(t)) {
-           code += `<${t}>Sample ${t} text</${t}>\n`;
-         } else {
-           code += `<${t}>\n  <!-- ${t} content -->\n</${t}>\n`;
-         }
-       });
-     }
-     return code;
-  };
-
-    const getExampleCode = (categoryName: string) => {
+const exampleCodeFunction = `  const getExampleCode = (categoryName: string) => {
      switch (categoryName) {
        case "Document Structure":
-         return `<!DOCTYPE html>
+         return \`<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -97,30 +21,30 @@ export function HtmlPlayground() {
     console.log("Document loaded!");
   </script>
 </body>
-</html>`;
+</html>\`;
        case "Layout & Containers":
-         return `<div class="bg-indigo-100 p-6 rounded-xl border border-indigo-200">
+         return \`<div class="bg-indigo-100 p-6 rounded-xl border border-indigo-200">
   <div class="text-indigo-900 font-bold mb-2">Block Level Container (div)</div>
   <p class="text-indigo-700">This container takes up the full width available.</p>
 </div>
 <div class="mt-4">
   <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-bold">Inline Container (span)</span>
   <span class="text-slate-600 ml-2">This container only takes up as much width as necessary.</span>
-</div>`;
+</div>\`;
        case "Headings & Text":
-         return `<h1>Heading 1 (Main Title)</h1>
+         return \`<h1>Heading 1 (Main Title)</h1>
 <h2>Heading 2 (Section Title)</h2>
 <h3>Heading 3 (Subsection Title)</h3>
 <hr class="my-4 border-slate-300" />
 <p>This is a paragraph. It contains multiple sentences and forms a block of text.</p>
-<p>Here is another paragraph with a <br> line break inside it.</p>`;
+<p>Here is another paragraph with a <br> line break inside it.</p>\`;
        case "Links & Media":
-         return `<a href="https://example.com" class="text-blue-600 hover:underline font-bold" target="_blank">Visit Example.com</a>
+         return \`<a href="https://example.com" class="text-blue-600 hover:underline font-bold" target="_blank">Visit Example.com</a>
 <div class="mt-4">
   <img src="https://shorturl.at/PtCQB" alt="Beautiful landscape" class="rounded-xl shadow-lg max-w-full h-auto w-64 object-cover" />
-</div>`;
+</div>\`;
        case "Lists":
-         return `<h3 class="font-bold mb-2">Unordered List</h3>
+         return \`<h3 class="font-bold mb-2">Unordered List</h3>
 <ul class="list-disc pl-5 mb-4 text-slate-700">
   <li>Apple</li>
   <li>Banana</li>
@@ -131,9 +55,9 @@ export function HtmlPlayground() {
   <li>First step</li>
   <li>Second step</li>
   <li>Third step</li>
-</ol>`;
+</ol>\`;
        case "Forms":
-         return `<form class="max-w-sm bg-white p-6 rounded-xl shadow-md border border-slate-200">
+         return \`<form class="max-w-sm bg-white p-6 rounded-xl shadow-md border border-slate-200">
   <div class="mb-4">
     <label class="block text-sm font-bold text-slate-700 mb-2">Username</label>
     <input type="text" placeholder="Enter username" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -151,9 +75,9 @@ export function HtmlPlayground() {
     </select>
   </div>
   <button type="button" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Submit</button>
-</form>`;
+</form>\`;
        case "Semantic Layout":
-         return `<header class="bg-slate-900 text-white p-4 rounded-t-xl">
+         return \`<header class="bg-slate-900 text-white p-4 rounded-t-xl">
   <h1 class="text-xl font-bold">My Awesome Site</h1>
   <nav class="mt-2">
     <a href="#" class="text-slate-300 hover:text-white mr-4">Home</a>
@@ -177,9 +101,9 @@ export function HtmlPlayground() {
 </div>
 <footer class="bg-slate-900 text-slate-400 p-4 rounded-b-xl text-center text-sm">
   &copy; 2026 My Awesome Site
-</footer>`;
+</footer>\`;
        case "Text Semantics":
-         return `<p class="mb-4">Here is a paragraph with <strong>strong importance</strong> and <em>emphasized text</em>.</p>
+         return \`<p class="mb-4">Here is a paragraph with <strong>strong importance</strong> and <em>emphasized text</em>.</p>
 <p class="mb-4">You can <mark class="bg-yellow-200 px-1 rounded">highlight</mark> text, or show <small class="text-xs text-slate-500">fine print</small>.</p>
 <blockquote class="border-l-4 border-indigo-500 pl-4 py-2 italic text-slate-700 bg-slate-50 rounded-r-lg mb-4">
   "This is a blockquote. It represents a section that is quoted from another source."
@@ -190,9 +114,9 @@ export function HtmlPlayground() {
 <code>function hello() {
   console.log("Hello World");
 }</code>
-</pre>`;
+</pre>\`;
        case "Media":
-         return `<figure class="bg-white p-4 rounded-xl shadow-md border border-slate-200 inline-block mb-6">
+         return \`<figure class="bg-white p-4 rounded-xl shadow-md border border-slate-200 inline-block mb-6">
   <picture>
     <source media="(min-width: 800px)" srcset="https://shorturl.at/PtCQB" />
     <img src="https://shorturl.at/PtCQB" alt="Beautiful landscape" class="rounded-lg w-64 h-48 object-cover mb-2" />
@@ -216,9 +140,9 @@ export function HtmlPlayground() {
       Your browser does not support the video tag.
     </video>
   </div>
-</div>`;
+</div>\`;
        case "Interactive Elements":
-         return `<details class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-4 group">
+         return \`<details class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-4 group">
   <summary class="font-bold cursor-pointer text-indigo-700 list-none flex justify-between items-center">
     Click to reveal more information
     <span class="transition group-open:rotate-180">▼</span>
@@ -236,9 +160,9 @@ export function HtmlPlayground() {
   <div class="mt-4 text-slate-600 border-t pt-4">
     <p>You can use the 'open' attribute to have it expanded by default.</p>
   </div>
-</details>`;
+</details>\`;
        case "Advanced Forms":
-         return `<fieldset class="border-2 border-indigo-200 p-6 rounded-xl mb-6">
+         return \`<fieldset class="border-2 border-indigo-200 p-6 rounded-xl mb-6">
   <legend class="px-2 font-bold text-indigo-700 bg-white rounded">Personal Details (Fieldset)</legend>
   
   <div class="mb-4">
@@ -288,9 +212,9 @@ export function HtmlPlayground() {
       = <output name="x" for="a b" class="font-bold text-lg text-indigo-600">100</output>
     </div>
   </form>
-</div>`;
+</div>\`;
        case "Tables":
-         return `<div class="overflow-x-auto bg-white rounded-xl shadow-sm border border-slate-200">
+         return \`<div class="overflow-x-auto bg-white rounded-xl shadow-sm border border-slate-200">
   <table class="w-full text-left border-collapse">
     <caption class="p-4 text-lg font-bold text-slate-700 bg-slate-50 border-b">Employee Roster (Caption)</caption>
     <colgroup>
@@ -323,9 +247,9 @@ export function HtmlPlayground() {
       </tr>
     </tfoot>
   </table>
-</div>`;
+</div>\`;
        case "Graphics & Rendering":
-         return `<div class="space-y-6">
+         return \`<div class="space-y-6">
   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
     <h3 class="font-bold mb-4 text-slate-700">SVG Element</h3>
     <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -345,9 +269,9 @@ export function HtmlPlayground() {
       ctx.fillRect(20, 20, 150, 60);
     </script>
   </div>
-</div>`;
+</div>\`;
        case "Templates & Progressive Enhancement":
-         return `<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+         return \`<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
   <h3 class="font-bold mb-2 text-slate-700">Noscript Element</h3>
   <noscript>
     <div class="bg-red-100 text-red-800 p-4 rounded-lg font-bold border border-red-200">
@@ -378,9 +302,9 @@ export function HtmlPlayground() {
       document.getElementById("target").appendChild(clon);
     }
   </script>
-</div>`;
+</div>\`;
        case "Accessibility & Internationalization":
-         return `<div class="space-y-6">
+         return \`<div class="space-y-6">
   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
     <h3 class="font-bold mb-2 text-slate-700">Abbreviations</h3>
     <p>The <abbr title="World Health Organization" class="underline decoration-dotted cursor-help text-indigo-700 font-semibold">WHO</abbr> was founded in 1948.</p>
@@ -401,9 +325,9 @@ export function HtmlPlayground() {
     </ruby>
     <p class="text-sm text-slate-500 mt-2">Used primarily in East Asian typography to show pronunciation.</p>
   </div>
-</div>`;
+</div>\`;
        case "Document Metadata & Contact":
-         return `<div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+         return \`<div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
   <h3 class="font-bold mb-4 text-slate-700 text-lg border-b pb-2">Contact Us</h3>
   <address class="not-italic text-slate-600 leading-relaxed">
     <strong>Example Corp.</strong><br>
@@ -414,9 +338,9 @@ export function HtmlPlayground() {
     USA
   </address>
   <p class="text-sm text-slate-500 mt-4 italic">The address tag provides contact information for a document or article.</p>
-</div>`;
+</div>\`;
        case "Developer & Technical Text":
-         return `<div class="space-y-6">
+         return \`<div class="space-y-6">
   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
     <h3 class="font-bold mb-2 text-slate-700">Keyboard Input (kbd)</h3>
     <p class="text-slate-600">Please press <kbd class="bg-slate-100 border border-slate-300 border-b-2 rounded-md px-2 py-1 font-mono text-sm text-slate-800 mx-1">Ctrl</kbd> + <kbd class="bg-slate-100 border border-slate-300 border-b-2 rounded-md px-2 py-1 font-mono text-sm text-slate-800 mx-1">C</kbd> to copy.</p>
@@ -431,9 +355,9 @@ export function HtmlPlayground() {
     <h3 class="font-bold mb-2 text-slate-700">Variables (var)</h3>
     <p class="text-slate-600">The formula for area is <var class="italic font-serif text-indigo-600 text-lg">A</var> = <var class="italic font-serif text-indigo-600 text-lg">πr²</var>.</p>
   </div>
-</div>`;
+</div>\`;
        case "Document Editing & Revisions":
-         return `<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+         return \`<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
   <h3 class="font-bold mb-4 text-slate-700">Document Edits</h3>
   
   <p class="text-lg text-slate-800">
@@ -446,9 +370,9 @@ export function HtmlPlayground() {
     <p><strong>&lt;del&gt;</strong> indicates deleted text.</p>
     <p><strong>&lt;ins&gt;</strong> indicates inserted text.</p>
   </div>
-</div>`;
+</div>\`;
        case "Definitions & Terminology":
-         return `<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+         return \`<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
   <h3 class="font-bold mb-4 text-slate-700">Definitions (dfn)</h3>
   
   <p class="text-slate-700 leading-relaxed">
@@ -460,9 +384,9 @@ export function HtmlPlayground() {
   </p>
   
   <p class="text-sm text-slate-500 mt-6 italic">The dfn element represents the defining instance of a term.</p>
-</div>`;
+</div>\`;
        case "Typography":
-         return `<div class="space-y-6">
+         return \`<div class="space-y-6">
   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
     <h3 class="font-bold mb-4 text-slate-700">Subscript & Superscript</h3>
     <p class="text-lg text-slate-700 mb-2">
@@ -480,99 +404,26 @@ export function HtmlPlayground() {
     </p>
     <p class="text-sm text-slate-500 mt-2">Resize the container to see the word break at the specified points.</p>
   </div>
-</div>`;
+</div>\`;
        default:
          return getDefaultCode(categoryName);
      }
-  };
-  const [code, setCode] = useState(getDefaultCode(activeCategory));
+  };\n`;
 
-  useEffect(() => {
-    setActiveCategory(categories.length > 0 ? categories[0].name : '');
-  }, [currentModuleId, categories.length]);
+content = content.replace(
+  /const \[code, setCode\] = useState\(getDefaultCode\(activeCategory\)\);/,
+  exampleCodeFunction + '  const [code, setCode] = useState(getDefaultCode(activeCategory));'
+);
 
-  useEffect(() => {
-    setCode(getDefaultCode(activeCategory));
-  }, [activeCategory]);
-
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-    useEffect(() => {
-    const doc = iframeRef.current?.contentDocument;
-    if (doc) {
-      doc.open();
-      doc.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <script src="https://cdn.tailwindcss.com"></script>
-          <style>
-            body {
-                margin: 0;
-                padding: 1rem;
-                min-height: 100vh;
-               font-family: system-ui, sans-serif;
-               background: white;
-               color: black;
-             }
-          </style>
-        </head>
-        <body>
-          ${code}
-        </body>
-        </html>
-      `);
-      doc.close();
-    }
-  }, [code]);
-
-  if (!module) return null;
-
-  return (
-    <div className="flex-1 flex flex-col bg-zinc-950">
-      {/* Category filter bar (sticky) */}
-      <div className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 p-4">
-        <div className="flex gap-2 overflow-x-auto scrollbar-thin pb-2">
-          {categories.map((cat: any) => {
-            const isActive = activeCategory === cat.name;
-            let activeColorClass = 'bg-indigo-500 text-white';
-            if (cat.color === 'indigo') activeColorClass = 'bg-indigo-500 text-white';
-            else if (cat.color === 'emerald') activeColorClass = 'bg-emerald-500 text-white';
-            else if (cat.color === 'rose') activeColorClass = 'bg-rose-500 text-white';
-            else if (cat.color === 'amber') activeColorClass = 'bg-amber-500 text-white';
-            else if (cat.color === 'cyan') activeColorClass = 'bg-cyan-500 text-white';
-            else if (cat.color === 'teal') activeColorClass = 'bg-teal-500 text-white';
-            else if (cat.color === 'pink') activeColorClass = 'bg-pink-500 text-white';
-            else if (cat.color === 'violet') activeColorClass = 'bg-violet-500 text-white';
-            
-            return (
-              <button
-                key={cat.name}
-                onClick={() => setActiveCategory(cat.name)}
-                className={`px-4 py-1.5 rounded-full font-sans font-medium text-sm whitespace-nowrap transition-colors ${
-                  isActive
-                    ? activeColorClass
-                    : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
-                }`}
-              >
-                {cat.name}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <CodeEditorPreview
+content = content.replace(
+  /<CodeEditorPreview\n        code={code}\n        onChange={setCode}\n        onReset=\{\(\) => setCode\(getDefaultCode\(activeCategory\)\)\}\n        iframeRef=\{iframeRef\}/,
+  `<CodeEditorPreview
         code={code}
         onChange={setCode}
         onReset={() => setCode(getDefaultCode(activeCategory))}
         onTry={() => setCode('')}
         onExample={() => setCode(getExampleCode(activeCategory))}
-        iframeRef={iframeRef}
-        title={activeCatObj ? `${activeCatObj.name}.html` : "index.html"}
-        language="html"
-        themeColor={activeCatObj ? activeCatObj.color : "indigo"}
-      />
-    </div>
-  );
-}
+        iframeRef={iframeRef}`
+);
+
+fs.writeFileSync('src/components/HtmlPlayground.tsx', content, 'utf8');

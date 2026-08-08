@@ -82,10 +82,21 @@ const colorMap: Record<string, string> = {
 export default function SemanticLayoutWidget() {
   const [showWhy, setShowWhy] = useState(false);
   const [activePanelId, setActivePanelId] = useState<string | null>(null);
+  const [hoveredPanelId, setHoveredPanelId] = useState<string | null>(null);
 
   const togglePanel = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setActivePanelId(prev => prev === id ? null : id);
+  };
+
+  const handleMouseOver = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setHoveredPanelId(id);
+  };
+
+  const handleMouseOut = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setHoveredPanelId(null);
   };
 
   const renderBlock = (block: BlockDef) => {
@@ -104,7 +115,9 @@ export default function SemanticLayoutWidget() {
       <div 
         key={block.id}
         onClick={(e) => togglePanel(block.id, e)}
-        className={`relative group cursor-pointer border-2 rounded-lg p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 ${classes} ${block.flex || 'w-full'} ${block.height || ''} ${block.layout === 'row' ? 'flex flex-row gap-3' : 'flex flex-col gap-3'} ${isActive ? 'ring-2 ring-white ring-offset-2 ring-offset-zinc-900' : ''}`}
+        onMouseOver={(e) => handleMouseOver(block.id, e)}
+        onMouseOut={handleMouseOut}
+        className={`relative cursor-pointer border-2 rounded-lg p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 hover:z-50 ${classes} ${block.flex || 'w-full'} ${block.height || ''} ${block.layout === 'row' ? 'flex flex-row gap-3' : 'flex flex-col gap-3'} ${isActive ? 'ring-2 ring-white ring-offset-2 ring-offset-zinc-900 z-50' : 'z-10'}`}
       >
         <div className="font-mono text-sm md:text-base font-medium opacity-90 text-center tracking-wide">&lt;{block.tag}&gt;</div>
         
@@ -117,7 +130,7 @@ export default function SemanticLayoutWidget() {
 
         {/* Hover Tooltip (hidden if showWhy is true) */}
         {!showWhy && !isActive && (
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-3 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-zinc-300 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20 shadow-xl shadow-black/50 text-center leading-relaxed">
+          <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 p-3 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-zinc-300 pointer-events-none transition-opacity z-[100] shadow-xl shadow-black/50 text-center leading-relaxed ${hoveredPanelId === block.id ? 'opacity-100' : 'opacity-0'}`}>
             {block.tooltip}
           </div>
         )}

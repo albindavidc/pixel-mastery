@@ -559,7 +559,7 @@ export const htmlTagsData: Record<string, any> = {
     ],
     "example": "<img>Example content",
     "accessibility": "Ensure <img> is used semantically for screen readers.",
-    "syntax": "<img src=\"cat.jpg\" alt=\"A cute cat\" />",
+    "syntax": "<img src=\"https://shorturl.at/PtCQB\" alt=\"A cute cat\" />",
     "definition": "The picture frame \u2014 displays an image file on the page.",
     "required": [
       "src",

@@ -11,18 +11,18 @@ interface ComponentCardProps {
 
 export function ComponentCard({ name, description, children, alsoIn, index }: ComponentCardProps) {
   return (
-    <div id={`component-${name.toLowerCase().replace(/\s+/g, '-')}`} className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-xl flex flex-col transition-all duration-300 hover:border-zinc-700 relative group scroll-mt-40">
+    <div id={`component-${name.toLowerCase().replace(/\s+/g, '-')}`} className="bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xl flex flex-col transition-all duration-300 hover:border-zinc-700 relative group scroll-mt-40">
       {index !== undefined && (
         <div className="absolute top-2 left-2 w-6 h-6 rounded-full bg-zinc-800/80 border border-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-400 z-10 backdrop-blur-sm group-hover:bg-indigo-500/20 group-hover:text-indigo-300 group-hover:border-indigo-500/50 transition-colors shadow-sm">
           {index}
         </div>
       )}
-      <div className="p-4 md:p-6 flex-1 flex flex-col justify-center items-center min-h-[200px] relative bg-zinc-950/50 pt-10">
+      <div className="p-4 md:p-6 flex-1 flex flex-col justify-center items-center min-h-[200px] relative bg-zinc-950/50 pt-10 rounded-t-2xl">
         <div className="w-full flex items-center justify-center p-4">
           {children}
         </div>
       </div>
-      <div className="p-4 md:p-5 border-t border-zinc-800 bg-zinc-900">
+      <div className="p-4 md:p-5 border-t border-zinc-800 bg-zinc-900 rounded-b-2xl">
         <h3 className="text-lg font-display font-semibold text-zinc-100 mb-1 flex items-center gap-2">
           {name}
         </h3>

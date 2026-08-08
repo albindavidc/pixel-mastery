@@ -40,7 +40,7 @@ export function useMediaComponents() {
                   </div>
                   <div className="w-full relative group">
                     <div className="text-[10px] text-zinc-600 absolute -top-5 left-0 opacity-0 group-hover:opacity-100 transition-opacity">Variant 2</div>
-                    <div className="w-full h-32 relative bg-zinc-950 rounded flex items-center justify-center overflow-hidden border border-zinc-800"><div className="absolute inset-0 bg-black/80 z-10 flex items-center justify-center"><div className="w-3/4 h-3/4 border-2 border-white/10 rounded overflow-hidden relative"><img src="https://images.unsplash.com/photo-1707343843437-caacff5cfa74?w=400&q=80" className="w-full h-full object-cover" /><button className="absolute top-2 right-2 text-white bg-black/50 w-6 h-6 rounded-full text-xs">×</button></div></div></div>
+                    <div className="w-full h-32 relative bg-zinc-950 rounded flex items-center justify-center overflow-hidden border border-zinc-800"><div className="absolute inset-0 bg-black/80 z-10 flex items-center justify-center"><div className="w-3/4 h-3/4 border-2 border-white/10 rounded overflow-hidden relative"><img src="https://shorturl.at/PtCQB" className="w-full h-full object-cover" /><button className="absolute top-2 right-2 text-white bg-black/50 w-6 h-6 rounded-full text-xs">×</button></div></div></div>
                   </div>
                 </div>
              )
