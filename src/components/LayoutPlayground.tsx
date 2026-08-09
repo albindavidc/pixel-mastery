@@ -372,15 +372,29 @@ const handleModeChange = (mode: string) => {
 
 
           <div className="absolute inset-0 flex items-center justify-center p-4 pt-16">
-            <IframePreview 
-              classes={playgroundClasses} 
-              dark={playgroundState.dark} 
-              width={getWidthValue()}
-              hover={playgroundState.hover}
-              focus={playgroundState.focus}
-              active={playgroundState.active}
-              previewMode={previewMode}
-            />
+            {(() => {
+              let activePreviewMode = previewMode;
+              if (previewMode === 'display') {
+                const classesList = playgroundClasses.split(' ').filter(c => c.trim() !== '');
+                if (classesList.includes('flex') || classesList.includes('inline-flex')) {
+                  activePreviewMode = 'flex';
+                } else if (classesList.includes('grid') || classesList.includes('inline-grid')) {
+                  activePreviewMode = 'grid';
+                }
+              }
+              return (
+                <IframePreview 
+                  key={activePreviewMode}
+                  classes={playgroundClasses} 
+                  dark={playgroundState.dark} 
+                  width={getWidthValue()}
+                  hover={playgroundState.hover}
+                  focus={playgroundState.focus}
+                  active={playgroundState.active}
+                  previewMode={activePreviewMode}
+                />
+              );
+            })()}
           </div>
 
           {/* Breakpoint Indicator */}

@@ -456,6 +456,7 @@ const handleModeChange = (mode: string) => {
 
           <div className="absolute inset-0 flex items-center justify-center p-4 pt-16">
             <IframePreview 
+              key={previewMode}
               classes={playgroundClasses} 
               dark={playgroundState.dark} 
               width={getWidthValue()}

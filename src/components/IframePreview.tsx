@@ -3,6 +3,7 @@ import { useAppStore } from '../store';
 import { createPortal } from 'react-dom';
 
 interface IframePreviewProps {
+  key?: string | number;
   classes: string;
   dark: boolean;
   width: number | null;
@@ -176,19 +177,13 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                 <div className="w-full max-w-5xl h-[85vh] lg:max-w-5xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-auto shadow-2xl p-6 sm:p-10 flex flex-col items-center justify-center">
                   <div className="bg-slate-800/80 rounded-xl border border-slate-700 p-6 text-slate-300 font-medium leading-relaxed w-full text-sm">
                     <div className="text-slate-400 leading-loose text-justify">
-                      CSS display property determines how an element is rendered in the document. It controls whether an element is treated as a block or inline element, and the layout used for its children. 
-                      Here is some regular text flowing naturally in the document before the target element. We are adding a bit more text here so that it wraps around correctly and forms a continuous paragraph of words. 
-                      This helps demonstrate how inline elements flow with text.
+                      Here is some regular text flowing naturally in the document before the target element. We are adding a bit more text here so that it wraps around correctly and forms a continuous paragraph of words.
                       <div className={`p-0.5 rounded-md bg-indigo-500/20 border-2 border-indigo-500 text-indigo-100 font-bold text-base shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all duration-300 align-middle ${containerClassesStr.replace(/p-\d+|w-full/g, '').trim()}`}>
                         <span className="bg-indigo-500/80 text-white px-2 py-0.5 mx-1 rounded border border-indigo-400/50 inline-flex items-center justify-center">1</span>
                         <span className="bg-rose-500/80 text-white px-2 py-0.5 mx-1 rounded border border-rose-400/50 inline-flex items-center justify-center">2</span>
                         <span className="bg-emerald-500/80 text-white px-2 py-0.5 mx-1 rounded border border-emerald-400/50 inline-flex items-center justify-center">3</span>
                       </div>
                       This text continues after the target element. Watch the layout change when you toggle the display property. 
-                      Notice how changing between inline, block, and inline-block affects both the element itself and the surrounding content flow. 
-                      Here is an additional line added to the bottom of the content to see the effect more clearly. 
-                      And another line to make sure we have plenty of text surrounding the element. 
-                      This is the final sentence of the paragraph to ensure it looks like a continuous block of text without artificial line breaks.
                     </div>
                   </div>
                 </div>
@@ -260,6 +255,28 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                        </div>
                     </div>
                   </div>
+                ) : ['flex', 'grid'].includes(previewMode) ? (
+                <div className="w-full max-w-4xl h-[85vh] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl">
+                   {/* Background Grid Layer */}
+                   <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-4 p-4 pointer-events-none opacity-30">
+                      {[...Array(9)].map((_, i) => (
+                         <div key={i} className="border-2 border-dashed border-slate-600 rounded-xl bg-slate-800/30"></div>
+                      ))}
+                   </div>
+                   
+                   {/* The actual preview container with simClasses */}
+                   <div className={`absolute inset-0 p-4 transition-all duration-300 border-2 border-dotted border-sky-400/50 ${simClasses}`}>
+                        <div className={`min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-fuchsia-500/20 border-2 border-fuchsia-500 flex items-center justify-center text-fuchsia-100 font-bold text-xl sm:text-2xl transition-all duration-300 shadow-[0_0_15px_rgba(217,70,239,0.3)] z-10`}>1</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center text-emerald-100 font-bold text-xl sm:text-2xl transition-all duration-300">2</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-rose-500/20 border-2 border-rose-500 flex items-center justify-center text-rose-100 font-bold text-xl sm:text-2xl transition-all duration-300">3</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center text-amber-100 font-bold text-xl sm:text-2xl transition-all duration-300">4</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-cyan-500/20 border-2 border-cyan-500 flex items-center justify-center text-cyan-100 font-bold text-xl sm:text-2xl transition-all duration-300">5</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-violet-500/20 border-2 border-violet-500 flex items-center justify-center text-violet-100 font-bold text-xl sm:text-2xl transition-all duration-300">6</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-pink-500/20 border-2 border-pink-500 flex items-center justify-center text-pink-100 font-bold text-xl sm:text-2xl transition-all duration-300">7</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-indigo-500/20 border-2 border-indigo-500 flex items-center justify-center text-indigo-100 font-bold text-xl sm:text-2xl transition-all duration-300">8</div>
+                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center text-emerald-100 font-bold text-xl sm:text-2xl transition-all duration-300">9</div>
+                   </div>
+                </div>
                 ) : (
                 <div className={simClasses}>
                 {previewMode === 'typography' && (
@@ -319,6 +336,7 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                      </div>
                    </div>
                 )}
+
 
               </div>
               )}
