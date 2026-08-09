@@ -1,10 +1,10 @@
 import { htmlModules } from './htmlModules';
 import { jsModules } from './jsModules';
+import { stylingModules } from './stylingModules';
 import { Module } from '../types';
 
 export const modules: Module[] = [
   ...htmlModules,
-  ...jsModules,
   {
     id: 'tailwind-layout-display',
     category: 'tailwind',
@@ -183,4 +183,6 @@ z-auto	z-index: auto;`,
     groupId: 'layout-group',
     groupTitle: 'Layout'
   },
+  ...stylingModules,
+  ...jsModules,
 ];

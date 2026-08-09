@@ -129,7 +129,7 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
   const containerClassesStr = containerClassList.join(' ');
   const itemClassesStr = itemClassList.join(' ');
 
-  const isLayoutMode = ['layouts', 'tailwind', 'flex', 'grid', 'display', 'box-sizing', 'position', 'visibility'].includes(previewMode);
+  const isLayoutMode = ['layouts', 'tailwind', 'flex', 'grid', 'display', 'box-sizing', 'position', 'visibility', 'background', 'text'].includes(previewMode);
 
   return (
     <div ref={containerRef} className="w-full h-full flex items-center justify-center overflow-hidden relative">
@@ -192,29 +192,75 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                     </div>
                   </div>
                 </div>
-              ) : ['layouts', 'tailwind', 'flex', 'grid'].includes(previewMode) ? (
-                <div className="w-full max-w-4xl h-[85vh] lg:max-w-3xl relative border-2 border-slate-700/50 rounded-2xl bg-[#0f172a] overflow-hidden shadow-2xl">
-                   {/* Background Grid Layer */}
-                   <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-4 p-4 pointer-events-none opacity-30">
-                      {[...Array(9)].map((_, i) => (
-                         <div key={i} className="border-2 border-dashed border-slate-600 rounded-xl bg-slate-800/30"></div>
-                      ))}
-                   </div>
-                   
-                   {/* The actual preview container with simClasses */}
-                   <div className={`absolute inset-0 p-4 transition-all duration-300 border-2 border-dotted border-sky-400/50 ${containerClassesStr}`}>
-                        <div className={`min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-fuchsia-500/20 border-2 border-fuchsia-500 flex items-center justify-center text-fuchsia-100 font-bold text-xl sm:text-2xl transition-all duration-300 shadow-[0_0_15px_rgba(217,70,239,0.3)] z-10 ${itemClassesStr}`}>1</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center text-emerald-100 font-bold text-xl sm:text-2xl transition-all duration-300">2</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-rose-500/20 border-2 border-rose-500 flex items-center justify-center text-rose-100 font-bold text-xl sm:text-2xl transition-all duration-300">3</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center text-amber-100 font-bold text-xl sm:text-2xl transition-all duration-300">4</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-cyan-500/20 border-2 border-cyan-500 flex items-center justify-center text-cyan-100 font-bold text-xl sm:text-2xl transition-all duration-300">5</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-violet-500/20 border-2 border-violet-500 flex items-center justify-center text-violet-100 font-bold text-xl sm:text-2xl transition-all duration-300">6</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-pink-500/20 border-2 border-pink-500 flex items-center justify-center text-pink-100 font-bold text-xl sm:text-2xl transition-all duration-300">7</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-indigo-500/20 border-2 border-indigo-500 flex items-center justify-center text-indigo-100 font-bold text-xl sm:text-2xl transition-all duration-300">8</div>
-                        <div className="min-w-[3rem] min-h-[3rem] sm:min-w-[4rem] sm:min-h-[4rem] rounded-xl bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center text-emerald-100 font-bold text-xl sm:text-2xl transition-all duration-300">9</div>
+              ) : previewMode === 'svg' ? (
+                <div className="w-full h-full flex items-center justify-center bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-800/60 p-8">
+                   <div className="flex flex-col gap-12 w-full max-w-2xl h-full items-center justify-center">
+                     {/* 1st SVG: Simple Geometric Shapes */}
+                     <svg viewBox="0 0 100 100" className={`w-48 h-48 transition-all duration-300 ${simClasses}`}>
+                       <circle cx="50" cy="50" r="45" className="opacity-80" />
+                       <rect x="25" y="25" width="50" height="50" className="opacity-90" />
+                       <polygon points="50,15 85,85 15,85" className="opacity-70 mix-blend-overlay" />
+                     </svg>
+                     
+                     {/* 2nd SVG: Icon / Vector */}
+                     <svg viewBox="0 0 24 24" className={`w-24 h-24 transition-all duration-300 ${simClasses}`}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0-18v18m-9-9h18" />
+                     </svg>
+                     
+                     <div className="text-slate-400 text-sm font-mono text-center max-w-sm">
+                        Apply fill, stroke, and stroke-width classes to style these SVG elements.
+                     </div>
                    </div>
                 </div>
-              ) : (
+              ) : previewMode === 'text' ? (
+                 <div className="w-full h-full flex items-center justify-center bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-800/60 p-12">
+                    <p className={`text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-center leading-tight transition-all duration-300 ${simClasses}`}>
+                       The quick brown fox jumps over the lazy dog
+                    </p>
+                 </div>
+              ) : previewMode === 'background' ? (
+                  <div className="flex flex-col items-center justify-center w-full max-w-4xl h-[85vh] p-4 relative bg-[#0B0F19] rounded-2xl overflow-hidden shadow-2xl border border-slate-800/60">
+                    
+                    {/* Decorative Background for the preview container itself to contrast the tested element */}
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800/40 via-[#0B0F19] to-[#0B0F19]"></div>
+                    
+                    {/* Container for the user's background classes */}
+                    <div className={`relative w-full max-w-2xl h-[65vh] rounded-3xl border-2 border-white/10 p-12 shadow-2xl overflow-y-auto transition-all duration-300 resize ${simClasses}`}>
+                       
+                       {/* Content to force scrolling and test background attachment & clip */}
+                       <div className="h-[200%] flex flex-col items-center justify-start text-center gap-8 pt-10">
+                          
+                          <div className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl transform rotate-3 hover:rotate-6 transition-transform cursor-pointer">
+                             <svg className="w-10 h-10 text-white opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                             </svg>
+                          </div>
+                          
+                          <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tighter leading-tight ${simClasses.includes('bg-clip-text') ? 'text-transparent' : 'text-white drop-shadow-2xl'}`}>
+                             Background<br/>Playground
+                          </h1>
+                          
+                          <p className={`max-w-md text-lg font-medium leading-relaxed ${simClasses.includes('bg-clip-text') ? 'text-transparent' : 'text-slate-200 drop-shadow-md'}`}>
+                             Scroll this container to test background <strong className="text-white">attachment</strong>. Apply thick borders to test <strong className="text-white">clip</strong> and <strong className="text-white">origin</strong> properties.
+                          </p>
+                          
+                          <div className="flex gap-4 mt-8 w-full max-w-xs flex-col sm:flex-row">
+                             <button className="flex-1 px-6 py-4 bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white font-semibold rounded-2xl border border-white/30 transition-all shadow-xl hover:-translate-y-1">
+                                Interactive
+                             </button>
+                             <button className="flex-1 px-6 py-4 bg-black/20 hover:bg-black/30 backdrop-blur-lg text-white font-semibold rounded-2xl border border-white/10 transition-all shadow-xl hover:-translate-y-1">
+                                Element
+                             </button>
+                          </div>
+
+                          <div className="mt-auto pb-10 opacity-50 flex flex-col items-center gap-2">
+                             <span className="text-xs uppercase tracking-widest text-white font-bold">Scroll Down</span>
+                             <div className="w-px h-16 bg-gradient-to-b from-white to-transparent"></div>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                ) : (
                 <div className={simClasses}>
                 {previewMode === 'typography' && (
                   <div className="flex flex-col gap-4 text-slate-200 w-full max-w-lg text-left bg-slate-900/50 p-8 rounded-2xl border border-slate-800">

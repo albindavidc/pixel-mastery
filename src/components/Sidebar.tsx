@@ -16,9 +16,9 @@ export function Sidebar() {
   } = useAppStore();
 
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [tailwindExpanded, setTailwindExpanded] = useState(true);
-  const [jsExpanded, setJsExpanded] = useState(true);
-  const [htmlExpanded, setHtmlExpanded] = useState(true);
+  const [tailwindExpanded, setTailwindExpanded] = useState(false);
+  const [jsExpanded, setJsExpanded] = useState(false);
+  const [htmlExpanded, setHtmlExpanded] = useState(false);
   const htmlModules = modules.filter(m => m.category === 'html');
   const jsModules = modules.filter(m => m.category === 'javascript' || m.category === 'js');
 
@@ -241,84 +241,72 @@ export function Sidebar() {
       <div className="flex-1 overflow-y-auto p-4 scrollbar-thin">
         <nav className="space-y-4">
             <div className="mb-6">
-              {!isCollapsed ? (
-                <button 
-                  onClick={() => setHtmlExpanded(!htmlExpanded)}
-                  className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
-                >
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
-                    HTML
-                    {htmlExpanded && (
-                      <div className="flex items-center gap-1">
-                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">[HTML5]</span>
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="HTML Documentation">
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                    )}
-                  </h3>
-                  {htmlExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
-                </button>
-              ) : (
-                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">HTML</h3>
-              )}
+              <button 
+                onClick={() => setHtmlExpanded(!htmlExpanded)}
+                className={`w-full flex items-center ${isCollapsed ? 'flex-col justify-center gap-1' : 'justify-between'} px-3 py-2 mb-2 group text-left hover:bg-zinc-900/50 rounded-lg transition-colors`}
+              >
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
+                  HTML
+                  {!isCollapsed && htmlExpanded && (
+                    <div className="flex items-center gap-1">
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">[HTML5]</span>
+                      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="HTML Documentation">
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
+                </h3>
+                {htmlExpanded ? <ChevronUp className={`w-4 h-4 text-zinc-500 transition-colors group-hover:text-zinc-300 ${isCollapsed ? 'mt-1' : ''}`} /> : <ChevronDown className={`w-4 h-4 text-zinc-500 transition-colors group-hover:text-zinc-300 ${isCollapsed ? 'mt-1' : ''}`} />}
+              </button>
               
               <div className="space-y-1">
-                {(isCollapsed || htmlExpanded) && groupedHtmlModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
+                {htmlExpanded && groupedHtmlModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
               </div>
             </div>
             <div>
-              {!isCollapsed ? (
-                <button 
-                  onClick={() => setTailwindExpanded(!tailwindExpanded)} 
-                  className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
-                >
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
-                    Tailwind
-                    {tailwindExpanded && (
-                      <div className="flex items-center gap-1">
-                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">v4.3</span>
-                        <a href="https://tailwindcss.com/docs" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="Tailwind Documentation">
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                    )}
-                  </h3>
-                  {tailwindExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
-                </button>
-              ) : (
-                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">TW</h3>
-              )}
+              <button 
+                onClick={() => setTailwindExpanded(!tailwindExpanded)}
+                className={`w-full flex items-center ${isCollapsed ? 'flex-col justify-center gap-1' : 'justify-between'} px-3 py-2 mb-2 group text-left hover:bg-zinc-900/50 rounded-lg transition-colors`}
+              >
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
+                  {isCollapsed ? 'TW' : 'Tailwind'}
+                  {!isCollapsed && tailwindExpanded && (
+                    <div className="flex items-center gap-1">
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">v4.3</span>
+                      <a href="https://tailwindcss.com/docs" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="Tailwind Documentation">
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
+                </h3>
+                {tailwindExpanded ? <ChevronUp className={`w-4 h-4 text-zinc-500 transition-colors group-hover:text-zinc-300 ${isCollapsed ? 'mt-1' : ''}`} /> : <ChevronDown className={`w-4 h-4 text-zinc-500 transition-colors group-hover:text-zinc-300 ${isCollapsed ? 'mt-1' : ''}`} />}
+              </button>
               
               <div className="space-y-1">
-                {(isCollapsed || tailwindExpanded) && groupedModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
+                {tailwindExpanded && groupedModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
               </div>
             </div>
             <div>
-              {!isCollapsed ? (
-                <button 
-                  onClick={() => setJsExpanded(!jsExpanded)} 
-                  className="w-full flex items-center justify-between px-3 py-1 mb-2 group text-left"
-                >
-                  <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
-                    JavaScript
-                    {jsExpanded && (
-                      <div className="flex items-center gap-1">
-                        <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">ES6+</span>
-                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="JavaScript Documentation">
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                    )}
-                  </h3>
-                  {jsExpanded ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
-                </button>
-              ) : (
-                <h3 className="px-3 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4 text-center">JS</h3>
-              )}
+              <button 
+                onClick={() => setJsExpanded(!jsExpanded)}
+                className={`w-full flex items-center ${isCollapsed ? 'flex-col justify-center gap-1' : 'justify-between'} px-3 py-2 mb-2 group text-left hover:bg-zinc-900/50 rounded-lg transition-colors`}
+              >
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors flex items-center gap-2">
+                  {isCollapsed ? 'JS' : 'JavaScript'}
+                  {!isCollapsed && jsExpanded && (
+                    <div className="flex items-center gap-1">
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-bold text-zinc-400 normal-case tracking-normal">ES6+</span>
+                      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-zinc-800 rounded text-zinc-500 hover:text-zinc-300" onClick={(e) => e.stopPropagation()} title="JavaScript Documentation">
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
+                </h3>
+                {jsExpanded ? <ChevronUp className={`w-4 h-4 text-zinc-500 transition-colors group-hover:text-zinc-300 ${isCollapsed ? 'mt-1' : ''}`} /> : <ChevronDown className={`w-4 h-4 text-zinc-500 transition-colors group-hover:text-zinc-300 ${isCollapsed ? 'mt-1' : ''}`} />}
+              </button>
               
               <div className="space-y-1">
-                {(isCollapsed || jsExpanded) && groupedJsModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
+                {jsExpanded && groupedJsModules.map((item, i) => item.isGroup ? renderGroup(item, i) : renderModuleButton(item, i))}
               </div>
             </div>
 

@@ -38,7 +38,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     'tailwind-layout-display-grid': 'grid p-6 w-full bg-fuchsia-500/20 border-4 border-fuchsia-500 rounded-2xl shadow-xl grid-cols-3 gap-4 place-content-center',
     'tailwind-layout-box-sizing': 'box-border p-4 w-64 h-64 bg-indigo-500/20 border-8 border-indigo-500 mx-auto mt-10',
     'tailwind-layout-position': 'relative',
-    'tailwind-layout-visibility': 'visible'
+    'tailwind-layout-visibility': 'visible',
+    'tailwind-styling-background': 'bg-[url(\'https://shorturl.at/dduSX\')] bg-[size:200%] bg-center'
   });
 
   const playgroundClasses = moduleClasses[currentModuleId] || '';
