@@ -208,11 +208,43 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                    </div>
                 </div>
               ) : previewMode === 'text' ? (
-                 <div className="w-full h-full flex items-center justify-center bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-800/60 p-12">
-                    <p className={`text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-center leading-tight transition-all duration-300 ${simClasses}`}>
-                       The quick brown fox jumps over the lazy dog
-                    </p>
-                 </div>
+                 <div className="w-full max-w-4xl h-[85vh] lg:max-w-3xl relative border border-slate-700/50 rounded-2xl bg-[#0B0F19] overflow-hidden shadow-2xl flex flex-col">
+                   {/* macOS-style Chrome Header */}
+                   <div className="h-12 border-b border-white/10 bg-white/5 flex items-center px-4 shrink-0">
+                      <div className="flex gap-2">
+                         <div className="w-3 h-3 rounded-full bg-slate-600"></div>
+                         <div className="w-3 h-3 rounded-full bg-slate-600"></div>
+                         <div className="w-3 h-3 rounded-full bg-slate-600"></div>
+                      </div>
+                   </div>
+                   
+                   {/* Text Preview Area */}
+                   <div className="flex-1 flex flex-col p-8 sm:p-12 overflow-y-auto overflow-x-hidden relative">
+                      {/* Grid background for alignment reference */}
+                      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+                      
+                      <div className={`w-full max-w-2xl mx-auto transition-all duration-300 text-white ${simClasses}`}>
+                        <h1 className="text-4xl font-extrabold tracking-tight mb-4">
+                          Build anything with Tailwind.
+                        </h1>
+                        <p className="text-xl mb-6 text-slate-300">
+                          Rapidly build modern websites without ever leaving your HTML.
+                        </p>
+                        <p className="mb-4 text-slate-400">
+                          A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
+                        </p>
+                        <ul className="pl-5 mb-6 text-slate-400 list-disc">
+                           <li>Utility-First Fundamentals</li>
+                           <li>Handling Hover, Focus, and Other States</li>
+                           <li>Responsive Design</li>
+                           <li>Dark Mode</li>
+                        </ul>
+                        <blockquote className="border-l-4 border-indigo-500 pl-4 text-slate-300 italic">
+                          "The best way to predict the future is to invent it."
+                        </blockquote>
+                      </div>
+                   </div>
+                </div>
               ) : previewMode === 'background' ? (
                   <div className="flex flex-col items-center justify-center w-full max-w-4xl h-[85vh] p-4 relative bg-[#0B0F19] rounded-2xl overflow-hidden shadow-2xl border border-slate-800/60">
                     
@@ -279,20 +311,7 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                 </div>
                 ) : (
                 <div className={simClasses}>
-                {previewMode === 'typography' && (
-                  <div className="flex flex-col gap-4 text-slate-200 w-full max-w-lg text-left bg-slate-900/50 p-8 rounded-2xl border border-slate-800">
-                    <h1 className="text-4xl font-bold text-white tracking-tight">Typography Hierarchy</h1>
-                    <h2 className="text-2xl font-semibold text-slate-300">Secondary Heading</h2>
-                    <p className="text-base text-slate-400 leading-relaxed">
-                      This is a paragraph of text demonstrating the body typography. 
-                      Tailwind CSS makes it easy to style text with utility classes and establish a clear visual hierarchy.
-                    </p>
-                    <div className="flex items-center gap-3 mt-2">
-                       <span className="text-sm font-medium text-indigo-400 hover:text-indigo-300 cursor-pointer">Read more &rarr;</span>
-                       <span className="text-[10px] font-mono bg-slate-800 px-2 py-1 rounded text-slate-300 border border-slate-700">article-tag</span>
-                    </div>
-                  </div>
-                )}
+                
 
                 {previewMode === 'colors' && (
                   <div className="flex flex-wrap items-center justify-center gap-6 p-8 bg-slate-900/50 rounded-2xl border border-slate-800">

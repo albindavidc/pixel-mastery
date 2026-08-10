@@ -3,7 +3,7 @@ import { ChevronRight, Settings2, HelpCircle, X } from 'lucide-react';
 import { CustomValueInput } from './CustomValueInput';
 import { ColorFamilyBadge } from './ColorFamilyBadge';
 import { ReferenceModal } from './ReferenceModal';
-import { stylingWildcards, tailwindColors } from '../data/stylingControlBar';
+import { stylingWildcards, tailwindColors, stylingControlBarData } from '../data/stylingControlBar';
 
 interface ControlBarAccordionProps {
   key?: React.Key;
@@ -17,8 +17,8 @@ interface ControlBarAccordionProps {
   onVariantClick: (variant: string) => void;
   onCustomApply: (variant: string) => void;
   onCustomRemove: (variant: string) => void;
-  activeGradientTab?: 'FROM' | 'VIA' | 'TO';
-  setActiveGradientTab?: (tab: 'FROM' | 'VIA' | 'TO') => void;
+  activeSubTab?: string;
+  setActiveSubTab?: (tab: string) => void;
   onOpenReference?: () => void;
   onCloseVariantsRow?: () => void;
 }
@@ -34,8 +34,8 @@ export function ControlBarAccordion({
   onVariantClick,
   onCustomApply,
   onCustomRemove,
-  activeGradientTab,
-  setActiveGradientTab,
+  activeSubTab,
+  setActiveSubTab,
   onOpenReference,
   onCloseVariantsRow
 }: ControlBarAccordionProps) {
@@ -82,28 +82,38 @@ export function ControlBarAccordion({
 
   return (
     <div className="border-b border-zinc-800/50 flex flex-col bg-zinc-900">
-      {group.isGradientStop && setActiveGradientTab && (
+      {(group.isGradientStop || group.isSubGroup) && setActiveSubTab && (
       <div className="flex items-center justify-between px-3 py-2 bg-zinc-950/50 transition-colors border-b border-zinc-800/30">
         <div className="flex items-center gap-3">
             <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
-              {['FROM', 'VIA', 'TO'].map(tab => (
+              
+              {(() => {
+                let subTabs = [];
+                if (group.isGradientStop) {
+                   subTabs = ['FROM', 'VIA', 'TO'];
+                } else if (group.isSubGroup && group.parentGroup) {
+                   const parent = (stylingControlBarData[previewMode as keyof typeof stylingControlBarData] || []).find((g: any) => g.group === group.parentGroup);
+                   if (parent && parent.subGroups) subTabs = parent.subGroups;
+                }
+                return subTabs.map(tab => (
+
                 <button
                   key={tab}
-                  onClick={() => setActiveGradientTab(tab as any)}
+                  onClick={() => setActiveSubTab(tab as any)}
                   className={`text-[9px] font-bold uppercase tracking-widest leading-tight py-0.5 px-1.5 rounded transition-colors text-left ${
-                    activeGradientTab === tab ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'text-zinc-500 hover:bg-zinc-800/50 hover:text-zinc-300'
+                    activeSubTab === tab ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'text-zinc-500 hover:bg-zinc-800/50 hover:text-zinc-300'
                   }`}
                 >
                   {tab}
                 </button>
-              ))}
+              ))})()}
             </div>
         </div>
       </div>
 )}
       
       <div className={`overflow-hidden transition-all duration-200 ease-in-out ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-         <div className={`p-3 pt-0 flex flex-col gap-3 ${group.isGradientStop ? "border-t border-zinc-800/50" : ""}`}>
+         <div className={`p-3 pt-0 flex flex-col gap-3 ${(group.isGradientStop || group.isSubGroup) ? "border-t border-zinc-800/50" : ""}`}>
              <div className="flex flex-wrap items-center gap-1.5 mt-3">
                 {group.properties.map((propObj: any) => {
                   const prop = typeof propObj === 'string' ? propObj : propObj.prop;
@@ -167,7 +177,7 @@ export function ControlBarAccordion({
                 })}
              
              <CustomValueInput
-                propertyGroup={group.isGradientStop ? group.group : group.group}
+                propertyGroup={(group.isGradientStop || group.isSubGroup) ? group.group : group.group}
                 previewMode={previewMode}
                 onApply={onCustomApply}
                 onRemove={onCustomRemove}

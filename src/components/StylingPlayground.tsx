@@ -43,7 +43,12 @@ export function StylingPlayground() {
   const [showColorModal, setShowColorModal] = useState(false);
   const [colorFamily, setColorFamily] = useState<string | null>(null);
   const [colorProperty, setColorProperty] = useState<string | null>(null);
-  const [activeGradientTab, setActiveGradientTab] = useState<'FROM' | 'VIA' | 'TO'>('FROM');
+  const [activeSubTab, setActiveSubTab] = useState<string>('FROM');
+  const [activeFontTab, setActiveFontTab] = useState<string>('FAMILY');
+  const [activeSpacingTab, setActiveSpacingTab] = useState<string>('LETTER SPACING');
+  const [activeTextTab, setActiveTextTab] = useState<string>('ALIGN');
+  const [activeDecorationTab, setActiveDecorationTab] = useState<string>('LINE');
+  const [activeListTab, setActiveListTab] = useState<string>('TYPE');
 
 
 const handleModeChange = (mode: string) => {
@@ -289,7 +294,14 @@ const handleModeChange = (mode: string) => {
   const hasGradient = playgroundClasses.includes('bg-linear') || playgroundClasses.includes('bg-radial') || playgroundClasses.includes('bg-conic');
   const activeControlData = (stylingControlBarData[previewMode as keyof typeof stylingControlBarData] || []).filter((g: any) => {
     if (g.isGradientStop) {
-      return hasGradient && g.group.startsWith(activeGradientTab);
+      return hasGradient && g.group.startsWith(activeSubTab);
+    }
+    if (g.isSubGroup) {
+      if (g.parentGroup === 'FONT') return g.group.startsWith(activeFontTab);
+      if (g.parentGroup === 'SPACING & LAYOUT') return g.group.startsWith(activeSpacingTab);
+      if (g.parentGroup === 'TEXT') return g.group.startsWith(activeTextTab);
+      if (g.parentGroup === 'DECORATION') return g.group.startsWith(activeDecorationTab);
+      if (g.parentGroup === 'LIST') return g.group.startsWith(activeListTab);
     }
     return true;
   });
@@ -345,16 +357,21 @@ const handleModeChange = (mode: string) => {
       <div className="flex-shrink-0 bg-zinc-900 border-b border-zinc-800 flex flex-col z-10 shadow-sm transition-colors w-full sticky top-0 max-h-[50vh] flex-col">
         <div className="flex items-center justify-between p-3 border-b border-zinc-800/50">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
-            {activeControlData
-              .filter((group: any, index: number, self: any[]) => 
-                 !group.isGradientStop || self.findIndex((g: any) => g.isGradientStop) === index
-              )
+            {Array.from(new Set(activeControlData
+              .filter((group: any) => {
+                 if (group.isGradientStop) return true;
+                 if (group.isSubGroup) return true;
+                 return true;
+              })
               .map((group: any) => {
               let label = group.group;
               if (group.isGradientStop) {
                  label = 'GRADIENT';
+              } else if (group.isSubGroup) {
+                 label = group.parentGroup;
               }
-              return (
+              return label;
+            }))).map((label: string) => (
                 <button
                   key={label}
                   onClick={() => setActiveTab(label)}
@@ -366,14 +383,13 @@ const handleModeChange = (mode: string) => {
                 >
                   {label}
                 </button>
-              );
-            })}
+              ))}
           </div>
           
         </div>
         
         <div className="flex-1 overflow-y-auto scrollbar-thin p-1">
-          {activeControlData.filter((g: any) => activeTab === (g.isGradientStop ? 'GRADIENT' : g.group)).map((group: any) => (
+          {activeControlData.filter((g: any) => activeTab === ((g.isGradientStop ? 'GRADIENT' : g.isSubGroup ? g.parentGroup : g.group))).map((group: any) => (
              <ControlBarAccordion
                 key={group.group}
                 group={group}
@@ -403,8 +419,8 @@ const handleModeChange = (mode: string) => {
                 onVariantClick={handleVariantClick}
                 onCustomApply={handleCustomApply}
                 onCustomRemove={handleCustomRemove}
-                activeGradientTab={activeGradientTab}
-                setActiveGradientTab={setActiveGradientTab}
+                activeSubTab={group.parentGroup === 'FONT' ? activeFontTab : group.parentGroup === 'SPACING & LAYOUT' ? activeSpacingTab : group.parentGroup === 'TEXT' ? activeTextTab : group.parentGroup === 'DECORATION' ? activeDecorationTab : group.parentGroup === 'LIST' ? activeListTab : activeSubTab}
+                setActiveSubTab={group.parentGroup === 'FONT' ? setActiveFontTab : group.parentGroup === 'SPACING & LAYOUT' ? setActiveSpacingTab : group.parentGroup === 'TEXT' ? setActiveTextTab : group.parentGroup === 'DECORATION' ? setActiveDecorationTab : group.parentGroup === 'LIST' ? setActiveListTab : setActiveSubTab}
                 onOpenReference={() => setShowReference(true)}
                 onCloseVariantsRow={() => setSelectedProperty(null)}
              />
@@ -414,13 +430,13 @@ const handleModeChange = (mode: string) => {
 
       
       {showReference && (() => {
-         const activeGroup = activeControlData.find((g: any) => activeTab === (g.isGradientStop ? 'GRADIENT' : g.group));
+         const activeGroup = activeControlData.find((g: any) => activeTab === ((g.isGradientStop ? 'GRADIENT' : g.isSubGroup ? g.parentGroup : g.group)));
          if (!activeGroup) return null;
          
          // If it's gradient, we might want to show properties for the currently active FROM/VIA/TO sub-tab
          // But activeGroup will just be the first one (FROM). To get all, we can aggregate.
-         const groupProperties = activeTab === 'GRADIENT' 
-           ? activeControlData.filter((g: any) => g.isGradientStop).flatMap((g: any) => g.properties)
+         const groupProperties = (activeTab === 'GRADIENT' || activeGroup.isSubGroup)  
+           ? activeControlData.filter((g: any) => g.isGradientStop || g.parentGroup === activeTab || g.group === activeTab).flatMap((g: any) => g.properties)
            : activeGroup.properties;
 
          return (

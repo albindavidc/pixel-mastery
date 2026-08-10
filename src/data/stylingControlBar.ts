@@ -1,376 +1,408 @@
+export const tailwindColors: any = {
+  "slate": {
+    "50": "oklch(98.4% 0.003 247.858)",
+    "100": "oklch(96.8% 0.007 247.896)",
+    "200": "oklch(92.9% 0.013 255.508)",
+    "300": "oklch(86.9% 0.022 252.894)",
+    "400": "oklch(70.4% 0.04 256.788)",
+    "500": "oklch(55.4% 0.046 257.417)",
+    "600": "oklch(44.6% 0.043 257.281)",
+    "700": "oklch(37.2% 0.044 257.287)",
+    "800": "oklch(27.9% 0.041 260.031)",
+    "900": "oklch(20.8% 0.042 265.755)",
+    "950": "oklch(12.9% 0.042 264.695)"
+  },
+  "gray": {
+    "50": "oklch(98.5% 0.002 247.839)",
+    "100": "oklch(96.7% 0.003 264.542)",
+    "200": "oklch(92.8% 0.006 264.531)",
+    "300": "oklch(87.2% 0.01 258.338)",
+    "400": "oklch(70.7% 0.022 261.325)",
+    "500": "oklch(55.1% 0.027 264.364)",
+    "600": "oklch(44.6% 0.03 256.802)",
+    "700": "oklch(37.3% 0.034 259.733)",
+    "800": "oklch(27.8% 0.033 256.848)",
+    "900": "oklch(21% 0.034 264.665)",
+    "950": "oklch(13% 0.028 261.692)"
+  },
+  "zinc": {
+    "50": "oklch(98.5% 0 none)",
+    "100": "oklch(96.7% 0.001 286.375)",
+    "200": "oklch(92% 0.004 286.32)",
+    "300": "oklch(87.1% 0.006 286.286)",
+    "400": "oklch(70.5% 0.015 286.067)",
+    "500": "oklch(55.2% 0.016 285.938)",
+    "600": "oklch(44.2% 0.017 285.786)",
+    "700": "oklch(37% 0.013 285.805)",
+    "800": "oklch(27.4% 0.006 286.033)",
+    "900": "oklch(21% 0.006 285.885)",
+    "950": "oklch(14.1% 0.005 285.823)"
+  },
+  "neutral": {
+    "50": "oklch(98.5% 0 none)",
+    "100": "oklch(97% 0 none)",
+    "200": "oklch(92.2% 0 none)",
+    "300": "oklch(87% 0 none)",
+    "400": "oklch(70.8% 0 none)",
+    "500": "oklch(55.6% 0 none)",
+    "600": "oklch(43.9% 0 none)",
+    "700": "oklch(37.1% 0 none)",
+    "800": "oklch(26.9% 0 none)",
+    "900": "oklch(20.5% 0 none)",
+    "950": "oklch(14.5% 0 none)"
+  },
+  "stone": {
+    "50": "oklch(98.5% 0.001 106.423)",
+    "100": "oklch(97% 0.001 106.424)",
+    "200": "oklch(92.3% 0.003 48.717)",
+    "300": "oklch(86.9% 0.005 56.366)",
+    "400": "oklch(70.9% 0.01 56.259)",
+    "500": "oklch(55.3% 0.013 58.071)",
+    "600": "oklch(44.4% 0.011 73.639)",
+    "700": "oklch(37.4% 0.01 67.558)",
+    "800": "oklch(26.8% 0.007 34.298)",
+    "900": "oklch(21.6% 0.006 56.043)",
+    "950": "oklch(14.7% 0.004 49.25)"
+  },
+  "mauve": {
+    "50": "oklch(98.5% 0 none)",
+    "100": "oklch(96% 0.003 325.6)",
+    "200": "oklch(92.2% 0.005 325.62)",
+    "300": "oklch(86.5% 0.012 325.68)",
+    "400": "oklch(71.1% 0.019 323.02)",
+    "500": "oklch(54.2% 0.034 322.5)",
+    "600": "oklch(43.5% 0.029 321.78)",
+    "700": "oklch(36.4% 0.029 323.89)",
+    "800": "oklch(26.3% 0.024 320.12)",
+    "900": "oklch(21.2% 0.019 322.12)",
+    "950": "oklch(14.5% 0.008 326)"
+  },
+  "olive": {
+    "50": "oklch(98.8% 0.003 106.5)",
+    "100": "oklch(96.6% 0.005 106.5)",
+    "200": "oklch(93% 0.007 106.5)",
+    "300": "oklch(88% 0.011 106.6)",
+    "400": "oklch(73.7% 0.021 106.9)",
+    "500": "oklch(58% 0.031 107.3)",
+    "600": "oklch(46.6% 0.025 107.3)",
+    "700": "oklch(39.4% 0.023 107.4)",
+    "800": "oklch(28.6% 0.016 107.4)",
+    "900": "oklch(22.8% 0.013 107.4)",
+    "950": "oklch(15.3% 0.006 107.1)"
+  },
+  "mist": {
+    "50": "oklch(98.7% 0.002 197.1)",
+    "100": "oklch(96.3% 0.002 197.1)",
+    "200": "oklch(92.5% 0.005 214.3)",
+    "300": "oklch(87.2% 0.007 219.6)",
+    "400": "oklch(72.3% 0.014 214.4)",
+    "500": "oklch(56% 0.021 213.5)",
+    "600": "oklch(45% 0.017 213.2)",
+    "700": "oklch(37.8% 0.015 216)",
+    "800": "oklch(27.5% 0.011 216.9)",
+    "900": "oklch(21.8% 0.008 223.9)",
+    "950": "oklch(14.8% 0.004 228.8)"
+  },
+  "taupe": {
+    "50": "oklch(98.6% 0.002 67.8)",
+    "100": "oklch(96% 0.002 17.2)",
+    "200": "oklch(92.2% 0.005 34.3)",
+    "300": "oklch(86.8% 0.007 39.5)",
+    "400": "oklch(71.4% 0.014 41.2)",
+    "500": "oklch(54.7% 0.021 43.1)",
+    "600": "oklch(43.8% 0.017 39.3)",
+    "700": "oklch(36.7% 0.016 35.7)",
+    "800": "oklch(26.8% 0.011 36.5)",
+    "900": "oklch(21.4% 0.009 43.1)",
+    "950": "oklch(14.7% 0.004 49.3)"
+  },
+  "red": {
+    "50": "oklch(97.1% 0.013 17.38)",
+    "100": "oklch(93.6% 0.032 17.717)",
+    "200": "oklch(88.5% 0.062 18.334)",
+    "300": "oklch(80.8% 0.114 19.571)",
+    "400": "oklch(70.4% 0.191 22.216)",
+    "500": "oklch(63.7% 0.237 25.331)",
+    "600": "oklch(57.7% 0.245 27.325)",
+    "700": "oklch(50.5% 0.213 27.518)",
+    "800": "oklch(44.4% 0.177 26.899)",
+    "900": "oklch(39.6% 0.141 25.723)",
+    "950": "oklch(25.8% 0.092 26.042)"
+  },
+  "orange": {
+    "50": "oklch(98% 0.016 73.684)",
+    "100": "oklch(95.4% 0.038 75.164)",
+    "200": "oklch(90.1% 0.076 70.697)",
+    "300": "oklch(83.7% 0.128 66.29)",
+    "400": "oklch(75% 0.183 55.934)",
+    "500": "oklch(70.5% 0.213 47.604)",
+    "600": "oklch(64.6% 0.222 41.116)",
+    "700": "oklch(55.3% 0.195 38.402)",
+    "800": "oklch(47% 0.157 37.304)",
+    "900": "oklch(40.8% 0.123 38.172)",
+    "950": "oklch(26.6% 0.079 36.259)"
+  },
+  "amber": {
+    "50": "oklch(98.7% 0.022 95.277)",
+    "100": "oklch(96.2% 0.059 95.617)",
+    "200": "oklch(92.4% 0.12 95.746)",
+    "300": "oklch(87.9% 0.169 91.605)",
+    "400": "oklch(82.8% 0.189 84.429)",
+    "500": "oklch(76.9% 0.188 70.08)",
+    "600": "oklch(66.6% 0.179 58.318)",
+    "700": "oklch(55.5% 0.163 48.998)",
+    "800": "oklch(47.3% 0.137 46.201)",
+    "900": "oklch(41.4% 0.112 45.904)",
+    "950": "oklch(27.9% 0.077 45.635)"
+  },
+  "yellow": {
+    "50": "oklch(98.7% 0.026 102.212)",
+    "100": "oklch(97.3% 0.071 103.193)",
+    "200": "oklch(94.5% 0.129 101.54)",
+    "300": "oklch(90.5% 0.182 98.111)",
+    "400": "oklch(85.2% 0.199 91.936)",
+    "500": "oklch(79.5% 0.184 86.047)",
+    "600": "oklch(68.1% 0.162 75.834)",
+    "700": "oklch(55.4% 0.135 66.442)",
+    "800": "oklch(47.6% 0.114 61.907)",
+    "900": "oklch(42.1% 0.095 57.708)",
+    "950": "oklch(28.6% 0.066 53.813)"
+  },
+  "lime": {
+    "50": "oklch(98.6% 0.031 120.757)",
+    "100": "oklch(96.7% 0.067 122.328)",
+    "200": "oklch(93.8% 0.127 124.321)",
+    "300": "oklch(89.7% 0.196 126.665)",
+    "400": "oklch(84.1% 0.238 128.85)",
+    "500": "oklch(76.8% 0.233 130.85)",
+    "600": "oklch(64.8% 0.2 131.684)",
+    "700": "oklch(53.2% 0.157 131.589)",
+    "800": "oklch(45.3% 0.124 130.933)",
+    "900": "oklch(40.5% 0.101 131.063)",
+    "950": "oklch(27.4% 0.072 132.109)"
+  },
+  "green": {
+    "50": "oklch(98.2% 0.018 155.826)",
+    "100": "oklch(96.2% 0.044 156.743)",
+    "200": "oklch(92.5% 0.084 155.995)",
+    "300": "oklch(87.1% 0.15 154.449)",
+    "400": "oklch(79.2% 0.209 151.711)",
+    "500": "oklch(72.3% 0.219 149.579)",
+    "600": "oklch(62.7% 0.194 149.214)",
+    "700": "oklch(52.7% 0.154 150.069)",
+    "800": "oklch(44.8% 0.119 151.328)",
+    "900": "oklch(39.3% 0.095 152.535)",
+    "950": "oklch(26.6% 0.065 152.934)"
+  },
+  "emerald": {
+    "50": "oklch(97.9% 0.021 166.113)",
+    "100": "oklch(95% 0.052 163.051)",
+    "200": "oklch(90.5% 0.093 164.15)",
+    "300": "oklch(84.5% 0.143 164.978)",
+    "400": "oklch(76.5% 0.177 163.223)",
+    "500": "oklch(69.6% 0.17 162.48)",
+    "600": "oklch(59.6% 0.145 163.225)",
+    "700": "oklch(50.8% 0.118 165.612)",
+    "800": "oklch(43.2% 0.095 166.913)",
+    "900": "oklch(37.8% 0.077 168.94)",
+    "950": "oklch(26.2% 0.051 172.552)"
+  },
+  "teal": {
+    "50": "oklch(98.4% 0.014 180.72)",
+    "100": "oklch(95.3% 0.051 180.801)",
+    "200": "oklch(91% 0.096 180.426)",
+    "300": "oklch(85.5% 0.138 181.071)",
+    "400": "oklch(77.7% 0.152 181.912)",
+    "500": "oklch(70.4% 0.14 182.503)",
+    "600": "oklch(60% 0.118 184.704)",
+    "700": "oklch(51.1% 0.096 186.391)",
+    "800": "oklch(43.7% 0.078 188.216)",
+    "900": "oklch(38.6% 0.063 188.416)",
+    "950": "oklch(27.7% 0.046 192.524)"
+  },
+  "cyan": {
+    "50": "oklch(98.4% 0.019 200.873)",
+    "100": "oklch(95.6% 0.045 203.388)",
+    "200": "oklch(91.7% 0.08 205.041)",
+    "300": "oklch(86.5% 0.127 207.078)",
+    "400": "oklch(78.9% 0.154 211.53)",
+    "500": "oklch(71.5% 0.143 215.221)",
+    "600": "oklch(60.9% 0.126 221.723)",
+    "700": "oklch(52% 0.105 223.128)",
+    "800": "oklch(45% 0.085 224.283)",
+    "900": "oklch(39.8% 0.07 227.392)",
+    "950": "oklch(30.2% 0.056 229.695)"
+  },
+  "sky": {
+    "50": "oklch(97.7% 0.013 236.62)",
+    "100": "oklch(95.1% 0.026 236.824)",
+    "200": "oklch(90.1% 0.058 230.902)",
+    "300": "oklch(82.8% 0.111 230.318)",
+    "400": "oklch(74.6% 0.16 232.661)",
+    "500": "oklch(68.5% 0.169 237.323)",
+    "600": "oklch(58.8% 0.158 241.966)",
+    "700": "oklch(50% 0.134 242.749)",
+    "800": "oklch(44.3% 0.11 240.79)",
+    "900": "oklch(39.1% 0.09 240.876)",
+    "950": "oklch(29.3% 0.066 243.157)"
+  },
+  "blue": {
+    "50": "oklch(97% 0.014 254.604)",
+    "100": "oklch(93.2% 0.032 255.585)",
+    "200": "oklch(88.2% 0.059 254.128)",
+    "300": "oklch(80.9% 0.105 251.813)",
+    "400": "oklch(70.7% 0.165 254.624)",
+    "500": "oklch(62.3% 0.214 259.815)",
+    "600": "oklch(54.6% 0.245 262.881)",
+    "700": "oklch(48.8% 0.243 264.376)",
+    "800": "oklch(42.4% 0.199 265.638)",
+    "900": "oklch(37.9% 0.146 265.522)",
+    "950": "oklch(28.2% 0.091 267.935)"
+  },
+  "indigo": {
+    "50": "oklch(96.2% 0.018 272.314)",
+    "100": "oklch(93% 0.034 272.788)",
+    "200": "oklch(87% 0.065 274.039)",
+    "300": "oklch(78.5% 0.115 274.713)",
+    "400": "oklch(67.3% 0.182 276.935)",
+    "500": "oklch(58.5% 0.233 277.117)",
+    "600": "oklch(51.1% 0.262 276.966)",
+    "700": "oklch(45.7% 0.24 277.023)",
+    "800": "oklch(39.8% 0.195 277.366)",
+    "900": "oklch(35.9% 0.144 278.697)",
+    "950": "oklch(25.7% 0.09 281.288)"
+  },
+  "violet": {
+    "50": "oklch(96.9% 0.016 293.756)",
+    "100": "oklch(94.3% 0.029 294.588)",
+    "200": "oklch(89.4% 0.057 293.283)",
+    "300": "oklch(81.1% 0.111 293.571)",
+    "400": "oklch(70.2% 0.183 293.541)",
+    "500": "oklch(60.6% 0.25 292.717)",
+    "600": "oklch(54.1% 0.281 293.009)",
+    "700": "oklch(49.1% 0.27 292.581)",
+    "800": "oklch(43.2% 0.232 292.759)",
+    "900": "oklch(38% 0.189 293.745)",
+    "950": "oklch(28.3% 0.141 291.089)"
+  },
+  "purple": {
+    "50": "oklch(97.7% 0.014 308.299)",
+    "100": "oklch(94.6% 0.033 307.174)",
+    "200": "oklch(90.2% 0.063 306.703)",
+    "300": "oklch(82.7% 0.119 306.383)",
+    "400": "oklch(71.4% 0.203 305.504)",
+    "500": "oklch(62.7% 0.265 303.9)",
+    "600": "oklch(55.8% 0.288 302.321)",
+    "700": "oklch(49.6% 0.265 301.924)",
+    "800": "oklch(43.8% 0.218 303.724)",
+    "900": "oklch(38.1% 0.176 304.987)",
+    "950": "oklch(29.1% 0.149 302.717)"
+  },
+  "fuchsia": {
+    "50": "oklch(97.7% 0.017 320.058)",
+    "100": "oklch(95.2% 0.037 318.852)",
+    "200": "oklch(90.3% 0.076 319.62)",
+    "300": "oklch(83.3% 0.145 321.434)",
+    "400": "oklch(74% 0.238 322.16)",
+    "500": "oklch(66.7% 0.295 322.15)",
+    "600": "oklch(59.1% 0.293 322.896)",
+    "700": "oklch(51.8% 0.253 323.949)",
+    "800": "oklch(45.2% 0.211 324.591)",
+    "900": "oklch(40.1% 0.17 325.612)",
+    "950": "oklch(29.3% 0.136 325.661)"
+  },
+  "pink": {
+    "50": "oklch(97.1% 0.014 343.198)",
+    "100": "oklch(94.8% 0.028 342.258)",
+    "200": "oklch(89.9% 0.061 343.231)",
+    "300": "oklch(82.3% 0.12 346.018)",
+    "400": "oklch(71.8% 0.202 349.761)",
+    "500": "oklch(65.6% 0.241 354.308)",
+    "600": "oklch(59.2% 0.249 0.584)",
+    "700": "oklch(52.5% 0.223 3.958)",
+    "800": "oklch(45.9% 0.187 3.815)",
+    "900": "oklch(40.8% 0.153 2.432)",
+    "950": "oklch(28.4% 0.109 3.907)"
+  },
+  "rose": {
+    "50": "oklch(96.9% 0.015 12.422)",
+    "100": "oklch(94.1% 0.03 12.58)",
+    "200": "oklch(89.2% 0.058 10.001)",
+    "300": "oklch(81% 0.117 11.638)",
+    "400": "oklch(71.2% 0.194 13.428)",
+    "500": "oklch(64.5% 0.246 16.439)",
+    "600": "oklch(58.6% 0.253 17.585)",
+    "700": "oklch(51.4% 0.222 16.935)",
+    "800": "oklch(45.5% 0.188 13.697)",
+    "900": "oklch(41% 0.159 10.272)",
+    "950": "oklch(27.1% 0.105 12.094)"
+  }
+};
+
 export const stylingWildcards: Record<string, string[]> = {
   // We'll populate this later based on needs
 };
 
-export const stylingControlBarData = {
-  svg: [
-    {
-      group: 'FILL',
-      properties: [
-        { label: 'fill-none', prop: 'fill-none', value: 'fill-none', isColor: true, colorVal: 'transparent' },
-        { label: 'fill-inherit', prop: 'fill-inherit', value: 'fill-inherit', isColor: true, colorVal: 'transparent' },
-        { label: 'fill-current', prop: 'fill-current', value: 'fill-current', isColor: true, colorVal: 'currentColor' },
-        { label: 'fill-transparent', prop: 'fill-transparent', value: 'fill-transparent', isColor: true, colorVal: 'transparent' },
-        { label: 'fill-black', prop: 'fill-black', value: 'fill-black', isColor: true, colorVal: '#000' },
-        { label: 'fill-white', prop: 'fill-white', value: 'fill-white', isColor: true, colorVal: '#fff' },
-        { label: 'red', prop: 'fill-red-*', value: 'fill-red-*', isColorFamily: true, family: 'red' },
-        { label: 'orange', prop: 'fill-orange-*', value: 'fill-orange-*', isColorFamily: true, family: 'orange' },
-        { label: 'amber', prop: 'fill-amber-*', value: 'fill-amber-*', isColorFamily: true, family: 'amber' },
-        { label: 'yellow', prop: 'fill-yellow-*', value: 'fill-yellow-*', isColorFamily: true, family: 'yellow' },
-        { label: 'lime', prop: 'fill-lime-*', value: 'fill-lime-*', isColorFamily: true, family: 'lime' },
-        { label: 'green', prop: 'fill-green-*', value: 'fill-green-*', isColorFamily: true, family: 'green' },
-        { label: 'emerald', prop: 'fill-emerald-*', value: 'fill-emerald-*', isColorFamily: true, family: 'emerald' },
-        { label: 'teal', prop: 'fill-teal-*', value: 'fill-teal-*', isColorFamily: true, family: 'teal' },
-        { label: 'cyan', prop: 'fill-cyan-*', value: 'fill-cyan-*', isColorFamily: true, family: 'cyan' },
-        { label: 'sky', prop: 'fill-sky-*', value: 'fill-sky-*', isColorFamily: true, family: 'sky' },
-        { label: 'blue', prop: 'fill-blue-*', value: 'fill-blue-*', isColorFamily: true, family: 'blue' },
-        { label: 'indigo', prop: 'fill-indigo-*', value: 'fill-indigo-*', isColorFamily: true, family: 'indigo' },
-        { label: 'violet', prop: 'fill-violet-*', value: 'fill-violet-*', isColorFamily: true, family: 'violet' },
-        { label: 'purple', prop: 'fill-purple-*', value: 'fill-purple-*', isColorFamily: true, family: 'purple' },
-        { label: 'fuchsia', prop: 'fill-fuchsia-*', value: 'fill-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
-        { label: 'pink', prop: 'fill-pink-*', value: 'fill-pink-*', isColorFamily: true, family: 'pink' },
-        { label: 'rose', prop: 'fill-rose-*', value: 'fill-rose-*', isColorFamily: true, family: 'rose' },
-        { label: 'slate', prop: 'fill-slate-*', value: 'fill-slate-*', isColorFamily: true, family: 'slate' },
-        { label: 'gray', prop: 'fill-gray-*', value: 'fill-gray-*', isColorFamily: true, family: 'gray' },
-        { label: 'zinc', prop: 'fill-zinc-*', value: 'fill-zinc-*', isColorFamily: true, family: 'zinc' },
-        { label: 'neutral', prop: 'fill-neutral-*', value: 'fill-neutral-*', isColorFamily: true, family: 'neutral' },
-        { label: 'stone', prop: 'fill-stone-*', value: 'fill-stone-*', isColorFamily: true, family: 'stone' },
-        { label: 'mauve', prop: 'fill-mauve-*', value: 'fill-mauve-*', isColorFamily: true, family: 'mauve' },
-        { label: 'olive', prop: 'fill-olive-*', value: 'fill-olive-*', isColorFamily: true, family: 'olive' },
-        { label: 'mist', prop: 'fill-mist-*', value: 'fill-mist-*', isColorFamily: true, family: 'mist' },
-        { label: 'taupe', prop: 'fill-taupe-*', value: 'fill-taupe-*', isColorFamily: true, family: 'taupe' }
-      ]
-    },
-    {
-      group: 'STROKE',
-      properties: [
-        { label: 'stroke-none', prop: 'stroke-none', value: 'stroke-none', isColor: true, colorVal: 'transparent' },
-        { label: 'stroke-inherit', prop: 'stroke-inherit', value: 'stroke-inherit', isColor: true, colorVal: 'transparent' },
-        { label: 'stroke-current', prop: 'stroke-current', value: 'stroke-current', isColor: true, colorVal: 'currentColor' },
-        { label: 'stroke-transparent', prop: 'stroke-transparent', value: 'stroke-transparent', isColor: true, colorVal: 'transparent' },
-        { label: 'stroke-black', prop: 'stroke-black', value: 'stroke-black', isColor: true, colorVal: '#000' },
-        { label: 'stroke-white', prop: 'stroke-white', value: 'stroke-white', isColor: true, colorVal: '#fff' },
-        { label: 'red', prop: 'stroke-red-*', value: 'stroke-red-*', isColorFamily: true, family: 'red' },
-        { label: 'orange', prop: 'stroke-orange-*', value: 'stroke-orange-*', isColorFamily: true, family: 'orange' },
-        { label: 'amber', prop: 'stroke-amber-*', value: 'stroke-amber-*', isColorFamily: true, family: 'amber' },
-        { label: 'yellow', prop: 'stroke-yellow-*', value: 'stroke-yellow-*', isColorFamily: true, family: 'yellow' },
-        { label: 'lime', prop: 'stroke-lime-*', value: 'stroke-lime-*', isColorFamily: true, family: 'lime' },
-        { label: 'green', prop: 'stroke-green-*', value: 'stroke-green-*', isColorFamily: true, family: 'green' },
-        { label: 'emerald', prop: 'stroke-emerald-*', value: 'stroke-emerald-*', isColorFamily: true, family: 'emerald' },
-        { label: 'teal', prop: 'stroke-teal-*', value: 'stroke-teal-*', isColorFamily: true, family: 'teal' },
-        { label: 'cyan', prop: 'stroke-cyan-*', value: 'stroke-cyan-*', isColorFamily: true, family: 'cyan' },
-        { label: 'sky', prop: 'stroke-sky-*', value: 'stroke-sky-*', isColorFamily: true, family: 'sky' },
-        { label: 'blue', prop: 'stroke-blue-*', value: 'stroke-blue-*', isColorFamily: true, family: 'blue' },
-        { label: 'indigo', prop: 'stroke-indigo-*', value: 'stroke-indigo-*', isColorFamily: true, family: 'indigo' },
-        { label: 'violet', prop: 'stroke-violet-*', value: 'stroke-violet-*', isColorFamily: true, family: 'violet' },
-        { label: 'purple', prop: 'stroke-purple-*', value: 'stroke-purple-*', isColorFamily: true, family: 'purple' },
-        { label: 'fuchsia', prop: 'stroke-fuchsia-*', value: 'stroke-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
-        { label: 'pink', prop: 'stroke-pink-*', value: 'stroke-pink-*', isColorFamily: true, family: 'pink' },
-        { label: 'rose', prop: 'stroke-rose-*', value: 'stroke-rose-*', isColorFamily: true, family: 'rose' },
-        { label: 'slate', prop: 'stroke-slate-*', value: 'stroke-slate-*', isColorFamily: true, family: 'slate' },
-        { label: 'gray', prop: 'stroke-gray-*', value: 'stroke-gray-*', isColorFamily: true, family: 'gray' },
-        { label: 'zinc', prop: 'stroke-zinc-*', value: 'stroke-zinc-*', isColorFamily: true, family: 'zinc' },
-        { label: 'neutral', prop: 'stroke-neutral-*', value: 'stroke-neutral-*', isColorFamily: true, family: 'neutral' },
-        { label: 'stone', prop: 'stroke-stone-*', value: 'stroke-stone-*', isColorFamily: true, family: 'stone' },
-        { label: 'mauve', prop: 'stroke-mauve-*', value: 'stroke-mauve-*', isColorFamily: true, family: 'mauve' },
-        { label: 'olive', prop: 'stroke-olive-*', value: 'stroke-olive-*', isColorFamily: true, family: 'olive' },
-        { label: 'mist', prop: 'stroke-mist-*', value: 'stroke-mist-*', isColorFamily: true, family: 'mist' },
-        { label: 'taupe', prop: 'stroke-taupe-*', value: 'stroke-taupe-*', isColorFamily: true, family: 'taupe' }
-      ]
-    },
-    {
-      group: 'STROKE WIDTH',
-      properties: [
-        { label: 'stroke-0', prop: 'stroke-0', value: 'stroke-0' },
-        { label: 'stroke-1', prop: 'stroke-1', value: 'stroke-1' },
-        { label: 'stroke-2', prop: 'stroke-2', value: 'stroke-2' },
-      ]
-    }
-  ],
-
-  background: [
-    {
-      group: 'ATTACHMENT',
-      properties: [
-        { label: 'bg-fixed', prop: 'bg-fixed', value: 'bg-fixed' },
-        { label: 'bg-local', prop: 'bg-local', value: 'bg-local' },
-        { label: 'bg-scroll', prop: 'bg-scroll', value: 'bg-scroll' },
-      ]
-    },
-    {
-      group: 'CLIP',
-      properties: [
-        { label: 'bg-clip-border', prop: 'bg-clip-border', value: 'bg-clip-border' },
-        { label: 'bg-clip-padding', prop: 'bg-clip-padding', value: 'bg-clip-padding' },
-        { label: 'bg-clip-content', prop: 'bg-clip-content', value: 'bg-clip-content' },
-        { label: 'bg-clip-text', prop: 'bg-clip-text', value: 'bg-clip-text' },
-      ]
-    },
-    {
-      group: 'COLOR',
-      properties: [
-        { label: 'bg-inherit', prop: 'bg-inherit', value: 'bg-inherit', isColor: true, colorVal: 'transparent' },
-        { label: 'bg-current', prop: 'bg-current', value: 'bg-current', isColor: true, colorVal: 'currentColor' },
-        { label: 'bg-transparent', prop: 'bg-transparent', value: 'bg-transparent', isColor: true, colorVal: 'transparent' },
-        { label: 'bg-black', prop: 'bg-black', value: 'bg-black', isColor: true, colorVal: '#000' },
-        { label: 'bg-white', prop: 'bg-white', value: 'bg-white', isColor: true, colorVal: '#fff' },
-        { label: 'red', prop: 'bg-red-*', value: 'bg-red-*', isColorFamily: true, family: 'red' },
-        { label: 'orange', prop: 'bg-orange-*', value: 'bg-orange-*', isColorFamily: true, family: 'orange' },
-        { label: 'amber', prop: 'bg-amber-*', value: 'bg-amber-*', isColorFamily: true, family: 'amber' },
-        { label: 'yellow', prop: 'bg-yellow-*', value: 'bg-yellow-*', isColorFamily: true, family: 'yellow' },
-        { label: 'lime', prop: 'bg-lime-*', value: 'bg-lime-*', isColorFamily: true, family: 'lime' },
-        { label: 'green', prop: 'bg-green-*', value: 'bg-green-*', isColorFamily: true, family: 'green' },
-        { label: 'emerald', prop: 'bg-emerald-*', value: 'bg-emerald-*', isColorFamily: true, family: 'emerald' },
-        { label: 'teal', prop: 'bg-teal-*', value: 'bg-teal-*', isColorFamily: true, family: 'teal' },
-        { label: 'cyan', prop: 'bg-cyan-*', value: 'bg-cyan-*', isColorFamily: true, family: 'cyan' },
-        { label: 'sky', prop: 'bg-sky-*', value: 'bg-sky-*', isColorFamily: true, family: 'sky' },
-        { label: 'blue', prop: 'bg-blue-*', value: 'bg-blue-*', isColorFamily: true, family: 'blue' },
-        { label: 'indigo', prop: 'bg-indigo-*', value: 'bg-indigo-*', isColorFamily: true, family: 'indigo' },
-        { label: 'violet', prop: 'bg-violet-*', value: 'bg-violet-*', isColorFamily: true, family: 'violet' },
-        { label: 'purple', prop: 'bg-purple-*', value: 'bg-purple-*', isColorFamily: true, family: 'purple' },
-        { label: 'fuchsia', prop: 'bg-fuchsia-*', value: 'bg-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
-        { label: 'pink', prop: 'bg-pink-*', value: 'bg-pink-*', isColorFamily: true, family: 'pink' },
-        { label: 'rose', prop: 'bg-rose-*', value: 'bg-rose-*', isColorFamily: true, family: 'rose' },
-        { label: 'slate', prop: 'bg-slate-*', value: 'bg-slate-*', isColorFamily: true, family: 'slate' },
-        { label: 'gray', prop: 'bg-gray-*', value: 'bg-gray-*', isColorFamily: true, family: 'gray' },
-        { label: 'zinc', prop: 'bg-zinc-*', value: 'bg-zinc-*', isColorFamily: true, family: 'zinc' },
-        { label: 'neutral', prop: 'bg-neutral-*', value: 'bg-neutral-*', isColorFamily: true, family: 'neutral' },
-        { label: 'stone', prop: 'bg-stone-*', value: 'bg-stone-*', isColorFamily: true, family: 'stone' },
-        { label: 'mauve', prop: 'bg-mauve-*', value: 'bg-mauve-*', isColorFamily: true, family: 'mauve' },
-        { label: 'olive', prop: 'bg-olive-*', value: 'bg-olive-*', isColorFamily: true, family: 'olive' },
-        { label: 'mist', prop: 'bg-mist-*', value: 'bg-mist-*', isColorFamily: true, family: 'mist' },
-        { label: 'taupe', prop: 'bg-taupe-*', value: 'bg-taupe-*', isColorFamily: true, family: 'taupe' },
-      ]
-    },
-    {
-      group: 'IMAGE',
-      properties: [
-        { label: 'bg-none', prop: 'bg-none', value: 'bg-none' },
-        { label: 'url(custom)', prop: "bg-[url('https://shorturl.at/dduSX')]", value: "bg-[url('https://shorturl.at/dduSX')]" },
-        { label: 'bg-linear-to-t', prop: 'bg-linear-to-t', value: 'bg-linear-to-t' },
-        { label: 'bg-linear-to-tr', prop: 'bg-linear-to-tr', value: 'bg-linear-to-tr' },
-        { label: 'bg-linear-to-r', prop: 'bg-linear-to-r', value: 'bg-linear-to-r' },
-        { label: 'bg-linear-to-br', prop: 'bg-linear-to-br', value: 'bg-linear-to-br' },
-        { label: 'bg-linear-to-b', prop: 'bg-linear-to-b', value: 'bg-linear-to-b' },
-        { label: 'bg-linear-to-bl', prop: 'bg-linear-to-bl', value: 'bg-linear-to-bl' },
-        { label: 'bg-linear-to-l', prop: 'bg-linear-to-l', value: 'bg-linear-to-l' },
-        { label: 'bg-linear-to-tl', prop: 'bg-linear-to-tl', value: 'bg-linear-to-tl' },
-        { label: 'bg-radial', prop: 'bg-radial', value: 'bg-radial' },
-        { label: 'bg-(image:<custom>)', prop: 'bg-(image:<custom-property>)', value: 'bg-(image:<custom-property>)' },
-      ],
-      subGroups: ['FROM', 'VIA', 'TO']
-    },
-    {
-      group: 'FROM (GRADIENT)',
-      isGradientStop: true,
-      properties: [
-
-        { label: 'inherit', prop: 'from-inherit', value: 'from-inherit', isColor: true, colorVal: 'transparent' },
-        { label: 'current', prop: 'from-current', value: 'from-current', isColor: true, colorVal: 'currentColor' },
-        { label: 'transparent', prop: 'from-transparent', value: 'from-transparent', isColor: true, colorVal: 'transparent' },
-        { label: 'black', prop: 'from-black', value: 'from-black', isColor: true, colorVal: '#000' },
-        { label: 'white', prop: 'from-white', value: 'from-white', isColor: true, colorVal: '#fff' },
-        { label: 'red', prop: 'from-red-*', value: 'from-red-*', isColorFamily: true, family: 'red' },
-        { label: 'orange', prop: 'from-orange-*', value: 'from-orange-*', isColorFamily: true, family: 'orange' },
-        { label: 'amber', prop: 'from-amber-*', value: 'from-amber-*', isColorFamily: true, family: 'amber' },
-        { label: 'yellow', prop: 'from-yellow-*', value: 'from-yellow-*', isColorFamily: true, family: 'yellow' },
-        { label: 'lime', prop: 'from-lime-*', value: 'from-lime-*', isColorFamily: true, family: 'lime' },
-        { label: 'green', prop: 'from-green-*', value: 'from-green-*', isColorFamily: true, family: 'green' },
-        { label: 'emerald', prop: 'from-emerald-*', value: 'from-emerald-*', isColorFamily: true, family: 'emerald' },
-        { label: 'teal', prop: 'from-teal-*', value: 'from-teal-*', isColorFamily: true, family: 'teal' },
-        { label: 'cyan', prop: 'from-cyan-*', value: 'from-cyan-*', isColorFamily: true, family: 'cyan' },
-        { label: 'sky', prop: 'from-sky-*', value: 'from-sky-*', isColorFamily: true, family: 'sky' },
-        { label: 'blue', prop: 'from-blue-*', value: 'from-blue-*', isColorFamily: true, family: 'blue' },
-        { label: 'indigo', prop: 'from-indigo-*', value: 'from-indigo-*', isColorFamily: true, family: 'indigo' },
-        { label: 'violet', prop: 'from-violet-*', value: 'from-violet-*', isColorFamily: true, family: 'violet' },
-        { label: 'purple', prop: 'from-purple-*', value: 'from-purple-*', isColorFamily: true, family: 'purple' },
-        { label: 'fuchsia', prop: 'from-fuchsia-*', value: 'from-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
-        { label: 'pink', prop: 'from-pink-*', value: 'from-pink-*', isColorFamily: true, family: 'pink' },
-        { label: 'rose', prop: 'from-rose-*', value: 'from-rose-*', isColorFamily: true, family: 'rose' },
-        { label: 'slate', prop: 'from-slate-*', value: 'from-slate-*', isColorFamily: true, family: 'slate' },
-        { label: 'gray', prop: 'from-gray-*', value: 'from-gray-*', isColorFamily: true, family: 'gray' },
-        { label: 'zinc', prop: 'from-zinc-*', value: 'from-zinc-*', isColorFamily: true, family: 'zinc' },
-        { label: 'neutral', prop: 'from-neutral-*', value: 'from-neutral-*', isColorFamily: true, family: 'neutral' },
-        { label: 'stone', prop: 'from-stone-*', value: 'from-stone-*', isColorFamily: true, family: 'stone' },
-{ label: 'from-0%', prop: 'from-0%', value: 'from-0%' },
-        { label: 'from-5%', prop: 'from-5%', value: 'from-5%' },
-        { label: 'from-10%', prop: 'from-10%', value: 'from-10%' },
-        { label: 'from-15%', prop: 'from-15%', value: 'from-15%' },
-        { label: 'from-20%', prop: 'from-20%', value: 'from-20%' },
-        { label: 'from-25%', prop: 'from-25%', value: 'from-25%' },
-        { label: 'from-30%', prop: 'from-30%', value: 'from-30%' },
-        { label: 'from-35%', prop: 'from-35%', value: 'from-35%' },
-        { label: 'from-40%', prop: 'from-40%', value: 'from-40%' },
-        { label: 'from-45%', prop: 'from-45%', value: 'from-45%' },
-        { label: 'from-50%', prop: 'from-50%', value: 'from-50%' },
-        { label: 'from-55%', prop: 'from-55%', value: 'from-55%' },
-        { label: 'from-60%', prop: 'from-60%', value: 'from-60%' },
-        { label: 'from-65%', prop: 'from-65%', value: 'from-65%' },
-        { label: 'from-70%', prop: 'from-70%', value: 'from-70%' },
-        { label: 'from-75%', prop: 'from-75%', value: 'from-75%' },
-        { label: 'from-80%', prop: 'from-80%', value: 'from-80%' },
-        { label: 'from-85%', prop: 'from-85%', value: 'from-85%' },
-        { label: 'from-90%', prop: 'from-90%', value: 'from-90%' },
-        { label: 'from-95%', prop: 'from-95%', value: 'from-95%' },
-        { label: 'from-100%', prop: 'from-100%', value: 'from-100%' }
-
-      ]
-    },
-    {
-      group: 'VIA (GRADIENT)',
-      isGradientStop: true,
-      properties: [
-
-        { label: 'inherit', prop: 'via-inherit', value: 'via-inherit', isColor: true, colorVal: 'transparent' },
-        { label: 'current', prop: 'via-current', value: 'via-current', isColor: true, colorVal: 'currentColor' },
-        { label: 'transparent', prop: 'via-transparent', value: 'via-transparent', isColor: true, colorVal: 'transparent' },
-        { label: 'black', prop: 'via-black', value: 'via-black', isColor: true, colorVal: '#000' },
-        { label: 'white', prop: 'via-white', value: 'via-white', isColor: true, colorVal: '#fff' },
-        { label: 'red', prop: 'via-red-*', value: 'via-red-*', isColorFamily: true, family: 'red' },
-        { label: 'orange', prop: 'via-orange-*', value: 'via-orange-*', isColorFamily: true, family: 'orange' },
-        { label: 'amber', prop: 'via-amber-*', value: 'via-amber-*', isColorFamily: true, family: 'amber' },
-        { label: 'yellow', prop: 'via-yellow-*', value: 'via-yellow-*', isColorFamily: true, family: 'yellow' },
-        { label: 'lime', prop: 'via-lime-*', value: 'via-lime-*', isColorFamily: true, family: 'lime' },
-        { label: 'green', prop: 'via-green-*', value: 'via-green-*', isColorFamily: true, family: 'green' },
-        { label: 'emerald', prop: 'via-emerald-*', value: 'via-emerald-*', isColorFamily: true, family: 'emerald' },
-        { label: 'teal', prop: 'via-teal-*', value: 'via-teal-*', isColorFamily: true, family: 'teal' },
-        { label: 'cyan', prop: 'via-cyan-*', value: 'via-cyan-*', isColorFamily: true, family: 'cyan' },
-        { label: 'sky', prop: 'via-sky-*', value: 'via-sky-*', isColorFamily: true, family: 'sky' },
-        { label: 'blue', prop: 'via-blue-*', value: 'via-blue-*', isColorFamily: true, family: 'blue' },
-        { label: 'indigo', prop: 'via-indigo-*', value: 'via-indigo-*', isColorFamily: true, family: 'indigo' },
-        { label: 'violet', prop: 'via-violet-*', value: 'via-violet-*', isColorFamily: true, family: 'violet' },
-        { label: 'purple', prop: 'via-purple-*', value: 'via-purple-*', isColorFamily: true, family: 'purple' },
-        { label: 'fuchsia', prop: 'via-fuchsia-*', value: 'via-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
-        { label: 'pink', prop: 'via-pink-*', value: 'via-pink-*', isColorFamily: true, family: 'pink' },
-        { label: 'rose', prop: 'via-rose-*', value: 'via-rose-*', isColorFamily: true, family: 'rose' },
-        { label: 'slate', prop: 'via-slate-*', value: 'via-slate-*', isColorFamily: true, family: 'slate' },
-        { label: 'gray', prop: 'via-gray-*', value: 'via-gray-*', isColorFamily: true, family: 'gray' },
-        { label: 'zinc', prop: 'via-zinc-*', value: 'via-zinc-*', isColorFamily: true, family: 'zinc' },
-        { label: 'neutral', prop: 'via-neutral-*', value: 'via-neutral-*', isColorFamily: true, family: 'neutral' },
-        { label: 'stone', prop: 'via-stone-*', value: 'via-stone-*', isColorFamily: true, family: 'stone' },
-{ label: 'via-0%', prop: 'via-0%', value: 'via-0%' },
-        { label: 'via-5%', prop: 'via-5%', value: 'via-5%' },
-        { label: 'via-10%', prop: 'via-10%', value: 'via-10%' },
-        { label: 'via-15%', prop: 'via-15%', value: 'via-15%' },
-        { label: 'via-20%', prop: 'via-20%', value: 'via-20%' },
-        { label: 'via-25%', prop: 'via-25%', value: 'via-25%' },
-        { label: 'via-30%', prop: 'via-30%', value: 'via-30%' },
-        { label: 'via-35%', prop: 'via-35%', value: 'via-35%' },
-        { label: 'via-40%', prop: 'via-40%', value: 'via-40%' },
-        { label: 'via-45%', prop: 'via-45%', value: 'via-45%' },
-        { label: 'via-50%', prop: 'via-50%', value: 'via-50%' },
-        { label: 'via-55%', prop: 'via-55%', value: 'via-55%' },
-        { label: 'via-60%', prop: 'via-60%', value: 'via-60%' },
-        { label: 'via-65%', prop: 'via-65%', value: 'via-65%' },
-        { label: 'via-70%', prop: 'via-70%', value: 'via-70%' },
-        { label: 'via-75%', prop: 'via-75%', value: 'via-75%' },
-        { label: 'via-80%', prop: 'via-80%', value: 'via-80%' },
-        { label: 'via-85%', prop: 'via-85%', value: 'via-85%' },
-        { label: 'via-90%', prop: 'via-90%', value: 'via-90%' },
-        { label: 'via-95%', prop: 'via-95%', value: 'via-95%' },
-        { label: 'via-100%', prop: 'via-100%', value: 'via-100%' }
-
-      ]
-    },
-    {
-      group: 'TO (GRADIENT)',
-      isGradientStop: true,
-      properties: [
-
-        { label: 'inherit', prop: 'to-inherit', value: 'to-inherit', isColor: true, colorVal: 'transparent' },
-        { label: 'current', prop: 'to-current', value: 'to-current', isColor: true, colorVal: 'currentColor' },
-        { label: 'transparent', prop: 'to-transparent', value: 'to-transparent', isColor: true, colorVal: 'transparent' },
-        { label: 'black', prop: 'to-black', value: 'to-black', isColor: true, colorVal: '#000' },
-        { label: 'white', prop: 'to-white', value: 'to-white', isColor: true, colorVal: '#fff' },
-        { label: 'red', prop: 'to-red-*', value: 'to-red-*', isColorFamily: true, family: 'red' },
-        { label: 'orange', prop: 'to-orange-*', value: 'to-orange-*', isColorFamily: true, family: 'orange' },
-        { label: 'amber', prop: 'to-amber-*', value: 'to-amber-*', isColorFamily: true, family: 'amber' },
-        { label: 'yellow', prop: 'to-yellow-*', value: 'to-yellow-*', isColorFamily: true, family: 'yellow' },
-        { label: 'lime', prop: 'to-lime-*', value: 'to-lime-*', isColorFamily: true, family: 'lime' },
-        { label: 'green', prop: 'to-green-*', value: 'to-green-*', isColorFamily: true, family: 'green' },
-        { label: 'emerald', prop: 'to-emerald-*', value: 'to-emerald-*', isColorFamily: true, family: 'emerald' },
-        { label: 'teal', prop: 'to-teal-*', value: 'to-teal-*', isColorFamily: true, family: 'teal' },
-        { label: 'cyan', prop: 'to-cyan-*', value: 'to-cyan-*', isColorFamily: true, family: 'cyan' },
-        { label: 'sky', prop: 'to-sky-*', value: 'to-sky-*', isColorFamily: true, family: 'sky' },
-        { label: 'blue', prop: 'to-blue-*', value: 'to-blue-*', isColorFamily: true, family: 'blue' },
-        { label: 'indigo', prop: 'to-indigo-*', value: 'to-indigo-*', isColorFamily: true, family: 'indigo' },
-        { label: 'violet', prop: 'to-violet-*', value: 'to-violet-*', isColorFamily: true, family: 'violet' },
-        { label: 'purple', prop: 'to-purple-*', value: 'to-purple-*', isColorFamily: true, family: 'purple' },
-        { label: 'fuchsia', prop: 'to-fuchsia-*', value: 'to-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
-        { label: 'pink', prop: 'to-pink-*', value: 'to-pink-*', isColorFamily: true, family: 'pink' },
-        { label: 'rose', prop: 'to-rose-*', value: 'to-rose-*', isColorFamily: true, family: 'rose' },
-        { label: 'slate', prop: 'to-slate-*', value: 'to-slate-*', isColorFamily: true, family: 'slate' },
-        { label: 'gray', prop: 'to-gray-*', value: 'to-gray-*', isColorFamily: true, family: 'gray' },
-        { label: 'zinc', prop: 'to-zinc-*', value: 'to-zinc-*', isColorFamily: true, family: 'zinc' },
-        { label: 'neutral', prop: 'to-neutral-*', value: 'to-neutral-*', isColorFamily: true, family: 'neutral' },
-        { label: 'stone', prop: 'to-stone-*', value: 'to-stone-*', isColorFamily: true, family: 'stone' },
-{ label: 'to-0%', prop: 'to-0%', value: 'to-0%' },
-        { label: 'to-5%', prop: 'to-5%', value: 'to-5%' },
-        { label: 'to-10%', prop: 'to-10%', value: 'to-10%' },
-        { label: 'to-15%', prop: 'to-15%', value: 'to-15%' },
-        { label: 'to-20%', prop: 'to-20%', value: 'to-20%' },
-        { label: 'to-25%', prop: 'to-25%', value: 'to-25%' },
-        { label: 'to-30%', prop: 'to-30%', value: 'to-30%' },
-        { label: 'to-35%', prop: 'to-35%', value: 'to-35%' },
-        { label: 'to-40%', prop: 'to-40%', value: 'to-40%' },
-        { label: 'to-45%', prop: 'to-45%', value: 'to-45%' },
-        { label: 'to-50%', prop: 'to-50%', value: 'to-50%' },
-        { label: 'to-55%', prop: 'to-55%', value: 'to-55%' },
-        { label: 'to-60%', prop: 'to-60%', value: 'to-60%' },
-        { label: 'to-65%', prop: 'to-65%', value: 'to-65%' },
-        { label: 'to-70%', prop: 'to-70%', value: 'to-70%' },
-        { label: 'to-75%', prop: 'to-75%', value: 'to-75%' },
-        { label: 'to-80%', prop: 'to-80%', value: 'to-80%' },
-        { label: 'to-85%', prop: 'to-85%', value: 'to-85%' },
-        { label: 'to-90%', prop: 'to-90%', value: 'to-90%' },
-        { label: 'to-95%', prop: 'to-95%', value: 'to-95%' },
-        { label: 'to-100%', prop: 'to-100%', value: 'to-100%' }
-
-      ]
-    },
-    {
-      group: 'ORIGIN',
-      properties: [
-        { label: 'bg-origin-border', prop: 'bg-origin-border', value: 'bg-origin-border' },
-        { label: 'bg-origin-padding', prop: 'bg-origin-padding', value: 'bg-origin-padding' },
-        { label: 'bg-origin-content', prop: 'bg-origin-content', value: 'bg-origin-content' },
-      ]
-    },
-    {
-      group: 'POSITION',
-      properties: [
-        { label: 'bg-top-left', prop: 'bg-top-left', value: 'bg-top-left' },
-        { label: 'bg-top', prop: 'bg-top', value: 'bg-top' },
-        { label: 'bg-top-right', prop: 'bg-top-right', value: 'bg-top-right' },
-        { label: 'bg-left', prop: 'bg-left', value: 'bg-left' },
-        { label: 'bg-center', prop: 'bg-center', value: 'bg-center' },
-        { label: 'bg-right', prop: 'bg-right', value: 'bg-right' },
-        { label: 'bg-bottom-left', prop: 'bg-bottom-left', value: 'bg-bottom-left' },
-        { label: 'bg-bottom', prop: 'bg-bottom', value: 'bg-bottom' },
-        { label: 'bg-bottom-right', prop: 'bg-bottom-right', value: 'bg-bottom-right' },
-      ]
-    },
-    {
-      group: 'REPEAT',
-      properties: [
-        { label: 'bg-repeat', prop: 'bg-repeat', value: 'bg-repeat' },
-        { label: 'bg-repeat-x', prop: 'bg-repeat-x', value: 'bg-repeat-x' },
-        { label: 'bg-repeat-y', prop: 'bg-repeat-y', value: 'bg-repeat-y' },
-        { label: 'bg-repeat-space', prop: 'bg-repeat-space', value: 'bg-repeat-space' },
-        { label: 'bg-repeat-round', prop: 'bg-repeat-round', value: 'bg-repeat-round' },
-        { label: 'bg-no-repeat', prop: 'bg-no-repeat', value: 'bg-no-repeat' },
-      ]
-    },
-    {
-      group: 'SIZE',
-      properties: [
-        { label: 'bg-auto', prop: 'bg-auto', value: 'bg-auto' },
-        { label: 'bg-cover', prop: 'bg-cover', value: 'bg-cover' },
-        { label: 'bg-contain', prop: 'bg-contain', value: 'bg-contain' },
-      ]
-    },
-  ],
+export const stylingControlBarData: any = {
   text: [
+    {
+      group: 'FONT',
+      subGroups: ['FAMILY', 'SIZE', 'WEIGHT', 'STYLE'],
+      properties: []
+    },
+    {
+      group: 'FAMILY', isSubGroup: true, parentGroup: 'FONT',
+      properties: [
+        { label: 'font-sans', prop: 'font-sans', value: 'font-sans' },
+        { label: 'font-serif', prop: 'font-serif', value: 'font-serif' },
+        { label: 'font-mono', prop: 'font-mono', value: 'font-mono' },
+        { label: 'font-(family-name:<custom>)', prop: 'font-(family-name:<custom-property>)', value: 'font-(family-name:<custom-property>)' },
+        { label: 'font-[<value>]', prop: 'font-[<value>]', value: 'font-[<value>]' }
+      ]
+    },
+    {
+      group: 'SIZE', isSubGroup: true, parentGroup: 'FONT',
+      properties: [
+        { label: 'text-xs', prop: 'text-xs', value: 'text-xs' },
+        { label: 'text-sm', prop: 'text-sm', value: 'text-sm' },
+        { label: 'text-base', prop: 'text-base', value: 'text-base' },
+        { label: 'text-lg', prop: 'text-lg', value: 'text-lg' },
+        { label: 'text-xl', prop: 'text-xl', value: 'text-xl' },
+        { label: 'text-2xl', prop: 'text-2xl', value: 'text-2xl' },
+        { label: 'text-3xl', prop: 'text-3xl', value: 'text-3xl' },
+        { label: 'text-4xl', prop: 'text-4xl', value: 'text-4xl' },
+        { label: 'text-5xl', prop: 'text-5xl', value: 'text-5xl' },
+        { label: 'text-6xl', prop: 'text-6xl', value: 'text-6xl' },
+        { label: 'text-7xl', prop: 'text-7xl', value: 'text-7xl' },
+        { label: 'text-8xl', prop: 'text-8xl', value: 'text-8xl' },
+        { label: 'text-9xl', prop: 'text-9xl', value: 'text-9xl' },
+        { label: 'text-(length:<custom>)', prop: 'text-(length:<custom-property>)', value: 'text-(length:<custom-property>)' },
+        { label: 'text-[<value>]', prop: 'text-[<value>]', value: 'text-[<value>]' }
+      ]
+    },
+    {
+      group: 'WEIGHT', isSubGroup: true, parentGroup: 'FONT',
+      properties: [
+        { label: 'font-thin', prop: 'font-thin', value: 'font-thin' },
+        { label: 'font-extralight', prop: 'font-extralight', value: 'font-extralight' },
+        { label: 'font-light', prop: 'font-light', value: 'font-light' },
+        { label: 'font-normal', prop: 'font-normal', value: 'font-normal' },
+        { label: 'font-medium', prop: 'font-medium', value: 'font-medium' },
+        { label: 'font-semibold', prop: 'font-semibold', value: 'font-semibold' },
+        { label: 'font-bold', prop: 'font-bold', value: 'font-bold' },
+        { label: 'font-extrabold', prop: 'font-extrabold', value: 'font-extrabold' },
+        { label: 'font-black', prop: 'font-black', value: 'font-black' },
+        { label: 'font-(<custom>)', prop: 'font-(<custom-property>)', value: 'font-(<custom-property>)' },
+        { label: 'font-[<value>]', prop: 'font-[<value>]', value: 'font-[<value>]' }
+      ]
+    },
+    {
+      group: 'STYLE', isSubGroup: true, parentGroup: 'FONT',
+      properties: [
+        { label: 'italic', prop: 'italic', value: 'italic' },
+        { label: 'not-italic', prop: 'not-italic', value: 'not-italic' }
+      ]
+    },
     {
       group: 'COLOR',
       properties: [
@@ -405,68 +437,436 @@ export const stylingControlBarData = {
         { label: 'olive', prop: 'text-olive-*', value: 'text-olive-*', isColorFamily: true, family: 'olive' },
         { label: 'mist', prop: 'text-mist-*', value: 'text-mist-*', isColorFamily: true, family: 'mist' },
         { label: 'taupe', prop: 'text-taupe-*', value: 'text-taupe-*', isColorFamily: true, family: 'taupe' },
+        { label: 'text-(<custom>)', prop: 'text-(<custom-property>)', value: 'text-(<custom-property>)' },
+        { label: 'text-[<value>]', prop: 'text-[<value>]', value: 'text-[<value>]' }
       ]
     },
     {
-      group: 'ALIGNMENT',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'SPACING & LAYOUT',
+      subGroups: ['LETTER SPACING', 'LINE HEIGHT', 'LINE CLAMP', 'TAB SIZE', 'VERTICAL ALIGN', 'OVERFLOW WRAP', 'HYPHENS', 'INDENT'],
+      properties: []
     },
     {
-      group: 'SIZE',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'LETTER SPACING', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        { label: 'tracking-tighter', prop: 'tracking-tighter', value: 'tracking-tighter' },
+        { label: 'tracking-tight', prop: 'tracking-tight', value: 'tracking-tight' },
+        { label: 'tracking-normal', prop: 'tracking-normal', value: 'tracking-normal' },
+        { label: 'tracking-wide', prop: 'tracking-wide', value: 'tracking-wide' },
+        { label: 'tracking-wider', prop: 'tracking-wider', value: 'tracking-wider' },
+        { label: 'tracking-widest', prop: 'tracking-widest', value: 'tracking-widest' },
+        { label: 'tracking-(<custom>)', prop: 'tracking-(<custom-property>)', value: 'tracking-(<custom-property>)' },
+        { label: 'tracking-[<value>]', prop: 'tracking-[<value>]', value: 'tracking-[<value>]' }
+      ]
     },
     {
-      group: 'WEIGHT',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'LINE HEIGHT', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        { label: 'leading-none', prop: 'leading-none', value: 'leading-none' },
+        ...[3,4,5,6,7,8,9,10,12,14,16].map(n => ({ label: `leading-${n}`, prop: `leading-${n}`, value: `leading-${n}` })),
+        { label: 'leading-(<custom>)', prop: 'leading-(<custom-property>)', value: 'leading-(<custom-property>)' },
+        { label: 'leading-[<value>]', prop: 'leading-[<value>]', value: 'leading-[<value>]' }
+      ]
     },
     {
-      group: 'LINE HEIGHT',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'LINE CLAMP', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        ...[1,2,3,4,5,6].map(n => ({ label: `line-clamp-${n}`, prop: `line-clamp-${n}`, value: `line-clamp-${n}` })),
+        { label: 'line-clamp-none', prop: 'line-clamp-none', value: 'line-clamp-none' },
+        { label: 'line-clamp-(<custom>)', prop: 'line-clamp-(<custom-property>)', value: 'line-clamp-(<custom-property>)' },
+        { label: 'line-clamp-[<value>]', prop: 'line-clamp-[<value>]', value: 'line-clamp-[<value>]' }
+      ]
     },
     {
-      group: 'LETTER SPACING',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'TAB SIZE', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        ...[1,2,4,8].map(n => ({ label: `tab-${n}`, prop: `tab-${n}`, value: `tab-${n}` })),
+        { label: 'tab-(<custom>)', prop: 'tab-(<custom-property>)', value: 'tab-(<custom-property>)' },
+        { label: 'tab-[<value>]', prop: 'tab-[<value>]', value: 'tab-[<value>]' }
+      ]
+    },
+    {
+      group: 'VERTICAL ALIGN', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        'baseline', 'top', 'middle', 'bottom', 'text-top', 'text-bottom', 'sub', 'super'
+      ].map(v => ({ label: `align-${v}`, prop: `align-${v}`, value: `align-${v}` })).concat([
+        { label: 'align-(<custom>)', prop: 'align-(<custom-property>)', value: 'align-(<custom-property>)' },
+        { label: 'align-[<value>]', prop: 'align-[<value>]', value: 'align-[<value>]' }
+      ])
+    },
+    {
+      group: 'OVERFLOW WRAP', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        { label: 'wrap-break-word', prop: 'wrap-break-word', value: 'wrap-break-word' },
+        { label: 'wrap-anywhere', prop: 'wrap-anywhere', value: 'wrap-anywhere' },
+        { label: 'wrap-normal', prop: 'wrap-normal', value: 'wrap-normal' }
+      ]
+    },
+    {
+      group: 'HYPHENS', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        { label: 'hyphens-none', prop: 'hyphens-none', value: 'hyphens-none' },
+        { label: 'hyphens-manual', prop: 'hyphens-manual', value: 'hyphens-manual' },
+        { label: 'hyphens-auto', prop: 'hyphens-auto', value: 'hyphens-auto' }
+      ]
+    },
+    {
+      group: 'INDENT', isSubGroup: true, parentGroup: 'SPACING & LAYOUT',
+      properties: [
+        ...[0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16].flatMap(n => ([
+          { label: `indent-${n}`, prop: `indent-${n}`, value: `indent-${n}` },
+          ...(n !== 0 ? [{ label: `-indent-${n}`, prop: `-indent-${n}`, value: `-indent-${n}` }] : [])
+        ])),
+        { label: 'indent-px', prop: 'indent-px', value: 'indent-px' },
+        { label: '-indent-px', prop: '-indent-px', value: '-indent-px' },
+        { label: 'indent-(<custom>)', prop: 'indent-(<custom-property>)', value: 'indent-(<custom-property>)' },
+        { label: 'indent-[<value>]', prop: 'indent-[<value>]', value: 'indent-[<value>]' }
+      ]
+    },
+    {
+      group: 'TEXT',
+      subGroups: ['ALIGN', 'OVERFLOW', 'WRAP', 'TRANSFORM'],
+      properties: []
+    },
+    {
+      group: 'ALIGN', isSubGroup: true, parentGroup: 'TEXT',
+      properties: [
+        'left', 'center', 'right', 'justify', 'start', 'end'
+      ].map(v => ({ label: `text-${v}`, prop: `text-${v}`, value: `text-${v}` }))
+    },
+    {
+      group: 'OVERFLOW', isSubGroup: true, parentGroup: 'TEXT',
+      properties: [
+        { label: 'truncate', prop: 'truncate', value: 'truncate' },
+        { label: 'text-ellipsis', prop: 'text-ellipsis', value: 'text-ellipsis' },
+        { label: 'text-clip', prop: 'text-clip', value: 'text-clip' }
+      ]
+    },
+    {
+      group: 'WRAP', isSubGroup: true, parentGroup: 'TEXT',
+      properties: [
+        'wrap', 'nowrap', 'balance', 'pretty'
+      ].map(v => ({ label: `text-${v}`, prop: `text-${v}`, value: `text-${v}` }))
+    },
+    {
+      group: 'TRANSFORM', isSubGroup: true, parentGroup: 'TEXT',
+      properties: [
+        { label: 'uppercase', prop: 'uppercase', value: 'uppercase' },
+        { label: 'lowercase', prop: 'lowercase', value: 'lowercase' },
+        { label: 'capitalize', prop: 'capitalize', value: 'capitalize' },
+        { label: 'normal-case', prop: 'normal-case', value: 'normal-case' }
+      ]
     },
     {
       group: 'DECORATION',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      subGroups: ['LINE', 'COLOR', 'STYLE', 'THICKNESS', 'UNDERLINE OFFSET'],
+      properties: []
     },
     {
-      group: 'TRANSFORM',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'LINE', isSubGroup: true, parentGroup: 'DECORATION',
+      properties: [
+        { label: 'underline', prop: 'underline', value: 'underline' },
+        { label: 'overline', prop: 'overline', value: 'overline' },
+        { label: 'line-through', prop: 'line-through', value: 'line-through' },
+        { label: 'no-underline', prop: 'no-underline', value: 'no-underline' }
+      ]
     },
     {
-      group: 'OVERFLOW & WRAPPING',
-      properties: [{ label: 'Awaiting full class reference', prop: 'awaiting', value: 'awaiting' }]
+      group: 'COLOR', isSubGroup: true, parentGroup: 'DECORATION',
+      properties: [
+        { label: 'decoration-inherit', prop: 'decoration-inherit', value: 'decoration-inherit', isColor: true, colorVal: 'transparent' },
+        { label: 'decoration-current', prop: 'decoration-current', value: 'decoration-current', isColor: true, colorVal: 'currentColor' },
+        { label: 'decoration-transparent', prop: 'decoration-transparent', value: 'decoration-transparent', isColor: true, colorVal: 'transparent' },
+        { label: 'decoration-black', prop: 'decoration-black', value: 'decoration-black', isColor: true, colorVal: '#000' },
+        { label: 'decoration-white', prop: 'decoration-white', value: 'decoration-white', isColor: true, colorVal: '#fff' },
+        { label: 'red', prop: 'decoration-red-*', value: 'decoration-red-*', isColorFamily: true, family: 'red' },
+        { label: 'orange', prop: 'decoration-orange-*', value: 'decoration-orange-*', isColorFamily: true, family: 'orange' },
+        { label: 'amber', prop: 'decoration-amber-*', value: 'decoration-amber-*', isColorFamily: true, family: 'amber' },
+        { label: 'yellow', prop: 'decoration-yellow-*', value: 'decoration-yellow-*', isColorFamily: true, family: 'yellow' },
+        { label: 'lime', prop: 'decoration-lime-*', value: 'decoration-lime-*', isColorFamily: true, family: 'lime' },
+        { label: 'green', prop: 'decoration-green-*', value: 'decoration-green-*', isColorFamily: true, family: 'green' },
+        { label: 'emerald', prop: 'decoration-emerald-*', value: 'decoration-emerald-*', isColorFamily: true, family: 'emerald' },
+        { label: 'teal', prop: 'decoration-teal-*', value: 'decoration-teal-*', isColorFamily: true, family: 'teal' },
+        { label: 'cyan', prop: 'decoration-cyan-*', value: 'decoration-cyan-*', isColorFamily: true, family: 'cyan' },
+        { label: 'sky', prop: 'decoration-sky-*', value: 'decoration-sky-*', isColorFamily: true, family: 'sky' },
+        { label: 'blue', prop: 'decoration-blue-*', value: 'decoration-blue-*', isColorFamily: true, family: 'blue' },
+        { label: 'indigo', prop: 'decoration-indigo-*', value: 'decoration-indigo-*', isColorFamily: true, family: 'indigo' },
+        { label: 'violet', prop: 'decoration-violet-*', value: 'decoration-violet-*', isColorFamily: true, family: 'violet' },
+        { label: 'purple', prop: 'decoration-purple-*', value: 'decoration-purple-*', isColorFamily: true, family: 'purple' },
+        { label: 'fuchsia', prop: 'decoration-fuchsia-*', value: 'decoration-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
+        { label: 'pink', prop: 'decoration-pink-*', value: 'decoration-pink-*', isColorFamily: true, family: 'pink' },
+        { label: 'rose', prop: 'decoration-rose-*', value: 'decoration-rose-*', isColorFamily: true, family: 'rose' },
+        { label: 'slate', prop: 'decoration-slate-*', value: 'decoration-slate-*', isColorFamily: true, family: 'slate' },
+        { label: 'gray', prop: 'decoration-gray-*', value: 'decoration-gray-*', isColorFamily: true, family: 'gray' },
+        { label: 'zinc', prop: 'decoration-zinc-*', value: 'decoration-zinc-*', isColorFamily: true, family: 'zinc' },
+        { label: 'neutral', prop: 'decoration-neutral-*', value: 'decoration-neutral-*', isColorFamily: true, family: 'neutral' },
+        { label: 'stone', prop: 'decoration-stone-*', value: 'decoration-stone-*', isColorFamily: true, family: 'stone' },
+        { label: 'mauve', prop: 'decoration-mauve-*', value: 'decoration-mauve-*', isColorFamily: true, family: 'mauve' },
+        { label: 'olive', prop: 'decoration-olive-*', value: 'decoration-olive-*', isColorFamily: true, family: 'olive' },
+        { label: 'mist', prop: 'decoration-mist-*', value: 'decoration-mist-*', isColorFamily: true, family: 'mist' },
+        { label: 'taupe', prop: 'decoration-taupe-*', value: 'decoration-taupe-*', isColorFamily: true, family: 'taupe' },
+        { label: 'decoration-(<custom>)', prop: 'decoration-(<custom-property>)', value: 'decoration-(<custom-property>)' },
+        { label: 'decoration-[<value>]', prop: 'decoration-[<value>]', value: 'decoration-[<value>]' }
+      ]
+    },
+    {
+      group: 'STYLE', isSubGroup: true, parentGroup: 'DECORATION',
+      properties: [
+        'solid', 'double', 'dotted', 'dashed', 'wavy'
+      ].map(v => ({ label: `decoration-${v}`, prop: `decoration-${v}`, value: `decoration-${v}` }))
+    },
+    {
+      group: 'THICKNESS', isSubGroup: true, parentGroup: 'DECORATION',
+      properties: [
+        ...[0, 1, 2, 4, 8].map(n => ({ label: `decoration-${n}`, prop: `decoration-${n}`, value: `decoration-${n}` })),
+        { label: 'decoration-from-font', prop: 'decoration-from-font', value: 'decoration-from-font' },
+        { label: 'decoration-auto', prop: 'decoration-auto', value: 'decoration-auto' },
+        { label: 'decoration-(length:<custom>)', prop: 'decoration-(length:<custom-property>)', value: 'decoration-(length:<custom-property>)' },
+        { label: 'decoration-[<value>]', prop: 'decoration-[<value>]', value: 'decoration-[<value>]' }
+      ]
+    },
+    {
+      group: 'UNDERLINE OFFSET', isSubGroup: true, parentGroup: 'DECORATION',
+      properties: [
+        ...[0, 1, 2, 4, 8].flatMap(n => ([
+          { label: `underline-offset-${n}`, prop: `underline-offset-${n}`, value: `underline-offset-${n}` },
+          ...(n !== 0 ? [{ label: `-underline-offset-${n}`, prop: `-underline-offset-${n}`, value: `-underline-offset-${n}` }] : [])
+        ])),
+        { label: 'underline-offset-auto', prop: 'underline-offset-auto', value: 'underline-offset-auto' },
+        { label: 'underline-offset-(<custom>)', prop: 'underline-offset-(<custom-property>)', value: 'underline-offset-(<custom-property>)' },
+        { label: 'underline-offset-[<value>]', prop: 'underline-offset-[<value>]', value: 'underline-offset-[<value>]' }
+      ]
+    },
+    {
+      group: 'LIST',
+      subGroups: ['TYPE', 'POSITION', 'IMAGE'],
+      properties: []
+    },
+    {
+      group: 'TYPE', isSubGroup: true, parentGroup: 'LIST',
+      properties: [
+        { label: 'list-disc', prop: 'list-disc', value: 'list-disc' },
+        { label: 'list-decimal', prop: 'list-decimal', value: 'list-decimal' },
+        { label: 'list-none', prop: 'list-none', value: 'list-none' }
+      ]
+    },
+    {
+      group: 'POSITION', isSubGroup: true, parentGroup: 'LIST',
+      properties: [
+        { label: 'list-inside', prop: 'list-inside', value: 'list-inside' },
+        { label: 'list-outside', prop: 'list-outside', value: 'list-outside' }
+      ]
+    },
+    {
+      group: 'IMAGE', isSubGroup: true, parentGroup: 'LIST',
+      properties: [
+        { label: 'list-image-none', prop: 'list-image-none', value: 'list-image-none' },
+        { label: 'list-image-[<value>]', prop: 'list-image-[<value>]', value: 'list-image-[<value>]' }
+      ]
+    },
+    {
+      group: 'CONTENT',
+      properties: [
+        { label: 'content-none', prop: 'content-none', value: 'content-none' },
+        { label: 'content-[<value>]', prop: 'content-[<value>]', value: 'content-[<value>]' },
+        { label: 'content-(<custom>)', prop: 'content-(<custom-property>)', value: 'content-(<custom-property>)' }
+      ]
+    }
+  ],
+  background: [
+    {
+      group: 'COLOR',
+      properties: [
+        { label: 'bg-inherit', prop: 'bg-inherit', value: 'bg-inherit', isColor: true, colorVal: 'transparent' },
+        { label: 'bg-current', prop: 'bg-current', value: 'bg-current', isColor: true, colorVal: 'currentColor' },
+        { label: 'bg-transparent', prop: 'bg-transparent', value: 'bg-transparent', isColor: true, colorVal: 'transparent' },
+        { label: 'bg-black', prop: 'bg-black', value: 'bg-black', isColor: true, colorVal: '#000' },
+        { label: 'bg-white', prop: 'bg-white', value: 'bg-white', isColor: true, colorVal: '#fff' },
+        { label: 'red', prop: 'bg-red-*', value: 'bg-red-*', isColorFamily: true, family: 'red' },
+        { label: 'orange', prop: 'bg-orange-*', value: 'bg-orange-*', isColorFamily: true, family: 'orange' },
+        { label: 'amber', prop: 'bg-amber-*', value: 'bg-amber-*', isColorFamily: true, family: 'amber' },
+        { label: 'yellow', prop: 'bg-yellow-*', value: 'bg-yellow-*', isColorFamily: true, family: 'yellow' },
+        { label: 'lime', prop: 'bg-lime-*', value: 'bg-lime-*', isColorFamily: true, family: 'lime' },
+        { label: 'green', prop: 'bg-green-*', value: 'bg-green-*', isColorFamily: true, family: 'green' },
+        { label: 'emerald', prop: 'bg-emerald-*', value: 'bg-emerald-*', isColorFamily: true, family: 'emerald' },
+        { label: 'teal', prop: 'bg-teal-*', value: 'bg-teal-*', isColorFamily: true, family: 'teal' },
+        { label: 'cyan', prop: 'bg-cyan-*', value: 'bg-cyan-*', isColorFamily: true, family: 'cyan' },
+        { label: 'sky', prop: 'bg-sky-*', value: 'bg-sky-*', isColorFamily: true, family: 'sky' },
+        { label: 'blue', prop: 'bg-blue-*', value: 'bg-blue-*', isColorFamily: true, family: 'blue' },
+        { label: 'indigo', prop: 'bg-indigo-*', value: 'bg-indigo-*', isColorFamily: true, family: 'indigo' },
+        { label: 'violet', prop: 'bg-violet-*', value: 'bg-violet-*', isColorFamily: true, family: 'violet' },
+        { label: 'purple', prop: 'bg-purple-*', value: 'bg-purple-*', isColorFamily: true, family: 'purple' },
+        { label: 'fuchsia', prop: 'bg-fuchsia-*', value: 'bg-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
+        { label: 'pink', prop: 'bg-pink-*', value: 'bg-pink-*', isColorFamily: true, family: 'pink' },
+        { label: 'rose', prop: 'bg-rose-*', value: 'bg-rose-*', isColorFamily: true, family: 'rose' },
+        { label: 'slate', prop: 'bg-slate-*', value: 'bg-slate-*', isColorFamily: true, family: 'slate' },
+        { label: 'gray', prop: 'bg-gray-*', value: 'bg-gray-*', isColorFamily: true, family: 'gray' },
+        { label: 'zinc', prop: 'bg-zinc-*', value: 'bg-zinc-*', isColorFamily: true, family: 'zinc' },
+        { label: 'neutral', prop: 'bg-neutral-*', value: 'bg-neutral-*', isColorFamily: true, family: 'neutral' },
+        { label: 'stone', prop: 'bg-stone-*', value: 'bg-stone-*', isColorFamily: true, family: 'stone' },
+        { label: 'mauve', prop: 'bg-mauve-*', value: 'bg-mauve-*', isColorFamily: true, family: 'mauve' },
+        { label: 'olive', prop: 'bg-olive-*', value: 'bg-olive-*', isColorFamily: true, family: 'olive' },
+        { label: 'mist', prop: 'bg-mist-*', value: 'bg-mist-*', isColorFamily: true, family: 'mist' },
+        { label: 'taupe', prop: 'bg-taupe-*', value: 'bg-taupe-*', isColorFamily: true, family: 'taupe' },
+        { label: 'bg-(<custom>)', prop: 'bg-(<custom-property>)', value: 'bg-(<custom-property>)' },
+        { label: 'bg-[<value>]', prop: 'bg-[<value>]', value: 'bg-[<value>]' }
+      ]
+    },
+    {
+      group: 'IMAGE',
+      properties: [
+        { label: 'bg-none', prop: 'bg-none', value: 'bg-none' },
+        { label: 'bg-gradient-to-t', prop: 'bg-gradient-to-t', value: 'bg-gradient-to-t' },
+        { label: 'bg-gradient-to-tr', prop: 'bg-gradient-to-tr', value: 'bg-gradient-to-tr' },
+        { label: 'bg-gradient-to-r', prop: 'bg-gradient-to-r', value: 'bg-gradient-to-r' },
+        { label: 'bg-gradient-to-br', prop: 'bg-gradient-to-br', value: 'bg-gradient-to-br' },
+        { label: 'bg-gradient-to-b', prop: 'bg-gradient-to-b', value: 'bg-gradient-to-b' },
+        { label: 'bg-gradient-to-bl', prop: 'bg-gradient-to-bl', value: 'bg-gradient-to-bl' },
+        { label: 'bg-gradient-to-l', prop: 'bg-gradient-to-l', value: 'bg-gradient-to-l' },
+        { label: 'bg-gradient-to-tl', prop: 'bg-gradient-to-tl', value: 'bg-gradient-to-tl' },
+        { label: 'bg-[url(<value>)]', prop: 'bg-[url(<value>)]', value: 'bg-[url(<value>)]' }
+      ]
+    },
+    {
+      group: 'SIZE',
+      properties: [
+        { label: 'bg-auto', prop: 'bg-auto', value: 'bg-auto' },
+        { label: 'bg-cover', prop: 'bg-cover', value: 'bg-cover' },
+        { label: 'bg-contain', prop: 'bg-contain', value: 'bg-contain' },
+        { label: 'bg-[length:<value>]', prop: 'bg-[length:<value>]', value: 'bg-[length:<value>]' }
+      ]
+    },
+    {
+      group: 'POSITION',
+      properties: [
+        'bottom', 'center', 'left', 'left-bottom', 'left-top', 'right', 'right-bottom', 'right-top', 'top'
+      ].map(v => ({ label: `bg-${v}`, prop: `bg-${v}`, value: `bg-${v}` })).concat([
+        { label: 'bg-[position:<value>]', prop: 'bg-[position:<value>]', value: 'bg-[position:<value>]' }
+      ])
+    },
+    {
+      group: 'REPEAT',
+      properties: [
+        { label: 'bg-repeat', prop: 'bg-repeat', value: 'bg-repeat' },
+        { label: 'bg-no-repeat', prop: 'bg-no-repeat', value: 'bg-no-repeat' },
+        { label: 'bg-repeat-x', prop: 'bg-repeat-x', value: 'bg-repeat-x' },
+        { label: 'bg-repeat-y', prop: 'bg-repeat-y', value: 'bg-repeat-y' },
+        { label: 'bg-repeat-round', prop: 'bg-repeat-round', value: 'bg-repeat-round' },
+        { label: 'bg-repeat-space', prop: 'bg-repeat-space', value: 'bg-repeat-space' }
+      ]
+    },
+    {
+      group: 'ATTACHMENT',
+      properties: [
+        { label: 'bg-fixed', prop: 'bg-fixed', value: 'bg-fixed' },
+        { label: 'bg-local', prop: 'bg-local', value: 'bg-local' },
+        { label: 'bg-scroll', prop: 'bg-scroll', value: 'bg-scroll' }
+      ]
+    },
+    {
+      group: 'CLIP',
+      properties: [
+        { label: 'bg-clip-border', prop: 'bg-clip-border', value: 'bg-clip-border' },
+        { label: 'bg-clip-padding', prop: 'bg-clip-padding', value: 'bg-clip-padding' },
+        { label: 'bg-clip-content', prop: 'bg-clip-content', value: 'bg-clip-content' },
+        { label: 'bg-clip-text', prop: 'bg-clip-text', value: 'bg-clip-text' }
+      ]
+    },
+    {
+      group: 'ORIGIN',
+      properties: [
+        { label: 'bg-origin-border', prop: 'bg-origin-border', value: 'bg-origin-border' },
+        { label: 'bg-origin-padding', prop: 'bg-origin-padding', value: 'bg-origin-padding' },
+        { label: 'bg-origin-content', prop: 'bg-origin-content', value: 'bg-origin-content' }
+      ]
+    }
+  ],
+  svg: [
+    {
+      group: 'FILL',
+      properties: [
+        { label: 'fill-none', prop: 'fill-none', value: 'fill-none' },
+        { label: 'fill-inherit', prop: 'fill-inherit', value: 'fill-inherit', isColor: true, colorVal: 'transparent' },
+        { label: 'fill-current', prop: 'fill-current', value: 'fill-current', isColor: true, colorVal: 'currentColor' },
+        { label: 'fill-transparent', prop: 'fill-transparent', value: 'fill-transparent', isColor: true, colorVal: 'transparent' },
+        { label: 'fill-black', prop: 'fill-black', value: 'fill-black', isColor: true, colorVal: '#000' },
+        { label: 'fill-white', prop: 'fill-white', value: 'fill-white', isColor: true, colorVal: '#fff' },
+        { label: 'red', prop: 'fill-red-*', value: 'fill-red-*', isColorFamily: true, family: 'red' },
+        { label: 'orange', prop: 'fill-orange-*', value: 'fill-orange-*', isColorFamily: true, family: 'orange' },
+        { label: 'amber', prop: 'fill-amber-*', value: 'fill-amber-*', isColorFamily: true, family: 'amber' },
+        { label: 'yellow', prop: 'fill-yellow-*', value: 'fill-yellow-*', isColorFamily: true, family: 'yellow' },
+        { label: 'lime', prop: 'fill-lime-*', value: 'fill-lime-*', isColorFamily: true, family: 'lime' },
+        { label: 'green', prop: 'fill-green-*', value: 'fill-green-*', isColorFamily: true, family: 'green' },
+        { label: 'emerald', prop: 'fill-emerald-*', value: 'fill-emerald-*', isColorFamily: true, family: 'emerald' },
+        { label: 'teal', prop: 'fill-teal-*', value: 'fill-teal-*', isColorFamily: true, family: 'teal' },
+        { label: 'cyan', prop: 'fill-cyan-*', value: 'fill-cyan-*', isColorFamily: true, family: 'cyan' },
+        { label: 'sky', prop: 'fill-sky-*', value: 'fill-sky-*', isColorFamily: true, family: 'sky' },
+        { label: 'blue', prop: 'fill-blue-*', value: 'fill-blue-*', isColorFamily: true, family: 'blue' },
+        { label: 'indigo', prop: 'fill-indigo-*', value: 'fill-indigo-*', isColorFamily: true, family: 'indigo' },
+        { label: 'violet', prop: 'fill-violet-*', value: 'fill-violet-*', isColorFamily: true, family: 'violet' },
+        { label: 'purple', prop: 'fill-purple-*', value: 'fill-purple-*', isColorFamily: true, family: 'purple' },
+        { label: 'fuchsia', prop: 'fill-fuchsia-*', value: 'fill-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
+        { label: 'pink', prop: 'fill-pink-*', value: 'fill-pink-*', isColorFamily: true, family: 'pink' },
+        { label: 'rose', prop: 'fill-rose-*', value: 'fill-rose-*', isColorFamily: true, family: 'rose' },
+        { label: 'slate', prop: 'fill-slate-*', value: 'fill-slate-*', isColorFamily: true, family: 'slate' },
+        { label: 'gray', prop: 'fill-gray-*', value: 'fill-gray-*', isColorFamily: true, family: 'gray' },
+        { label: 'zinc', prop: 'fill-zinc-*', value: 'fill-zinc-*', isColorFamily: true, family: 'zinc' },
+        { label: 'neutral', prop: 'fill-neutral-*', value: 'fill-neutral-*', isColorFamily: true, family: 'neutral' },
+        { label: 'stone', prop: 'fill-stone-*', value: 'fill-stone-*', isColorFamily: true, family: 'stone' },
+        { label: 'mauve', prop: 'fill-mauve-*', value: 'fill-mauve-*', isColorFamily: true, family: 'mauve' },
+        { label: 'olive', prop: 'fill-olive-*', value: 'fill-olive-*', isColorFamily: true, family: 'olive' },
+        { label: 'mist', prop: 'fill-mist-*', value: 'fill-mist-*', isColorFamily: true, family: 'mist' },
+        { label: 'taupe', prop: 'fill-taupe-*', value: 'fill-taupe-*', isColorFamily: true, family: 'taupe' },
+        { label: 'fill-(<custom>)', prop: 'fill-(<custom-property>)', value: 'fill-(<custom-property>)' },
+        { label: 'fill-[<value>]', prop: 'fill-[<value>]', value: 'fill-[<value>]' }
+      ]
+    },
+    {
+      group: 'STROKE',
+      properties: [
+        { label: 'stroke-none', prop: 'stroke-none', value: 'stroke-none' },
+        { label: 'stroke-inherit', prop: 'stroke-inherit', value: 'stroke-inherit', isColor: true, colorVal: 'transparent' },
+        { label: 'stroke-current', prop: 'stroke-current', value: 'stroke-current', isColor: true, colorVal: 'currentColor' },
+        { label: 'stroke-transparent', prop: 'stroke-transparent', value: 'stroke-transparent', isColor: true, colorVal: 'transparent' },
+        { label: 'stroke-black', prop: 'stroke-black', value: 'stroke-black', isColor: true, colorVal: '#000' },
+        { label: 'stroke-white', prop: 'stroke-white', value: 'stroke-white', isColor: true, colorVal: '#fff' },
+        { label: 'red', prop: 'stroke-red-*', value: 'stroke-red-*', isColorFamily: true, family: 'red' },
+        { label: 'orange', prop: 'stroke-orange-*', value: 'stroke-orange-*', isColorFamily: true, family: 'orange' },
+        { label: 'amber', prop: 'stroke-amber-*', value: 'stroke-amber-*', isColorFamily: true, family: 'amber' },
+        { label: 'yellow', prop: 'stroke-yellow-*', value: 'stroke-yellow-*', isColorFamily: true, family: 'yellow' },
+        { label: 'lime', prop: 'stroke-lime-*', value: 'stroke-lime-*', isColorFamily: true, family: 'lime' },
+        { label: 'green', prop: 'stroke-green-*', value: 'stroke-green-*', isColorFamily: true, family: 'green' },
+        { label: 'emerald', prop: 'stroke-emerald-*', value: 'stroke-emerald-*', isColorFamily: true, family: 'emerald' },
+        { label: 'teal', prop: 'stroke-teal-*', value: 'stroke-teal-*', isColorFamily: true, family: 'teal' },
+        { label: 'cyan', prop: 'stroke-cyan-*', value: 'stroke-cyan-*', isColorFamily: true, family: 'cyan' },
+        { label: 'sky', prop: 'stroke-sky-*', value: 'stroke-sky-*', isColorFamily: true, family: 'sky' },
+        { label: 'blue', prop: 'stroke-blue-*', value: 'stroke-blue-*', isColorFamily: true, family: 'blue' },
+        { label: 'indigo', prop: 'stroke-indigo-*', value: 'stroke-indigo-*', isColorFamily: true, family: 'indigo' },
+        { label: 'violet', prop: 'stroke-violet-*', value: 'stroke-violet-*', isColorFamily: true, family: 'violet' },
+        { label: 'purple', prop: 'stroke-purple-*', value: 'stroke-purple-*', isColorFamily: true, family: 'purple' },
+        { label: 'fuchsia', prop: 'stroke-fuchsia-*', value: 'stroke-fuchsia-*', isColorFamily: true, family: 'fuchsia' },
+        { label: 'pink', prop: 'stroke-pink-*', value: 'stroke-pink-*', isColorFamily: true, family: 'pink' },
+        { label: 'rose', prop: 'stroke-rose-*', value: 'stroke-rose-*', isColorFamily: true, family: 'rose' },
+        { label: 'slate', prop: 'stroke-slate-*', value: 'stroke-slate-*', isColorFamily: true, family: 'slate' },
+        { label: 'gray', prop: 'stroke-gray-*', value: 'stroke-gray-*', isColorFamily: true, family: 'gray' },
+        { label: 'zinc', prop: 'stroke-zinc-*', value: 'stroke-zinc-*', isColorFamily: true, family: 'zinc' },
+        { label: 'neutral', prop: 'stroke-neutral-*', value: 'stroke-neutral-*', isColorFamily: true, family: 'neutral' },
+        { label: 'stone', prop: 'stroke-stone-*', value: 'stroke-stone-*', isColorFamily: true, family: 'stone' },
+        { label: 'mauve', prop: 'stroke-mauve-*', value: 'stroke-mauve-*', isColorFamily: true, family: 'mauve' },
+        { label: 'olive', prop: 'stroke-olive-*', value: 'stroke-olive-*', isColorFamily: true, family: 'olive' },
+        { label: 'mist', prop: 'stroke-mist-*', value: 'stroke-mist-*', isColorFamily: true, family: 'mist' },
+        { label: 'taupe', prop: 'stroke-taupe-*', value: 'stroke-taupe-*', isColorFamily: true, family: 'taupe' },
+        { label: 'stroke-(<custom>)', prop: 'stroke-(<custom-property>)', value: 'stroke-(<custom-property>)' },
+        { label: 'stroke-[<value>]', prop: 'stroke-[<value>]', value: 'stroke-[<value>]' }
+      ]
+    },
+    {
+      group: 'STROKE WIDTH',
+      properties: [
+        ...[0, 1, 2].map(n => ({ label: `stroke-${n}`, prop: `stroke-${n}`, value: `stroke-${n}` })),
+        { label: 'stroke-(length:<custom>)', prop: 'stroke-(length:<custom-property>)', value: 'stroke-(length:<custom-property>)' },
+        { label: 'stroke-[<value>]', prop: 'stroke-[<value>]', value: 'stroke-[<value>]' }
+      ]
     }
   ]
-};
-
-export const tailwindColors = {
-  red: { 50: '#fef2f2', 100: '#fee2e2', 200: '#fecaca', 300: '#fca5a5', 400: '#f87171', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 800: '#991b1b', 900: '#7f1d1d', 950: '#450a0a' },
-  orange: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12', 950: '#431407' },
-  amber: { 50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03' },
-  yellow: { 50: '#fefce8', 100: '#fef9c3', 200: '#fef08a', 300: '#fde047', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207', 800: '#854d0e', 900: '#713f12', 950: '#422006' },
-  lime: { 50: '#f7fee7', 100: '#ecfccb', 200: '#d9f99d', 300: '#bef264', 400: '#a3e635', 500: '#84cc16', 600: '#65a30d', 700: '#4d7c0f', 800: '#3f6212', 900: '#365314', 950: '#1a2e05' },
-  green: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac', 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 800: '#166534', 900: '#14532d', 950: '#052e16' },
-  emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' },
-  teal: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' },
-  cyan: { 50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63', 950: '#083344' },
-  sky: { 50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e', 950: '#082f49' },
-  blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
-  indigo: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81', 950: '#1e1b4b' },
-  violet: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065' },
-  purple: { 50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce', 800: '#6b21a8', 900: '#581c87', 950: '#3b0764' },
-  fuchsia: { 50: '#fdf4ff', 100: '#fae8ff', 200: '#f5d0fe', 300: '#f0abfc', 400: '#e879f9', 500: '#d946ef', 600: '#c026d3', 700: '#a21caf', 800: '#86198f', 900: '#701a75', 950: '#4a044e' },
-  pink: { 50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4', 400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d', 800: '#9d174d', 900: '#831843', 950: '#500724' },
-  rose: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' },
-  slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' },
-  gray: { 50: '#f9fafb', 100: '#f3f4f6', 200: '#e5e7eb', 300: '#d1d5db', 400: '#9ca3af', 500: '#6b7280', 600: '#4b5563', 700: '#374151', 800: '#1f2937', 900: '#111827', 950: '#030712' },
-  zinc: { 50: '#fafafa', 100: '#f4f4f5', 200: '#e4e4e7', 300: '#d4d4d8', 400: '#a1a1aa', 500: '#71717a', 600: '#52525b', 700: '#3f3f46', 800: '#27272a', 900: '#18181b', 950: '#09090b' },
-  neutral: { 50: '#fafafa', 100: '#f5f5f5', 200: '#e5e5e5', 300: '#d4d4d4', 400: '#a3a3a3', 500: '#737373', 600: '#525252', 700: '#404040', 800: '#262626', 900: '#171717', 950: '#0a0a0a' },
-  stone: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 300: '#d6d3d1', 400: '#a8a29e', 500: '#78716c', 600: '#57534e', 700: '#44403c', 800: '#292524', 900: '#1c1917', 950: '#0c0a09' },
-  mauve: { 50: '#faf9fb', 100: '#f4f2f6', 200: '#e9e6ec', 300: '#d7d2dc', 400: '#b8b0c2', 500: '#91879c', 600: '#776b85', 700: '#63596e', 800: '#534a5d', 900: '#474050', 950: '#2c2732' },
-  olive: { 50: '#fbfaf8', 100: '#f6f5f1', 200: '#ebe9e3', 300: '#dbd8cd', 400: '#c0bcac', 500: '#9e9983', 600: '#837e67', 700: '#6d6957', 800: '#5b5749', 900: '#4d4a3f', 950: '#302d26' },
-  mist: { 50: '#f8fafb', 100: '#eff4f7', 200: '#e0e9ee', 300: '#cbd8e0', 400: '#a7b8c3', 500: '#7b91a1', 600: '#5e7587', 700: '#4c5f6e', 800: '#40505d', 900: '#36444f', 950: '#222b32' },
-  taupe: { 50: '#fbfaf9', 100: '#f6f4f2', 200: '#ece9e4', 300: '#ddd7cf', 400: '#c5bcb0', 500: '#a4988a', 600: '#8a7d6f', 700: '#72675a', 800: '#5e554b', 900: '#4f4840', 950: '#322d28' }
 };

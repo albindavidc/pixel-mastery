@@ -45,16 +45,45 @@ Use bg-linear-to-*, bg-radial, or bg-conic-* to define a gradient type. Then use
     groupId: 'styling-group',
     groupTitle: 'Styling'
   },
-  {
+    {
     id: 'tailwind-styling-text',
     title: 'Text',
     category: 'tailwind',
     description: 'Utilities for controlling text styling.',
-    content: `Text\nUtilities for controlling text styling.`,
-    examples: [],
+    content: `Text
+Utilities for controlling typography, spacing, colors, and layout of text elements.
+
+### Quick Reference
+
+<table class="w-full text-sm text-left mb-6">
+  <thead class="text-xs text-zinc-400 uppercase bg-zinc-900/50">
+    <tr>
+      <th class="px-4 py-3 rounded-tl-lg">Group</th>
+      <th class="px-4 py-3 rounded-tr-lg">Description</th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-zinc-800/50 text-zinc-300">
+    <tr><td class="px-4 py-3 font-mono text-indigo-400">Font</td><td class="px-4 py-3">Family, size, weight, and style variations.</td></tr>
+    <tr><td class="px-4 py-3 font-mono text-indigo-400">Color</td><td class="px-4 py-3">Text fill colors and opacities.</td></tr>
+    <tr><td class="px-4 py-3 font-mono text-indigo-400">Spacing</td><td class="px-4 py-3">Tracking (letter-spacing) and leading (line-height).</td></tr>
+    <tr><td class="px-4 py-3 font-mono text-indigo-400">Layout & Text</td><td class="px-4 py-3">Alignment, wrapping, overflowing, and hyphenation.</td></tr>
+    <tr><td class="px-4 py-3 font-mono text-indigo-400">Decoration</td><td class="px-4 py-3">Underlines, styles, thicknesses, and offsets.</td></tr>
+  </tbody>
+</table>
+
+### Color Family System
+Tailwind provides a comprehensive palette of 26 color families. Each family typically includes 11 shades ranging from **50 (lightest)** to **950 (darkest)**. Use the interactive picker above to explore and select the perfect text or decoration color step.
+
+### Tailwind v4 Update
+> **Note:** In Tailwind CSS v4, \`text-opacity-*\` utilities are deprecated. Use the modern opacity modifier syntax instead: \`text-blue-500/50\`.`,
+    examples: [
+      { label: 'Hero Text', classes: 'text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-indigo-500' },
+      { label: 'Subtle Metadata', classes: 'text-sm font-medium tracking-wide text-zinc-500 uppercase' },
+      { label: 'Fancy Underline', classes: 'underline decoration-wavy decoration-pink-500 decoration-2 underline-offset-4' }
+    ],
     challenge: {
-      description: '',
-      targetClasses: []
+      description: 'Style a modern quote block using italic serif text, with a large size, indigo color, and relaxed line height.',
+      targetClasses: ['font-serif', 'italic', 'text-2xl', 'text-indigo-600', 'leading-relaxed']
     },
     groupId: 'styling-group',
     groupTitle: 'Styling'
