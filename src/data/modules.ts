@@ -8,7 +8,7 @@ export const modules: Module[] = [
   {
     id: 'tailwind-layout-display',
     category: 'tailwind',
-    title: 'Display, Flexbox & Grid',
+    title: 'Display: Flex, Grid, Table',
     description: 'Utilities for controlling the display box type, and arranging items via Flexbox and Grid.',
     content: `display
 Utilities for controlling the display box type of an element.

@@ -55,7 +55,7 @@ export function HtmlPlayground() {
            if (t === 'script') code += `<script>\n  // Write your internal JS here\n  console.log("Hello from Javascript!");\n</script>\n`;
            if (t === 'style') code += `<style>\n  /* Write your internal CSS here */\n  h1 { color: blue; }\n</style>\n`;
            if (t === 'head') code += `<head>\n  <!-- Head Content -->\n</head>\n`;
-           if (t === 'body') code += `<body>\n  <!-- Body Content -->\n</body>\n`;
+           if (t === 'body') code += `<body class="prose max-w-none">\n  <!-- Body Content -->\n</body>\n`;
          } else if (['img', 'br', 'hr', 'input', 'source', 'wbr', 'col'].includes(t)) {
            if (t === 'input') code += `<input type="text" placeholder="Enter text..." />\n`;
            else if (t === 'img') code += `<img src="https://shorturl.at/PtCQB" alt="Beautiful landscape" class="rounded-lg shadow-md max-w-full" />\n`;
@@ -91,7 +91,7 @@ export function HtmlPlayground() {
     h1 { color: #2563eb; }
   </style>
 </head>
-<body>
+<body class="prose prose-slate max-w-none">
   <h1>Welcome to Document Structure</h1>
   <p>This is a complete HTML document.</p>
   <script>
@@ -845,7 +845,7 @@ export function HtmlPlayground() {
         <!DOCTYPE html>
         <html>
         <head>
-          <script src="https://cdn.tailwindcss.com"></script>
+          <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
           <style>
             body {
                 margin: 0;
@@ -863,7 +863,7 @@ export function HtmlPlayground() {
              * { scrollbar-width: thin; scrollbar-color: #d4d4d8 transparent; }
           </style>
         </head>
-        <body>
+        <body class="prose prose-slate max-w-none">
           ${code}
         </body>
         </html>
