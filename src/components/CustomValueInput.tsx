@@ -2,24 +2,29 @@ import React, { useState } from 'react';
 import { Settings2, X, Plus, HelpCircle } from 'lucide-react';
 
 interface CustomValueInputProps {
-  propertyGroup: string;
-  previewMode: string;
+  propertyGroup?: string;
+  previewMode?: string;
+  property?: string;
+  placeholder?: string;
   onApply: (className: string) => void;
   activeClassesSet: Set<string>;
   onRemove: (className: string) => void;
   onOpenReference?: () => void;
 }
 
-export function CustomValueInput({ propertyGroup, previewMode, onApply, activeClassesSet, onRemove, onOpenReference }: CustomValueInputProps) {
+export function CustomValueInput({ propertyGroup, previewMode, property, placeholder: customPlaceholder, onApply, activeClassesSet, onRemove, onOpenReference }: CustomValueInputProps) {
   const [value, setValue] = useState('');
   const [forceMode, setForceMode] = useState<'auto' | 'bracket' | 'paren'>('auto');
   const [isFocused, setIsFocused] = useState(false);
 
   // Determine prefix based on group and mode
   let prefix = '';
-  let placeholder = '';
+  let placeholder = customPlaceholder || '';
   
-  if (propertyGroup === 'SIZE') {
+  if (property) {
+    prefix = property + '-';
+    if (!placeholder) placeholder = 'e.g. value';
+  } else if (propertyGroup === 'SIZE') {
     prefix = previewMode === 'text' ? 'text-' : 'bg-length-';
     placeholder = previewMode === 'text' ? 'e.g. 16px, 1.5rem' : 'e.g. 200px, 100% 50%';
   } else if (propertyGroup === 'POSITION') {
@@ -40,7 +45,7 @@ export function CustomValueInput({ propertyGroup, previewMode, onApply, activeCl
   } else if (propertyGroup === 'IMAGE') {
     prefix = 'bg-';
     placeholder = 'e.g. url(...)';
-  } else if (propertyGroup.includes('FROM') || propertyGroup.includes('VIA') || propertyGroup.includes('TO')) {
+  } else if (propertyGroup && (propertyGroup.includes('FROM') || propertyGroup.includes('VIA') || propertyGroup.includes('TO'))) {
     prefix = propertyGroup.includes('FROM') ? 'from-' : propertyGroup.includes('VIA') ? 'via-' : 'to-';
     placeholder = 'e.g. #ff0000, 50%';
   } else {

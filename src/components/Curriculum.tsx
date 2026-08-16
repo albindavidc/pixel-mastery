@@ -410,7 +410,7 @@ export function Curriculum() {
         </header>
 
         <div className="prose prose-invert max-w-none mb-10 text-zinc-400 leading-relaxed">
-          {module.id !== 'tailwind-layout-display' && !module.id.startsWith('html-') && module.id !== 'js-dom-bom' && <p>{module.content}</p>}
+          {module.id !== 'tailwind-layout-display' && !module.id.startsWith('html-') && module.id !== 'js-dom-bom' && !module.id.startsWith('tailwind-styling-') && <p>{module.content}</p>}
           {module.id === 'js-dom-bom' && (
              <div className="mt-8 mb-6 not-prose">
                <DomBomJsCurriculum />

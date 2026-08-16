@@ -17,6 +17,42 @@ export function HtmlPlayground() {
 
     // Create a default code block based on active category
   const getDefaultCode = (categoryName: string) => {
+     if (categoryName === 'Document Structure') {
+       return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Welcome to my website!</h1>
+  <p>This is a basic HTML document structure.</p>
+  <script>
+    console.log("Hello, World!");
+  </script>
+</body>
+</html>`;
+     }
+     if (categoryName === 'Document Structure') {
+       return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    console.log("Hello, World!");
+  </script>
+</head>
+<body>
+  <h1>Welcome to my website!</h1>
+  <p>This is a basic HTML document structure.</p>
+</body>
+</html>`;
+     }
      if (!categoryName) return '';
      const cat = categories.find((c: any) => c.name === categoryName);
      if (!cat) return '';

@@ -95,7 +95,7 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
     }
   }, [dark]);
 
-  let simClasses = classes;
+  let simClasses = classes || '';
   if (hover) simClasses = simClasses.replace(/hover:/g, '');
   if (focus) simClasses = simClasses.replace(/focus:/g, '');
   if (active) simClasses = simClasses.replace(/active:/g, '');
@@ -285,6 +285,29 @@ export function IframePreview({ classes, dark, width, hover, focus, active, prev
                              <div className="w-px h-16 bg-gradient-to-b from-white to-transparent"></div>
                           </div>
                        </div>
+                    </div>
+                  </div>
+                ) : previewMode === 'effects' ? (
+                  <div className="flex flex-col items-center justify-center w-full max-w-4xl h-[85vh] p-4 relative rounded-2xl overflow-hidden shadow-2xl border border-slate-800/60"
+                       style={{
+                         backgroundImage: 'url("https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2000&auto=format&fit=crop")',
+                         backgroundSize: 'cover',
+                         backgroundPosition: 'center'
+                       }}>
+                    <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
+                    
+                    <div className="relative w-full max-w-3xl flex items-center justify-center">
+                      <div className={`transition-all duration-300 p-12 rounded-3xl bg-white/20 border border-white/20 flex flex-col items-center justify-center gap-6 ${simClasses}`}>
+                        <div className="w-20 h-20 bg-indigo-500 rounded-2xl flex items-center justify-center">
+                          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                          </svg>
+                        </div>
+                        <div className="text-center">
+                          <h3 className={`text-3xl font-bold text-white mb-2 ${simClasses}`}>Visual Effects</h3>
+                          <p className="text-white/90 font-medium">Test opacity, shadows, filters, and masks.</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ) : ['flex', 'grid'].includes(previewMode) ? (

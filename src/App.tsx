@@ -13,6 +13,7 @@ import { Playground } from './components/Playground';
 import { TailwindPlayground } from './components/TailwindPlayground';
 import { LayoutPlayground } from './components/LayoutPlayground';
 import { StylingPlayground } from './components/StylingPlayground';
+import { VisualEffectsPlayground } from './components/effects/VisualEffectsPlayground';
 
 function MainLayout() {
   const { viewMode, playgroundState, currentModuleId } = useAppStore();
@@ -32,9 +33,14 @@ function MainLayout() {
               <LayoutPlayground key={currentModuleId} />
             </div>
           )}
-          {(currentModuleId.startsWith('tailwind-styling')) && viewMode !== 'guidelines' && viewMode !== 'components' && (
+          {(currentModuleId.startsWith('tailwind-styling') && currentModuleId !== 'tailwind-styling-effects') && viewMode !== 'guidelines' && viewMode !== 'components' && (
             <div className="h-[100vh] min-h-[700px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
               <StylingPlayground key={currentModuleId} />
+            </div>
+          )}
+          {currentModuleId === 'tailwind-styling-effects' && viewMode !== 'guidelines' && viewMode !== 'components' && (
+            <div className="h-[100vh] min-h-[700px] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
+              <VisualEffectsPlayground key={currentModuleId} />
             </div>
           )}
           {(currentModuleId === 'flexbox-grid') && viewMode !== 'guidelines' && viewMode !== 'components' && (
