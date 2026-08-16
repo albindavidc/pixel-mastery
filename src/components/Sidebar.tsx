@@ -28,6 +28,7 @@ export function Sidebar() {
 
   const renderModuleButton = (module: Module, index: number, isSubmenu = false) => {
     const isActive = currentModuleId === module.id;
+    const displayTitle = module.id === 'tailwind-layout-box-sizing' ? 'Box Model: size, space' : module.title;
     return (
       <button
         key={module.id}
@@ -35,7 +36,7 @@ export function Sidebar() {
           setCurrentModuleId(module.id);
           setViewMode('curriculum');
         }}
-        title={module.title}
+        title={displayTitle}
         className={`w-full text-left flex items-center ${isCollapsed ? (isSubmenu ? 'justify-center p-1 mb-1' : 'justify-center p-2 mb-2') : (isSubmenu ? 'gap-3 p-2 pl-6' : 'gap-3 p-2')} rounded-lg text-sm font-medium transition-all duration-300 border border-transparent ${
           isActive
             ? 'bg-zinc-900 border-indigo-500/50 text-white'
@@ -52,7 +53,7 @@ export function Sidebar() {
         }`}>
           <span className="text-[10px] font-bold">{index + 1}</span>
         </div>
-        <span className={`truncate overflow-hidden transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>{module.title}</span>
+        <span className={`truncate overflow-hidden transition-all duration-300 ${isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>{displayTitle}</span>
       </button>
     );
   };

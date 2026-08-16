@@ -164,11 +164,18 @@ export function HtmlPlayground() {
   <li>Cherry</li>
 </ul>
 <h3 class="font-bold mb-2">Ordered List</h3>
-<ol class="list-decimal pl-5 text-slate-700">
+<ol class="list-decimal pl-5 mb-4 text-slate-700">
   <li>First step</li>
   <li>Second step</li>
   <li>Third step</li>
-</ol>`;
+</ol>
+<h3 class="font-bold mb-2">Description List</h3>
+<dl class="text-slate-700 border-l-4 border-indigo-200 pl-4">
+  <dt class="font-bold text-slate-900 mt-2">HTML</dt>
+  <dd class="ml-4 mb-2">HyperText Markup Language</dd>
+  <dt class="font-bold text-slate-900">CSS</dt>
+  <dd class="ml-4">Cascading Style Sheets</dd>
+</dl>`;
        case "Forms":
          return `<form class="max-w-sm bg-white p-6 rounded-xl shadow-md border border-slate-200">
   <div class="mb-4">
