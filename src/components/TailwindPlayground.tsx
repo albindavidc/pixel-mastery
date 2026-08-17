@@ -472,8 +472,7 @@ export function TailwindPlayground() {
               );
             })()}
           </div>
-
-          {/* Breakpoint Indicator */}
+        {/* Breakpoint Indicator */}
           {playgroundSize !== '100%' && (
             <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded shadow-lg pointer-events-none">
               {playgroundSize} breakpoint

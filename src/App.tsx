@@ -1,4 +1,5 @@
 import { HtmlPlayground } from './components/HtmlPlayground';
+import { DomBomJsCurriculum } from './components/DomBomJsCurriculum';
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -23,7 +24,12 @@ function MainLayout() {
       <Sidebar />
       <div id="main-scroll-container" className="flex-1 overflow-y-auto bg-zinc-950">
         <div className="flex flex-col min-h-max">
-                              {currentModuleId.startsWith('html-') && viewMode !== 'guidelines' && viewMode !== 'components' && (
+                              {currentModuleId === 'js-dom-bom' && viewMode !== 'guidelines' && viewMode !== 'components' && (
+            <div className="min-h-[1500px] h-[150vh] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
+              <DomBomJsCurriculum key={currentModuleId} />
+            </div>
+          )}
+          {currentModuleId.startsWith('html-') && viewMode !== 'guidelines' && viewMode !== 'components' && (
             <div className="min-h-[1500px] h-[150vh] border-b border-zinc-800 flex flex-col shrink-0 relative z-10">
               <HtmlPlayground key={currentModuleId} />
             </div>

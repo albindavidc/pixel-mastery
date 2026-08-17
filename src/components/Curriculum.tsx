@@ -1,4 +1,4 @@
-import { DomBomJsCurriculum } from './DomBomJsCurriculum';
+
 import { useAppStore } from '../store';
 import { modules } from '../data/modules';
 import { CheckCircle2, Play, Info } from 'lucide-react';
@@ -411,11 +411,6 @@ export function Curriculum() {
 
         <div className="prose prose-invert max-w-none mb-10 text-zinc-400 leading-relaxed">
           {module.id !== 'tailwind-layout-display' && !module.id.startsWith('html-') && module.id !== 'js-dom-bom' && !module.id.startsWith('tailwind-styling-') && <p>{module.content}</p>}
-          {module.id === 'js-dom-bom' && (
-             <div className="mt-8 mb-6 not-prose">
-               <DomBomJsCurriculum />
-             </div>
-          )}
           {module.id === 'tailwind-layout-box-sizing' && (
             <div className="mt-8 mb-6 not-prose">
 
@@ -593,7 +588,7 @@ export function Curriculum() {
         
           <ModuleDetails moduleId={module.id} />
         {/* Note about v4 changes */}
-        {!module.id.startsWith('html-') && (
+        {!module.id.startsWith('html-') && module.id !== 'js-dom-bom' && (
           <div className="my-6 p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20 flex gap-3 text-sm text-indigo-200">
             <Info className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
             <div>
@@ -602,8 +597,18 @@ export function Curriculum() {
             </div>
           </div>
         )}
+        {module.id === 'js-dom-bom' && (
+          <div className="my-6 p-4 bg-amber-500/10 rounded-lg border border-amber-500/20 flex gap-3 text-sm text-amber-200">
+            <Info className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-semibold block mb-1">Browser Compatibility Note</span>
+              Most DOM and BOM APIs covered here are broadly supported across modern browsers. However, always check MDN for newer or less-consistently-supported methods before relying on them in production.
+            </div>
+          </div>
+        )}
         </div>
-
+        
+        {module.id !== 'js-dom-bom' && (
         <section className="mb-12">
           <h3 className="text-sm font-semibold text-zinc-100 uppercase tracking-wider mb-4">Examples to try</h3>
           <div className="space-y-3">
@@ -626,7 +631,8 @@ export function Curriculum() {
             ))}
           </div>
         </section>
-
+        )}
+        
         {module.challenge.description && (
         <section className="bg-zinc-900 p-6 rounded-2xl shadow-xl shadow-black/50 relative overflow-hidden border border-zinc-800">
           <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
@@ -648,13 +654,13 @@ export function Curriculum() {
                     className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-sm font-mono transition-colors ${
                       isMet 
                         ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                        : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                        : 'bg-zinc-800 text-zinc-400 border border-zinc-700/50'
                     }`}
                   >
-                    {isMet && <CheckCircle2 className="w-3.5 h-3.5" />}
+                    {isMet ? <CheckCircle2 className="w-3.5 h-3.5" /> : <div className="w-1.5 h-1.5 rounded-full bg-zinc-600" />}
                     {target}
                   </span>
-                )
+                );
               })}
             </div>
           </div>

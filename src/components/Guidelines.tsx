@@ -888,6 +888,7 @@ export function Guidelines() {
             >
               Semantic Layout
             </button>
+            <div className="w-px bg-zinc-800 mx-1"></div>
             <button
               onClick={() => setActiveTab('html')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
@@ -912,7 +913,7 @@ export function Guidelines() {
             >
               Event Attributes
             </button>
-
+            <div className="w-px bg-zinc-800 mx-1"></div>
             <button
               onClick={() => setActiveTab('tailwind')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${

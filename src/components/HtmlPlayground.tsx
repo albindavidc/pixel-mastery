@@ -878,6 +878,13 @@ export function HtmlPlayground() {
     setActiveMode(null);
   }, [activeCategory]);
 
+  const [debouncedCode, setDebouncedCode] = useState(code);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedCode(code);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [code]);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
@@ -907,13 +914,13 @@ export function HtmlPlayground() {
           </style>
         </head>
         <body class="prose prose-slate max-w-none">
-          ${code}
+          ${debouncedCode}
         </body>
         </html>
       `);
       doc.close();
     }
-  }, [code]);
+  }, [debouncedCode]);
 
   if (!module) return null;
 

@@ -1,12 +1,16 @@
 import React from 'react';
-import { RotateCcw, Wand2 } from 'lucide-react';
+import { RotateCcw, Wand2, GripVertical, GripHorizontal } from 'lucide-react';
+import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from 'react-resizable-panels';
 import beautify from 'js-beautify';
-import Editor from 'react-simple-code-editor';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism-twilight.css'; // or another theme
+import CodeMirror from '@uiw/react-codemirror';
+import { html } from '@codemirror/lang-html';
+import { css } from '@codemirror/lang-css';
+import { javascript } from '@codemirror/lang-javascript';
+import { EditorView } from '@codemirror/view';
+import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
+import { tags as t } from '@lezer/highlight';
+
+
 
 interface CodeEditorPreviewProps {
   themeColor?: string;
@@ -50,6 +54,54 @@ export function CodeEditorPreview({
   };
   const themeHex = getThemeHex(themeColor);
 
+  const customTheme = React.useMemo(() => {
+    const baseTheme = EditorView.theme({
+      "&": {
+        color: "#e4e4e7",
+        backgroundColor: "#09090b"
+      },
+      ".cm-content": {
+        caretColor: themeHex
+      },
+      "&.cm-focused .cm-cursor": {
+        borderLeftColor: themeHex
+      },
+      "&.cm-focused .cm-selectionBackground, ::selection": {
+        backgroundColor: `${themeHex}33`
+      },
+      ".cm-gutters": {
+        backgroundColor: "#09090b",
+        color: "#52525b",
+        borderRight: "1px solid #27272a",
+      },
+      ".cm-lineNumbers .cm-gutterElement": {
+        minWidth: "40px !important",
+        padding: "0 8px !important",
+        display: "flex",
+        justifyContent: "flex-end"
+      },
+      ".cm-activeLine": {
+        backgroundColor: "rgba(255, 255, 255, 0.04) !important"
+      },
+      ".cm-activeLineGutter": {
+        backgroundColor: "rgba(255, 255, 255, 0.04) !important",
+        color: themeHex
+      }
+    }, { dark: true });
+
+    const highlightStyle = HighlightStyle.define([
+      { tag: [t.tagName, t.keyword, t.operator, t.className, t.typeName, t.function(t.variableName)], color: themeHex },
+      { tag: [t.attributeName, t.propertyName], color: "#a1a1aa" },
+      { tag: [t.string, t.special(t.string)], color: "#e4e4e7" },
+      { tag: [t.number, t.bool, t.null], color: themeHex },
+      { tag: [t.comment, t.meta], color: "#52525b", fontStyle: "italic" },
+      { tag: t.angleBracket, color: "#52525b" }
+    ]);
+
+    return [baseTheme, syntaxHighlighting(highlightStyle)];
+  }, [themeHex]);
+
+
   const handleFormat = () => {
     if (language === 'html') {
       const formatted = beautify.html(code, { indent_size: 2 });
@@ -63,17 +115,31 @@ export function CodeEditorPreview({
     }
   };
 
-  const highlightCode = (c: string) => {
-    if (language === 'html') return Prism.highlight(c, Prism.languages.markup, 'markup');
-    if (language === 'css') return Prism.highlight(c, Prism.languages.css, 'css');
-    if (language === 'javascript' || language === 'js') return Prism.highlight(c, Prism.languages.javascript, 'javascript');
-    return c;
-  };
+  
+  const editorSetup = React.useMemo(() => ({
+    lineNumbers: true,
+    highlightActiveLineGutter: true,
+    highlightActiveLine: true,
+    foldGutter: true,
+  }), []);
+
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const editorExtensions = React.useMemo(() => [
+    language === 'html' ? html() : language === 'css' ? css() : javascript({ jsx: true })
+  ], [language]);
 
   return (
-    <div className="flex-1 p-6 flex flex-col lg:flex-row gap-6 min-h-0">
+    <div className="flex-1 p-6 min-h-0 flex">
+      <PanelGroup orientation={isMobile ? "vertical" : "horizontal"} className="flex-1 rounded-xl overflow-hidden shadow-2xl min-h-0 border border-zinc-800">
       {/* Editor Pane */}
-      <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl min-h-0">
+      <Panel defaultSize={75} minSize={20} className="flex flex-col bg-zinc-950 min-h-0">
         <div className="h-10 bg-zinc-900 border-b border-zinc-800 flex items-center px-4 justify-between shrink-0">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-rose-500"></div>
@@ -126,34 +192,29 @@ export function CodeEditorPreview({
             </button>
           </div>
         </div>
-        <div className="flex-1 overflow-y-scroll relative custom-prism-container editor-scrollbar" style={{ '--theme-hex': themeHex } as React.CSSProperties}>
+        <div className="flex-1 relative overflow-hidden flex flex-col min-h-0" style={{ '--theme-hex': themeHex } as React.CSSProperties}>
           <style>{`
-            .custom-prism-container .token.tag,
-            .custom-prism-container .token.keyword,
-            .custom-prism-container .token.selector,
-            .custom-prism-container .token.function {
-              color: var(--theme-hex) !important;
-            }
+            .cm-theme { height: 100%; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+            .cm-scroller { overflow: auto !important; height: 100% !important; flex: 1; }
           `}</style>
-          <Editor
+          <CodeMirror
             value={code}
-            onValueChange={onChange}
-            highlight={highlightCode}
-            padding={16}
-            style={{
-              fontFamily: '"Fira Code", "JetBrains Mono", monospace',
-              fontSize: 14,
-              backgroundColor: 'transparent',
-              minHeight: '100%',
-            }}
-            textareaClassName="focus:outline-none editor-scrollbar"
-            className="w-full min-h-full text-zinc-300 editor-container"
+            height="100%"
+            theme={customTheme}
+            extensions={editorExtensions}
+            onChange={(val) => onChange(val)}
+            className="w-full h-full text-sm flex-1 overflow-hidden"
+            basicSetup={editorSetup}
           />
+                </div>
+      </Panel>
+      <PanelResizeHandle className={`flex items-center justify-center bg-zinc-950 hover:bg-zinc-800 transition-colors group border-zinc-800 z-10 ${isMobile ? "h-4 cursor-row-resize border-t border-b" : "w-4 cursor-col-resize border-l border-r"}`}>
+        <div className={`flex items-center justify-center rounded-sm bg-zinc-700 group-hover:bg-indigo-500 transition-colors ${isMobile ? "h-1 w-8" : "w-1 h-8"}`}>
+           {isMobile ? <GripHorizontal className="w-3 h-3 text-zinc-500 group-hover:text-white" /> : <GripVertical className="w-3 h-3 text-zinc-500 group-hover:text-white" />}
         </div>
-      </div>
-
+      </PanelResizeHandle>
       {/* Preview Pane */}
-      <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-zinc-800 bg-white shadow-2xl min-h-0">
+      <Panel defaultSize={25} minSize={20} className="flex flex-col bg-white min-h-0 rounded-xl shadow-2xl">
         <div className="h-10 bg-zinc-900 border-b border-zinc-800 flex items-center px-4 shrink-0">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-zinc-600"></div>
@@ -167,7 +228,8 @@ export function CodeEditorPreview({
           className="flex-1 w-full bg-white border-0"
           title={`${language} Preview`}
         />
-      </div>
+      </Panel>
+    </PanelGroup>
     </div>
   );
 }

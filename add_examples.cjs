@@ -1,195 +1,39 @@
 const fs = require('fs');
-let code = fs.readFileSync('src/components/TailwindAnatomyGuidelines.tsx', 'utf8');
+let code = fs.readFileSync('src/components/DomBomJsCurriculum.tsx', 'utf8');
 
-const newExamples = `
-        {/* Divider */}
-        <div className="w-full h-px bg-zinc-800"></div>
-
-        {/* LEVEL 4: INTERACTIVE & ANIMATED */}
-        <div className="flex flex-col w-full relative">
-          <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-            <div>
-              <h3 className="text-xl font-bold text-zinc-100 font-sans tracking-tight">04 · INTERACTIVE & ANIMATED</h3>
-              <p className="text-zinc-400 text-sm mt-1">Combining states, transitions, and transforms</p>
+const examplesSection = `
+      <section className="mb-6 mt-4">
+        <h3 className="text-sm font-semibold text-zinc-100 uppercase tracking-wider mb-4">Examples to try</h3>
+        <div className="space-y-3">
+          {[
+            { label: 'Toggle a class', classes: "document.querySelector('.box').classList.toggle('active')" },
+            { label: 'Read the current URL', classes: "output.textContent = 'Current URL: ' + window.location.href;" },
+            { label: 'Create and append an element', classes: "const el = document.createElement('p');\\nel.textContent = 'Hello!';\\noutput.appendChild(el);" }
+          ].map((example, idx) => (
+            <div key={idx} className="flex items-start justify-between gap-4 p-4 rounded-xl border border-zinc-800 bg-zinc-900 hover:border-indigo-500 transition-colors group">
+              <div>
+                <div className="font-medium text-white mb-1">{example.label}</div>
+                <code className="text-sm text-indigo-400 bg-zinc-950 border border-indigo-500/30 px-1.5 py-0.5 rounded break-all whitespace-pre-wrap">
+                  {example.classes}
+                </code>
+              </div>
+              <button
+                onClick={() => handleTryCode(example.classes)}
+                className="shrink-0 flex items-center gap-2 text-sm font-medium text-zinc-300 bg-zinc-800 border border-zinc-700 shadow-sm rounded-lg px-3 py-1.5 hover:bg-zinc-700 hover:text-white transition-all active:scale-95"
+              >
+                <Play className="w-4 h-4" />
+                Try it
+              </button>
             </div>
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-right shrink-0">
-              <div className="text-emerald-400 text-[10px] font-bold tracking-wider mb-1">DIFFICULTY PROFILE</div>
-              <div className="text-zinc-200 text-sm font-semibold">Motion & State</div>
-              <div className="text-zinc-500 text-xs">Transform + Transition + Hover/Focus/Active</div>
-            </div>
-          </div>
-          
-          <div className="w-full overflow-x-auto pb-32 pt-24 hide-scrollbar flex justify-start lg:justify-center">
-            <div className="relative flex text-sm sm:text-base lg:text-lg font-mono font-medium tracking-tight w-max mx-auto px-10 shrink-0">
-               <span className="text-blue-400">&lt;div&nbsp;</span>
-               <span className="text-rose-400">class</span>
-               <span className="text-zinc-500">=</span>
-               <div className="relative flex">
-                 <span className="text-violet-400">"</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-cyan-400">transform transition-all duration-300 ease-out</span>
-                     <SvgBrace label="ANIMATION BASE" colorClass="text-cyan-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="MOTION" colorClass="text-cyan-400" position="top" className="bottom-full mb-2" />
-                 </div>
-                 <span>&nbsp;</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-pink-400">hover:scale-105 hover:-translate-y-1 hover:shadow-xl</span>
-                     <SvgBrace label="HOVER STATES" colorClass="text-pink-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <span>&nbsp;</span>
-                   <div className="relative flex">
-                     <span className="text-fuchsia-400">active:scale-95 active:shadow-md</span>
-                     <SvgBrace label="ACTIVE STATES" colorClass="text-fuchsia-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="INTERACTIONS" colorClass="text-pink-400" position="top" className="bottom-full mb-2" />
-                 </div>
-                 <span>&nbsp;</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-amber-400">bg-gradient-to-r from-purple-500 to-pink-500</span>
-                     <SvgBrace label="GRADIENT" colorClass="text-amber-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="STYLING" colorClass="text-amber-400" position="top" className="bottom-full mb-2" />
-                 </div>
-
-                 <span className="text-violet-400">"</span>
-                 
-               </div>
-               <span className="text-blue-400">&gt;&lt;/div&gt;</span>
-            </div>
-          </div>
+          ))}
         </div>
-
-        {/* Divider */}
-        <div className="w-full h-px bg-zinc-800"></div>
-
-        {/* LEVEL 5: RESPONSIVE GRID */}
-        <div className="flex flex-col w-full relative">
-          <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-            <div>
-              <h3 className="text-xl font-bold text-zinc-100 font-sans tracking-tight">05 · RESPONSIVE GRID</h3>
-              <p className="text-zinc-400 text-sm mt-1">Structural breakpoints and grid templating</p>
-            </div>
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-right shrink-0">
-              <div className="text-emerald-400 text-[10px] font-bold tracking-wider mb-1">DIFFICULTY PROFILE</div>
-              <div className="text-zinc-200 text-sm font-semibold">Adaptive Layout</div>
-              <div className="text-zinc-500 text-xs">Grid + Columns + Breakpoints</div>
-            </div>
-          </div>
-          
-          <div className="w-full overflow-x-auto pb-32 pt-24 hide-scrollbar flex justify-start lg:justify-center">
-            <div className="relative flex text-sm sm:text-base lg:text-lg font-mono font-medium tracking-tight w-max mx-auto px-10 shrink-0">
-               <span className="text-blue-400">&lt;div&nbsp;</span>
-               <span className="text-rose-400">class</span>
-               <span className="text-zinc-500">=</span>
-               <div className="relative flex">
-                 <span className="text-violet-400">"</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-blue-400">grid gap-4 sm:gap-6 lg:gap-8</span>
-                     <SvgBrace label="GRID & GAPS" colorClass="text-blue-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="BASE STRUCTURE" colorClass="text-blue-400" position="top" className="bottom-full mb-2" />
-                 </div>
-                 <span>&nbsp;</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-cyan-400">grid-cols-1</span>
-                     <SvgBrace label="MOBILE" colorClass="text-cyan-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <span>&nbsp;</span>
-                   <div className="relative flex">
-                     <span className="text-fuchsia-400">sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4</span>
-                     <SvgBrace label="BREAKPOINTS" colorClass="text-fuchsia-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="COLUMNS" colorClass="text-cyan-400" position="top" className="bottom-full mb-2" />
-                 </div>
-                 <span>&nbsp;</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-amber-400">w-full max-w-7xl mx-auto</span>
-                     <SvgBrace label="CONTAINER" colorClass="text-amber-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="SIZING" colorClass="text-amber-400" position="top" className="bottom-full mb-2" />
-                 </div>
-
-                 <span className="text-violet-400">"</span>
-                 
-               </div>
-               <span className="text-blue-400">&gt;&lt;/div&gt;</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="w-full h-px bg-zinc-800"></div>
-
-        {/* LEVEL 6: TYPOGRAPHIC POLISH */}
-        <div className="flex flex-col w-full relative">
-          <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-            <div>
-              <h3 className="text-xl font-bold text-zinc-100 font-sans tracking-tight">06 · TYPOGRAPHIC POLISH</h3>
-              <p className="text-zinc-400 text-sm mt-1">Refined text styling, line heights, and letter spacing</p>
-            </div>
-            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3 text-right shrink-0">
-              <div className="text-emerald-400 text-[10px] font-bold tracking-wider mb-1">DIFFICULTY PROFILE</div>
-              <div className="text-zinc-200 text-sm font-semibold">Text Rendering</div>
-              <div className="text-zinc-500 text-xs">Font + Size + Tracking + Leading + Color</div>
-            </div>
-          </div>
-          
-          <div className="w-full overflow-x-auto pb-32 pt-24 hide-scrollbar flex justify-start lg:justify-center">
-            <div className="relative flex text-sm sm:text-base lg:text-lg font-mono font-medium tracking-tight w-max mx-auto px-10 shrink-0">
-               <span className="text-blue-400">&lt;h1&nbsp;</span>
-               <span className="text-rose-400">class</span>
-               <span className="text-zinc-500">=</span>
-               <div className="relative flex">
-                 <span className="text-violet-400">"</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-fuchsia-400">font-sans text-4xl md:text-6xl font-extrabold</span>
-                     <SvgBrace label="FONT & WEIGHT" colorClass="text-fuchsia-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="TYPOGRAPHY" colorClass="text-fuchsia-400" position="top" className="bottom-full mb-2" />
-                 </div>
-                 <span>&nbsp;</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-cyan-400">tracking-tight leading-none text-balance</span>
-                     <SvgBrace label="METRICS & WRAPPING" colorClass="text-cyan-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="READABILITY" colorClass="text-cyan-400" position="top" className="bottom-full mb-2" />
-                 </div>
-                 <span>&nbsp;</span>
-                 
-                 <div className="relative flex">
-                   <div className="relative flex">
-                     <span className="text-amber-400">text-transparent bg-clip-text</span>
-                     <SvgBrace label="MASKING" colorClass="text-amber-400" position="bottom" className="top-full mt-2" />
-                   </div>
-                   <SvgBrace label="EFFECTS" colorClass="text-amber-400" position="top" className="bottom-full mb-2" />
-                 </div>
-
-                 <span className="text-violet-400">"</span>
-                 
-               </div>
-               <span className="text-blue-400">&gt;Hero&lt;/h1&gt;</span>
-            </div>
-          </div>
-        </div>
+      </section>
 `;
 
-code = code.replace('      </div>\n    </div>\n  );\n}', newExamples + '\n      </div>\n    </div>\n  );\n}');
+code = code.replace(
+  '<div className="bg-[#0f0f0f] border border-zinc-800/50 rounded-2xl p-6 mt-4">',
+  examplesSection + '\\n      <div className="bg-[#0f0f0f] border border-zinc-800/50 rounded-2xl p-6 mt-4">'
+);
 
-fs.writeFileSync('src/components/TailwindAnatomyGuidelines.tsx', code, 'utf8');
+fs.writeFileSync('src/components/DomBomJsCurriculum.tsx', code);
+console.log('Added Examples to Try');
