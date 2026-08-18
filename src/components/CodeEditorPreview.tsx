@@ -7,8 +7,10 @@ import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { EditorView } from '@codemirror/view';
+import { EditorState } from '@codemirror/state';
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { tags as t } from '@lezer/highlight';
+import { abbreviationTracker, emmetCompletionSource } from '@emmetio/codemirror6-plugin';
 
 
 
@@ -132,7 +134,9 @@ export function CodeEditorPreview({
   }, []);
 
   const editorExtensions = React.useMemo(() => [
-    language === 'html' ? html() : language === 'css' ? css() : javascript({ jsx: true })
+    language === 'html' ? html() : language === 'css' ? css() : javascript({ jsx: true }),
+    abbreviationTracker({ syntax: (language === 'javascript' || language === 'js' ? 'jsx' : language || 'html') as any }),
+    EditorState.languageData.of(() => [{ autocomplete: emmetCompletionSource }])
   ], [language]);
 
   return (
