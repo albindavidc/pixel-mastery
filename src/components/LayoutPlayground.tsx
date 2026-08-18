@@ -192,6 +192,46 @@ const handleModeChange = (mode: string) => {
   // Get active classes for checking active state
   const activeClassesSet = new Set<string>(playgroundClasses.split(' ').filter(c => c.trim() !== ''));
 
+  const getColorForProperty = (prop: string | null) => {
+    if (!prop) return 'indigo';
+    const selIdx = activeControlData.findIndex(g => g.properties.includes(prop));
+    if (selIdx !== -1) {
+      return tailwindColors[selIdx % tailwindColors.length];
+    }
+    return 'indigo';
+  };
+
+
+  const tailwindColors = ['indigo', 'emerald', 'rose', 'amber', 'cyan', 'teal', 'pink', 'violet'];
+
+  const getActiveColorClasses = (color: string) => {
+    switch (color) {
+        case 'indigo': return 'bg-indigo-600 text-white border-indigo-500 shadow-sm';
+        case 'emerald': return 'bg-emerald-600 text-white border-emerald-500 shadow-sm';
+        case 'rose': return 'bg-rose-600 text-white border-rose-500 shadow-sm';
+        case 'amber': return 'bg-amber-600 text-white border-amber-500 shadow-sm';
+        case 'cyan': return 'bg-cyan-600 text-white border-cyan-500 shadow-sm';
+        case 'teal': return 'bg-teal-600 text-white border-teal-500 shadow-sm';
+        case 'pink': return 'bg-pink-600 text-white border-pink-500 shadow-sm';
+        case 'violet': return 'bg-violet-600 text-white border-violet-500 shadow-sm';
+        default: return 'bg-indigo-600 text-white border-indigo-500 shadow-sm';
+    }
+  };
+
+  const getInactiveColorClasses = (color: string) => {
+    switch (color) {
+        case 'indigo': return 'bg-indigo-500/10 text-indigo-300 border-indigo-500/20 hover:bg-indigo-500/20 hover:text-indigo-200';
+        case 'emerald': return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20 hover:bg-emerald-500/20 hover:text-emerald-200';
+        case 'rose': return 'bg-rose-500/10 text-rose-300 border-rose-500/20 hover:bg-rose-500/20 hover:text-rose-200';
+        case 'amber': return 'bg-amber-500/10 text-amber-300 border-amber-500/20 hover:bg-amber-500/20 hover:text-amber-200';
+        case 'cyan': return 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20 hover:bg-cyan-500/20 hover:text-cyan-200';
+        case 'teal': return 'bg-teal-500/10 text-teal-300 border-teal-500/20 hover:bg-teal-500/20 hover:text-teal-200';
+        case 'pink': return 'bg-pink-500/10 text-pink-300 border-pink-500/20 hover:bg-pink-500/20 hover:text-pink-200';
+        case 'violet': return 'bg-violet-500/10 text-violet-300 border-violet-500/20 hover:bg-violet-500/20 hover:text-violet-200';
+        default: return 'bg-zinc-800/80 text-zinc-400 border-zinc-700/80 hover:bg-zinc-700 hover:text-zinc-300';
+    }
+  };
+
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
     if (e.deltaY !== 0) {
@@ -205,7 +245,9 @@ const handleModeChange = (mode: string) => {
       {/* Dynamic Property Control Bar */}
       <div className="flex-shrink-0 bg-zinc-900 border-b border-zinc-800 flex flex-col z-10 shadow-sm transition-colors w-full sticky top-0">
         <div className="flex flex-col border-b border-zinc-800/50">
-          {activeControlData.map((group, gIdx) => (
+          {activeControlData.map((group, gIdx) => {
+            const groupColor = tailwindColors[gIdx % tailwindColors.length];
+            return (
             <div key={group.group} className={`flex items-start sm:items-center justify-between gap-4 p-3 ${gIdx !== activeControlData.length - 1 ? 'border-b border-zinc-800/50' : ''}`}>
               <div className="w-24 shrink-0 flex flex-col justify-center border-r border-zinc-800/50 pr-2 mr-1 mt-1 sm:mt-0 relative">
                 {group.group.split(' ').map((word, i) => (
@@ -251,8 +293,8 @@ const handleModeChange = (mode: string) => {
                         onClick={() => handlePropertyClick(prop)}
                         className={`shrink-0 px-2.5 py-1 text-xs font-mono rounded-md transition-colors border ${
                           isSelected || isActive
-                            ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
-                            : 'bg-zinc-800/80 text-zinc-400 border-zinc-700/80 hover:bg-zinc-700 hover:text-zinc-300'
+                            ? getActiveColorClasses(groupColor)
+                            : getInactiveColorClasses(groupColor)
                         }`}
                       >
                         {prop}
@@ -279,7 +321,7 @@ const handleModeChange = (mode: string) => {
                 </button>
               )}
             </div>
-          ))}
+          );})}
         </div>
 
         {/* Row 2: Variants */}
@@ -297,8 +339,8 @@ const handleModeChange = (mode: string) => {
                   onClick={() => handleVariantClick(variant)}
                   className={`shrink-0 px-2.5 py-1 text-xs font-mono rounded-md transition-colors border ${
                     activeClassesSet.has(variant)
-                      ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
-                      : 'bg-zinc-800/80 text-zinc-400 border-zinc-700/80 hover:bg-zinc-700 hover:text-zinc-300'
+                      ? getActiveColorClasses(getColorForProperty(selectedProperty))
+                      : getInactiveColorClasses(getColorForProperty(selectedProperty))
                   }`}
                 >
                   {variant}
@@ -311,7 +353,7 @@ const handleModeChange = (mode: string) => {
                 <button
                   key={variant}
                   onClick={() => handleVariantClick(variant)}
-                  className="shrink-0 px-2.5 py-1 text-xs font-mono rounded-md transition-colors border bg-indigo-600 text-white border-indigo-500 shadow-sm flex items-center gap-1.5"
+                  className={`shrink-0 px-2.5 py-1 text-xs font-mono rounded-md transition-colors border ${getActiveColorClasses(getColorForProperty(selectedProperty))} flex items-center gap-1.5`}
                 >
                   {variant}
                   <X className="w-3 h-3 text-indigo-200" />
@@ -350,6 +392,7 @@ const handleModeChange = (mode: string) => {
               </button>
             )}
           </div>
+
         </div>
       </div>
 

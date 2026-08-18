@@ -102,6 +102,10 @@ export function HtmlPlayground() {
            code += `<table>\n  <tr>\n    <th>Header</th>\n  </tr>\n  <tr>\n    <td>Data</td>\n  </tr>\n</table>\n`;
          } else if (['ul', 'ol'].includes(t)) {
            code += `<${t}>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</${t}>\n`;
+         } else if (t === 'dl') {
+           code += `<dl>\n  <dt>Term 1</dt>\n  <dd>Description 1</dd>\n  <dt>Term 2</dt>\n  <dd>Description 2</dd>\n</dl>\n`;
+         } else if (['li', 'dt', 'dd'].includes(t)) {
+           // Skip these as they are included in their parent lists
          } else if (['a'].includes(t)) {
            code += `<a href="#">Click me</a>\n`;
          } else if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'strong', 'em', 'button', 'label'].includes(t)) {

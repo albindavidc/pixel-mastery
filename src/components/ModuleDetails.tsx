@@ -1,4 +1,5 @@
 import { HtmlModuleDetails } from './HtmlModuleDetails';
+import { HtmlBeginnerPage } from './HtmlBeginnerPage';
 import React from 'react';
 import { Info } from 'lucide-react';
 
@@ -7,6 +8,7 @@ interface ModuleDetailsProps {
 }
 
 export function ModuleDetails({ moduleId }: ModuleDetailsProps) {
+  if (moduleId === 'html-beginner') return <HtmlBeginnerPage />;
   if (moduleId.startsWith('html-')) return <HtmlModuleDetails moduleId={moduleId} />;
   if (moduleId === 'tailwind-layout-box-sizing') {
     return (

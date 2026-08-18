@@ -4,6 +4,7 @@ import { modules } from '../data/modules';
 import { CheckCircle2, Play, Info } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { ModuleDetails } from './ModuleDetails';
+import { HtmlBeginnerRoadmap } from './HtmlBeginnerRoadmap';
 
 export function Curriculum() {
   const { currentModuleId, setPlaygroundClasses, completedModules, toggleModuleComplete, moduleClasses } = useAppStore();
@@ -401,6 +402,9 @@ export function Curriculum() {
 
           </>
         )}
+        
+        {module.id === 'html-beginner' && <HtmlBeginnerRoadmap />}
+
         <header className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <h2 className="text-3xl font-bold text-zinc-100 tracking-tight">{module.title}</h2>

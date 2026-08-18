@@ -92,7 +92,7 @@ export function CodeEditorPreview({
     const highlightStyle = HighlightStyle.define([
       { tag: [t.tagName, t.keyword, t.operator, t.className, t.typeName, t.function(t.variableName)], color: themeHex },
       { tag: [t.attributeName, t.propertyName], color: "#a1a1aa" },
-      { tag: [t.string, t.special(t.string)], color: "#e4e4e7" },
+      { tag: [t.string, t.special(t.string)], color: "rgba(56, 189, 248, 0.75)" }, // Tailwind brand sky blue for strings/utilities
       { tag: [t.number, t.bool, t.null], color: themeHex },
       { tag: [t.comment, t.meta], color: "#52525b", fontStyle: "italic" },
       { tag: t.angleBracket, color: "#52525b" }

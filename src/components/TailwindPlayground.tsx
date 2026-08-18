@@ -415,7 +415,7 @@ export function TailwindPlayground() {
           <div className="absolute top-3 right-4 flex gap-4 items-center z-10">
             {/* Legend */}
             <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase bg-zinc-800/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300 shadow-lg pointer-events-none">
-              <div className="flex items-center gap-2 text-sky-400">
+              <div className="flex items-center gap-2 text-sky-400/75">
                 <span className="w-4 h-0 border-t-2 border-dotted border-sky-400"></span>
                 <span>Container</span>
               </div>
@@ -496,7 +496,7 @@ export function TailwindPlayground() {
             <textarea
               value={playgroundClasses}
               onChange={(e) => setPlaygroundClasses(e.target.value)}
-              className="w-full bg-zinc-950 text-indigo-100 font-mono text-sm p-4 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none min-h-[180px] overflow-y-scroll editor-scrollbar"
+              className="w-full bg-zinc-950 text-sky-400/75 font-mono text-sm p-4 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none min-h-[180px] overflow-y-scroll editor-scrollbar"
               placeholder="Enter Tailwind classes here..."
               spellCheck="false"
             />

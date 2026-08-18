@@ -1,12 +1,10 @@
 import React from 'react';
 import { htmlModules } from '../data/htmlModules';
 import { htmlTagsData } from '../data/htmlTagsData';
+import { HtmlElementsShowcase } from "./HtmlElementsShowcase";
 
-interface HtmlModuleDetailsProps {
-  moduleId: string;
-}
-
-export function HtmlModuleDetails({ moduleId }: HtmlModuleDetailsProps) {
+export function HtmlBeginnerPage() {
+  const moduleId = 'html-beginner';
   const module = htmlModules.find(m => m.id === moduleId);
   if (!module) return <div>Module not found</div>;
 
@@ -50,30 +48,9 @@ export function HtmlModuleDetails({ moduleId }: HtmlModuleDetailsProps) {
   };
 
   return (
-    <div className="text-zinc-200 p-8 max-w-5xl mx-auto font-sans">
-      {/* Roadmap Table Grid */}
-      <div className="mb-16">
-        <h3 className="text-2xl font-display font-bold text-white mb-6">Module Roadmap</h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((cat: any, i: number) => (
-            <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-sm flex flex-col h-full">
-              <h4 className={`font-display font-bold text-sm tracking-wide uppercase mb-4 ${getHeadingColorClass(cat.color)}`}>
-                {cat.name}
-              </h4>
-              <div className="flex flex-wrap gap-2 mt-auto">
-                {cat.tags.map((tag: string) => (
-                  <span
-                    key={tag}
-                    className={`font-mono text-xs px-2.5 py-1 rounded bg-white/5 border ${getColorClasses(cat.color)}`}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="text-zinc-200 font-sans w-full">
+      {/* HTML Elements Showcase */}
+      <HtmlElementsShowcase />
 
       {/* Element Breakdown */}
       <div className="space-y-16">
